@@ -1,1 +1,1 @@
-Welcome
+Welcome To our CSE/CIT 480 Project
