@@ -1,0 +1,12 @@
+CREATE DATABASE expense_reimbursement
+use expense_reimbursement
+
+ CREATE TABLE user (
+  user_id int(6) UNSIGNED NOT NULL,
+  user_fname varchar(20) NOT NULL,
+  user_lname varchar(20) NOT NULL,
+  user_email varchar(30) NOT NULL,
+  user_pass varchar(64) NOT NULL,
+  salt varchar(64),
+  user_dob date
+  );
