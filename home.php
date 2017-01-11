@@ -9,7 +9,9 @@
         <link href="/Styles/css/bootstrap.css" rel="stylesheet">
         
         <!-- Scripts -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="/Scripts/bootstrap.min.js"></script>
+        
         
     </head>
     <body>

@@ -5,6 +5,12 @@
         $logged_in = true;
     }
 ?>
+<style type="text/css">
+    .nav-tabs
+    {
+        border-bottom:0px;
+    }
+</style>
 <!DOCTYPE html>
 <html lang="en">
     <head></head>
@@ -58,9 +64,37 @@
                         else
                         {
                     ?>
-                    <ul class="nav nav-tabs" role="tablist" style="float:none">
-                       <li role="presentation"><a href="../Account/logout.php" >Logout</a></li>
-                    </ul>
+                    <div class="col-lg-4">
+                        
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row">
+                            
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" style="color:white; padding:12px;">Hello <?php echo $_SESSION['name']; ?>!</li>
+                            <li role="presentation">
+                                <div class="dropdown" style="padding:12px">
+                                    <a data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-triangle-bottom">
+                                            
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">My Account</a></li>
+                                        <li><a href="Account/logout.php">Logout</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                            
+
+                                
+                            
+                            
+                        </ul>
+                        </div>
+                        
+                    </div>
                     <?php
                         }
                     ?>
@@ -69,3 +103,9 @@
         </nav>   
     </body>
 </html>
+<script type="text/javascript" >
+    function show_menu()
+    {
+        
+    }
+</script>
