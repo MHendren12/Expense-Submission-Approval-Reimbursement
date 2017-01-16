@@ -27,17 +27,17 @@
                     </div>
                 <div id="navbar" class="navbar-collapse collapse" style="float:none">
                     <div class="col-lg-4">
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul>
                             <?php
                                 if(isset($_SESSION['is_logged_in']))
                                 {
                             ?>
-                            <li role="presentation" ><a href="home.php">Home</a></li>
+                            <li role="presentation" ><a href="home.php"><h1>RASE</h1></a></li>
                             <?php
                                 }
                                 else {
                             ?>
-                            <li role="presentation" ><a href="index.php">Home</a></li>
+                            <li role="presentation" ><a href="index.php"><h1>RASE</h1></a></li>
                             <?php
                                 }
                             ?>
@@ -54,9 +54,11 @@
                             </div>
                             <div class="form-group">
                                 <input type="password" placeholder="Password" class="form-control" name="Password">
-                            </div>  
+                            </div>
+                            <div class="form-group">
+                              
+                            </div>
                             <input type="submit" class="btn btn-success" value="Sign in" name="submit" />
-                            <a href="registration.php"><p class="btn btn-default">Register</p></a>
                         </form>
                     </div>
                     <?php
@@ -80,17 +82,11 @@
                                         </span>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">My Account</a></li>
+                                        <li><a href="Account/myAccount.php">My Account</a></li>
                                         <li><a href="Account/logout.php">Logout</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            
-                            
-
-                                
-                            
-                            
                         </ul>
                         </div>
                         

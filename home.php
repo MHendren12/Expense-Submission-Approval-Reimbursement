@@ -19,6 +19,7 @@
             include("Navbar/header.php");	
         ?>
         <div class="container" align = "center">
+            <hr>
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
