@@ -27,17 +27,17 @@
                     </div>
                 <div id="navbar" class="navbar-collapse collapse" style="float:none">
                     <div class="col-lg-4">
-                        <ul>
+                        <ul class="nav nav-tabs" role="tablist">
                             <?php
                                 if(isset($_SESSION['is_logged_in']))
                                 {
                             ?>
-                            <li role="presentation" ><a href="home.php"><h1>RASE</h1></a></li>
+                            <li role="presentation" ><a href="home.php" style="font-weight:bold">RASE</a></li>
                             <?php
                                 }
                                 else {
                             ?>
-                            <li role="presentation" ><a href="index.php"><h1>RASE</h1></a></li>
+                            <li role="presentation" ><a href="index.php"style="font-weight:bold">RASE</a></li>
                             <?php
                                 }
                             ?>
@@ -82,7 +82,7 @@
                                         </span>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="Account/myAccount.php">My Account</a></li>
+                                        <li><a href="account.php">My Account</a></li>
                                         <li><a href="Account/logout.php">Logout</a></li>
                                     </ul>
                                 </div>
