@@ -92,9 +92,21 @@ include("Navbar/header.php");
 											<h3>Date of Birth: </h3>
 											<select class="btn btn-default" name="DOBMonth" required="">
 											<option>----------------</option>
-											<?php $months = array("January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October","November", "December");
-											foreach($months as $month){
-												echo "<option value='" . $month . "'>" . $month . "</option>";
+											<?php $months = array(
+												'1' => 'January',
+												'2' => 'February',
+												'3' => 'March',
+												'4' => 'April',
+												'5' => 'May',
+												'6' => 'June',
+												'7' => 'July',
+												'8' => 'August',
+												'9' => 'September',
+												'10' => 'October',
+												'11' => 'November',
+												'12' => 'December' );
+											foreach($months as $key => $month){
+												echo "<option value='" . $key . "'>" . $month . "</option>";
 											} ?>
 											</select>
 											<select class="btn btn-default" name="DOBDay" required="">
@@ -122,7 +134,7 @@ include("Navbar/header.php");
                                                     function confirmExit()
                                                     {
                                                         // this shouldn't show if the user has filled out the page and wants to register
-                                                        return "Do you wish to cancel your registration for the Not-So-Social-Network and leave this page?";
+                                                        //return "Do you wish to cancel your registration for the Not-So-Social-Network and leave this page?";
                                                     }
                                                 </script>
                                             </div>
@@ -135,18 +147,6 @@ include("Navbar/header.php");
 			</div>
 		</div>
 	</div>
-    <nav class="navbar navbar-inverse navbar-fixed-bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2 col-sm-3 col-xs-6">
-                    <a class="navbar-brand" href="/WorkoutDB//contacts.php">Contacts</a>
-                </div>
-                <div class="col-md-6 col-sm-3 col-xs-6">
-                    <a class="navbar-brand" href="/WorkoutDB/aboutus.php">About Us</a>
-                </div>
-            </div>
-        </div>
-    </nav> 
 </div>
 
 </body>

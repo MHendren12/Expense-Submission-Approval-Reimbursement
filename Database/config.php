@@ -8,7 +8,5 @@
             or die("Unable to connect to MySQL");
         
         return $conn;
-        
     }
-
 ?>

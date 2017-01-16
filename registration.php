@@ -168,7 +168,7 @@
                         function confirmExit()
                         {
                             // this shouldn't show if the user has filled out the page and wants to register
-                            return "Do you wish to cancel your registration for the Not-So-Social-Network and leave this page?";
+                            //return "Do you wish to cancel your registration for the Not-So-Social-Network and leave this page?";
                         }
                     </script>
                 </div>
