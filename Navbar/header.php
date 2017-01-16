@@ -10,6 +10,10 @@
     {
         border-bottom:0px;
     }
+    td
+    {
+        padding: 0px 5px 0px 0px;
+    }
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,21 +31,19 @@
                     </div>
                 <div id="navbar" class="navbar-collapse collapse" style="float:none">
                     <div class="col-lg-4">
-                        <ul class="nav nav-tabs" role="tablist">
                             <?php
                                 if(isset($_SESSION['is_logged_in']))
                                 {
                             ?>
-                            <li role="presentation" ><a href="home.php" style="font-weight:bold">RASE</a></li>
+                           <a href="home.php" style="font-weight:bold"><h1>RASE</h1></a>
                             <?php
                                 }
                                 else {
                             ?>
-                            <li role="presentation" ><a href="index.php"style="font-weight:bold">RASE</a></li>
+                            <a href="index.php"style="font-weight:bold"><h2>RASE</h2></a>
                             <?php
                                 }
                             ?>
-                        </ul>
                     </div>
                     <?php
                         if(!isset($_SESSION['is_logged_in']))
@@ -49,16 +51,25 @@
                     ?>
                     <div class="col-lg-8" float="right">
                         <form class="navbar-form navbar-right" action="Account/Login.php" method="post">
-                            <div class="form-group">
-                                <input type="text" placeholder="Email" class="form-control" name="Email">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" placeholder="Password" class="form-control" name="Password">
-                            </div>
-                            <div class="form-group">
-                              
-                            </div>
-                            <input type="submit" class="btn btn-success" value="Sign in" name="submit" />
+                            <table>
+                                <tr >
+                                    <td>
+                                        <input type="text" placeholder="Email" class="form-control" name="Email">
+                                    </td>
+                                    <td>
+                                        <input type="password" placeholder="Password" class="form-control" name="Password">
+                                    </td>
+                                    <td>
+                                        <input type="submit" class="btn btn-success" value="Sign in" name="submit" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td style="padding-top: 5px;">
+                                        <a href="" >Forgot Password?</a>
+                                    </td>
+                                </tr>
+                            </table>
                         </form>
                     </div>
                     <?php
@@ -67,27 +78,23 @@
                         {
                     ?>
                     <div class="col-lg-4">
-                        
                     </div>
                     <div class="col-lg-4">
                         <div class="row">
-                            
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" style="color:white; padding:12px;">Hello <?php echo $_SESSION['name']; ?>!</li>
-                            <li role="presentation">
-                                <div class="dropdown" style="padding:12px">
-                                    <a data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-triangle-bottom">
-                                            
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="account.php">My Account</a></li>
-                                        <li><a href="Account/logout.php">Logout</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" style="color:white; padding:24px;">Hello <?php echo $_SESSION['name']; ?>!</li>
+                                <li role="presentation">
+                                    <div class="dropdown" style="padding:24px">
+                                        <a data-toggle="dropdown">
+                                            <span class="glyphicon glyphicon-triangle-bottom"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="account.php">My Account</a></li>
+                                            <li><a href="Account/logout.php">Logout</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                         
                     </div>
