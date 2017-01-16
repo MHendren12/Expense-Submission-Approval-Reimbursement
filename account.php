@@ -23,7 +23,7 @@
         <?php
             include("Navbar/header.php");	
         ?>
-        <div class="container" align = "center">
+        <div class="container" align="center" style="padding-top:30px;">
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
