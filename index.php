@@ -48,8 +48,7 @@ include("Navbar/header.php");
 												</div>
 												<div class="col-md-8" align="left">
 													<h4>Subways and Trains</h4>
-													<p>jkfdhsf sdbfk ksjhfdodsf jfnsd fkdsfodsf hfosdf fosdf jkdsfnsdf ldsnfsd fkjdvbsd
-													ki kdsfbuisdf khdsfbif dksfbidfbksdf dsgvboidg ksdbgiofds  idfs</p>	
+													<p>Cards for subways or any money used to </p>	
 												</div>												
 											</div>
 											<br><br>
@@ -59,8 +58,8 @@ include("Navbar/header.php");
 												</div>
 												<div class="col-md-8" align="left">
 													<h4>Automobiles</h4>
-													<p>jkfdhsf sdbfk ksjhfdodsf jfnsd fkdsfodsf hfosdf fosdf jkdsfnsdf ldsnfsd fkjdvbsd
-													ki kdsfbuisdf khdsfbif dksfbidfbksdf dsgvboidg ksdbgiofds  idfs</p>		
+													<p>Gas mileage, car rental, and other car related expenses that an employee might encounter on 
+													a business trip.</p>		
 												</div>												
 											</div>
 										</td>
