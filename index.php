@@ -48,7 +48,7 @@ include("Navbar/header.php");
 												</div>
 												<div class="col-md-8" align="left">
 													<h4>Subways and Trains</h4>
-													<p>Train tickets, subway fairs, and other train travel expense. </p>	
+													<p>Cards for subways or any money used to  </p>	
 												</div>												
 											</div>
 											<br><br>
@@ -58,8 +58,8 @@ include("Navbar/header.php");
 												</div>
 												<div class="col-md-8" align="left">
 													<h4>Automobiles</h4>
-													<p>Automobile rental, vehicle mileage, taxis and Ubers, and any other vehicle needs that 
-														an employee might need when traveling.</p>		
+													<p>Gas mileage, car rental, and other car related expenses that an employee might encounter on 
+													a business trip.</p>		
 												</div>												
 											</div>
 										</td>
