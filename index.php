@@ -48,7 +48,7 @@ include("Navbar/header.php");
 												</div>
 												<div class="col-md-8" align="left">
 													<h4>Subways and Trains</h4>
-													<p>Cards for subways or any money used to  </p>	
+													<p>Train tickets, subway fairs, and other train travel expense.</p>	
 												</div>												
 											</div>
 											<br><br>
