@@ -121,12 +121,14 @@ include("Navbar/header.php");
                                                 <input id="submit" input type="submit" class="btn btn-success" value="Create Account" name="submit" style="width:300px; height:50px; font-size:20px" />
                                                 
                                                 <script language="JavaScript">
+                                                /*
                                                     window.onbeforeunload = confirmExit;
                                                     function confirmExit()
                                                     {
                                                         // this shouldn't show if the user has filled out the page and wants to register
-                                                        return "Do you wish to cancel your registration for the Not-So-Social-Network and leave this page?";
+                                                       
                                                     }
+                                                    */
                                                 </script>
                                             </div>
                                         </td>
@@ -138,6 +140,7 @@ include("Navbar/header.php");
 			</div>
 		</div>
 	</div>
+	<!--
     <nav class="navbar navbar-inverse navbar-fixed-bottom">
         <div class="container">
             <div class="row">
@@ -145,11 +148,12 @@ include("Navbar/header.php");
                     <a class="navbar-brand" href="../WorkoutDB/contactus.php">Contact Us</a>
                 </div>
                 <div class="col-md-6 col-sm-3 col-xs-6">
-                    <a class="navbar-brand" href="../WorkoutDB/aboutus.php">About Us</a>
+                    <a class="navbar-brand" href="../aboutus.php">About Us</a>
                 </div>
             </div>
         </div>
     </nav> 
+    -->
 </div>
 
 </body>

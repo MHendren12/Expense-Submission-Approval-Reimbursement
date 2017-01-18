@@ -4,9 +4,8 @@
 		$username = "root";
 		$password = "";
 		$db = "expense_reimbursement";
-        $conn= mysqli_connect($servername, $username, $password, $db) 
+        $conn= mysqli_connect($servername, $username, $password, $db)
             or die("Unable to connect to MySQL");
-        
         return $conn;
     }
 ?>

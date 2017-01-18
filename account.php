@@ -29,7 +29,7 @@
                     <div class="panel-body">
                         <div class="row" align ="left">
                             <div class="col-lg-8" align = "left">
-                                <form action="Account/editinfo.php" method="post">
+                                <form action="Account/editinfo.php" onsubmit="return validateForm()" method="post">
                                     <?php
                                         $sql = "SELECT * FROM user WHERE user_id= '".$id."'";
                                         $result = mysqli_query($conn, $sql);
@@ -56,13 +56,15 @@
                                             <div id = "changePassword" style="display:none;">
                                                 <h2>Current Password</h2>
                                                 <input type="password" placeholder="Current Password" class="form-control" id="oldPassword" name="password" style="width:65%">
-                                                <span id="incorrectPassword" style="display:none;">The entered password does not match the current password!</span>
+                                                <span id="incorrectPassword" style="display:none; color:red;font-weight:bold;">The entered password does not match the current password!</span>
+                                            </div>
+                                            <div id = "changePasswordNewPassword" style="display:none;">
                                                 <h2>New Password</h2>
                                                 <input type="password" placeholder="New Password" class="form-control" id="password" name="newPassword" style="width:65%">
-                                                <h4><div class="figure" id="strength"></div></h4>
+                                                <div class="figure" id="strength" style="font-weight:bold;"></div>
                                                 <h2>Confirm Password</h2>
                                                 <input type="password" placeholder="Confirm Password" class="form-control" id="confirmPassword" name="confirmPassword" style="width:65%">
-                                                <div id="passwordsNotEqual" style="display:none;">The Password do not match</div>
+                                                <div id="passwordsNotEqual" style="display:none;"><span style="color:red;font-weight:bold;">The Password do not match</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -73,7 +75,7 @@
                                         <input class="btn btn-default" type="submit" id="submit" value="Submit" name="submit" />
                                         <a class="btn btn-default" href="home.php" role="button">Cancel &raquo;</a>
                                     </div>
-                                    
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -101,54 +103,70 @@
         else
         {
             $("#passwordsNotEqual").css("display", "none");
+            
+            
         }
     });
     
-    $("#oldPassword").bind("change",function(){
-        var password = $("#oldPassword").val();
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                debugger;
-                if (this.responseText == false)
-                    $("#incorrectPassword").css("display","");
-                else
-                    $("#incorrectPassword").css("display","none");
-            }
-        };
-        xmlhttp.open("GET", "Account/accountinfo.php?val=comparePasswords&pass=" + password, true);
-        xmlhttp.send();
-    });
+   
     
-    /*
     $("#oldPassword").bind("change",function(){
         debugger;
         var password = $("#oldPassword").val();
         jQuery.ajax({
-            url: 'Account/accountinfo.php',
+            url: 'Account/accountinfo.php?val=comparePasswords&pass=" + password,',
             data: ({val : 'comparePasswords'},{ pass : $("#oldPassword").val() }),
             success: function(match) {
-                handleData(match);
-                
+                if (match == 0)
+                {
+                    $("#incorrectPassword").css("display","");
+                }
+                else
+                {
+                    
+                    $("#changePasswordNewPassword").css("display", "");
+                    $("#incorrectPassword").css("display","none");
+                    $("#changePassword").css("display", "none");
+                }
             }
         });
     });
-    */
-    /*
-    $("#oldPassword").bind("change",function(){
-            var password = $(this).val();
-            debugger;
-            $.post(
-                'Account/accountinfo.php',
-                'val=comparePasswords',
-                'pass=' + password,
-                function(match) {
-                    
-                    if (match == false)
-                        $("#incorrectPassword").css("display","")
-
-                }
-            ); 
+    
+    function validateForm()
+    {
+        var thth = $("#password").val();
+        debugger;
+        
+        //no errors
+        if ( $("#passwordsNotEqual").css("display") == "none" && $("#incorrectPassword").css("display") == "none" )
+        {
+            //Current password not entered or entered incorrectly
+            if ($("#changePassword").css("display") != "none")
+            {
+                alert("Please enter your old password.");
+                return false;
+            }
+            //Blank new password 
+            else if( $("#changePasswordNewPassword").css("display") != "none" &&  ( $("#password").val() == "" || $("#confirmPassword").val() == "" ) )
+            {
+                alert("Please enter your new password.");
+                return false;
+            }
+            //no issues
+            else
+            {
+                return true;
+            }
             
-    });*/
+            
+        }
+        else
+        {
+            alert("Your password and confirmation do not match");
+            return false;
+        }
+        
+    }
+    
+   
 </script>
