@@ -1,4 +1,4 @@
-CREATE DATABASE expense_reimbursement
+reCREATE DATABASE expense_reimbursement
 use expense_reimbursement
 
  DROP TABLE user;
@@ -10,4 +10,14 @@ use expense_reimbursement
   user_pass varchar(64) NOT NULL,
   salt varchar(64),
   user_dob date
+  );
+ 
+ CREATE TABLE userAssignment (
+  userAssign_id int(6) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  
+  );
+  
+ CREATE TABLE userRole (
+  userRole_id int(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  
   );

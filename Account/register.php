@@ -5,7 +5,8 @@
 	 $fname = $_POST['FName'];
 	 $lname = $_POST['LName'];
 	 $email  = $_POST['Email'];
-	 $pass  = $_POST['Password']; 
+	 $pass  = $_POST['Password'];
+	 $pass2 = $_POST['ConfirmPassword'];
      $salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
      $saltedPW =  $pass . $salt;
      $hashedPW = hash('sha256', $saltedPW);
@@ -21,6 +22,11 @@
 	 $sql = "select * from user where user_email = '$email'";
 	 $check = mysqli_query($conn, $sql);
 	 $num_rows = mysqli_num_rows($check);
+	 
+	 if ($pass != $pass2){
+	     header("Location: ../index.php");
+	     die();
+	 }
 
 	 if ($num_rows == 0) 
      {

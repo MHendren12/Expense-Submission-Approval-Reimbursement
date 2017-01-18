@@ -70,16 +70,18 @@ include("Navbar/header.php");
 											<div class="row">
 												<h1>Register</h1><hr>
 												<div class="col-md-6" align="right">
-													<input class="form-control" name="FName" placeholder="First Name" required="" style="width: 70%" type="text">													
+													<input class="form-control" name="FName" placeholder="First Name" required="" style="width: 68%" type="text">													
 												</div>
 												<div class="col-md-6" align="left">
-													<input class="form-control" name="LName" placeholder="Last Name" required="" style="width: 70%" type="text">													
+													<input class="form-control" name="LName" placeholder="Last Name" required="" style="width: 68%" type="text">													
 												</div>
 											</div>											
 											<br>
 											<input class="form-control" name="Email" placeholder="Email" required="" style="width: 70%" type="text">
 											<br>
 											<input id="password" class="form-control" name="Password" placeholder="Password" required="" style="width: 70%" type="password">
+											<br>
+											<input id="confirmpassword" class="form-control" name="confirmpassword" placeholder="Confirm Password" required="" style="width: 70%" type="password">
 											<br>
 											<h4>
 											<div id="strength" class="figure">
@@ -92,14 +94,16 @@ include("Navbar/header.php");
 											<select class="btn btn-default" name="DOBMonth" required="">
 											<option>----------------</option>
 											<?php $months = array("January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October","November", "December");
+											$count = 0;
 											foreach($months as $month){
-												echo "<option value='" . $month . "'>" . $month . "</option>";
+												echo "<option value='" . $count . "'>" . $month . "</option>";
+												$count++;
 											} ?>
 											</select>
 											<select class="btn btn-default" name="DOBDay" required="">
 											<option>---</option>
 											<?php
-											for($i=0; $i<=31; $i++){
+											for($i=1; $i<=31; $i++){
 												echo "<option value='" . $i . "'>" . $i . "</option>";
 											} ?>
 											</select>
@@ -114,7 +118,7 @@ include("Navbar/header.php");
 											You will recieve an email notification regaurding your account verification and confirmation.</p>
 											<hr>
                                             <div class="row" align="center" >
-                                                <input id="submit" input type="submit" class="btn btn-success" value="Create Account" name="submit" />
+                                                <input id="submit" input type="submit" class="btn btn-success" value="Create Account" name="submit" style="width:300px; height:50px; font-size:20px" />
                                                 
                                                 <script language="JavaScript">
                                                     window.onbeforeunload = confirmExit;
@@ -138,10 +142,10 @@ include("Navbar/header.php");
         <div class="container">
             <div class="row">
                 <div class="col-md-2 col-sm-3 col-xs-6">
-                    <a class="navbar-brand" href="/WorkoutDB//contacts.php">Contacts</a>
+                    <a class="navbar-brand" href="../WorkoutDB/contactus.php">Contact Us</a>
                 </div>
                 <div class="col-md-6 col-sm-3 col-xs-6">
-                    <a class="navbar-brand" href="/WorkoutDB/aboutus.php">About Us</a>
+                    <a class="navbar-brand" href="../WorkoutDB/aboutus.php">About Us</a>
                 </div>
             </div>
         </div>

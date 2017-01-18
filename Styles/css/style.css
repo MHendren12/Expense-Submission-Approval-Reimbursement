@@ -1,0 +1,108 @@
+.error {
+	color: #FF0000;
+}
+.errormsg {
+	color: #FF0000;
+	text-align: left; 
+	padding:10px; 
+	border: 1px solid red; 
+	border-radius: 5px 5px 5px 5px; 
+	width: 96%; 
+	margin-bottom: 5px;
+}
+.success_position {
+	width: 430px; 
+	margin: 0 auto;
+}
+.success_tag{
+	color: #41A62A; 
+	text-align: left; 
+	padding:10px; 
+	border: 1px solid green; 
+	border-radius: 5px 5px 5px 5px; 
+	width: 500px; 
+}
+.tag-beauty {
+    max-width: 500px;
+    background: #F7F7F7;
+    padding: 25px 15px 25px 10px;
+    font: 12px Georgia, "Times New Roman", Times, serif;
+    color: #888;
+    text-shadow: 1px 1px 1px #FFF;
+    border:1px solid #E4E4E4;
+}
+.tag-beauty h1 {
+    font-size: 25px;
+    padding: 0px 0px 10px 40px;
+    display: block;
+    border-bottom:1px solid #E4E4E4;
+    margin: -10px -15px 30px -10px;;
+    color: #888;
+}
+.tag-beauty h1>span {
+    display: block;
+    font-size: 11px;
+}
+.tag-beauty label {
+    display: block;
+	float: left;
+}
+.tag-beauty label>span {
+    float: left;
+    width: 20%;
+    text-align: right;
+    padding-right: 10px;
+    margin-top: 10px;
+    color: #888;
+}
+.tag-beauty input[type="text"], .tag-beauty input[type="email"], .tag-beauty textarea, .tag-beauty select {
+    border: 1px solid #DADADA;
+    color: #888;
+    height: 30px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    padding: 3px 3px 3px 5px;
+    width: 99%;
+    font-size: 12px;
+    line-height:15px;
+    box-shadow: inset 0px 1px 4px #ECECEC;
+    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+}
+.tag-beauty textarea{
+    padding: 5px 3px 3px 5px;
+}
+.tag-beauty textarea{
+    height:100px;
+}
+.tag-beauty .button {
+    background: #E27575;
+    border: none;
+    padding: 10px 25px 10px 25px;
+    color: #FFF;
+    box-shadow: 1px 1px 5px #B6B6B6;
+    border-radius: 3px;
+    text-shadow: 1px 1px 1px #9E3F3F;
+    cursor: pointer;
+}
+.tag-beauty .button:hover {
+    background: #CF7A7A
+}
+.tag-button {
+	width: 100%;
+	height: 42px;
+	font-size: 18px;
+	font-weight: bold;
+}
+.tag_beauty_header {
+	width: 100%;
+	background-color: black;
+	float: left;
+	height: 30px;
+
+}
+.tag_beauty_header_inner {
+	text-align: left;
+}
