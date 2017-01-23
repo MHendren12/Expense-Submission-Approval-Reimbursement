@@ -13,11 +13,13 @@ use expense_reimbursement
   );
  
  CREATE TABLE userAssignment (
-  userAssign_id int(6) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  
+  userAssign_id int(6) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  user_id int(6)
   );
   
  CREATE TABLE userRole (
   userRole_id int(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  
+  userRole varchar(20) NOT NULL,
+  userDesc varchar(255),
+  userAssign_id int(6) NOT NULL
   );
