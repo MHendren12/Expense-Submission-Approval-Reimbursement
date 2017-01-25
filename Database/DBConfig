@@ -10,23 +10,18 @@ use expense_reimbursement
   user_pass varchar(64) NOT NULL,
   user_activated int NOT NULL,
   salt varchar(64),
-  user_dob date
+  user_dob date,
+  is_admin int(1)
   );
  
  CREATE TABLE userAssignment (
-<<<<<<< HEAD
   userAssign_id int(6) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   userRole_id int(6) UNSIGNED NOT NULL,
   user_id int(6) UNSIGNED NOT NULL
-=======
-  userAssign_id int(6) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  user_id int(6)
->>>>>>> 0cfd94c1db0cdd70ace70e1d5ae67a52fba450b6
   );
   
  CREATE TABLE userRole (
   userRole_id int(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-<<<<<<< HEAD
   userRole_Name  varchar(20) NOT NULL,
   userRole_Desc varchar(200) 
   );
@@ -34,9 +29,3 @@ use expense_reimbursement
   Insert into userRole (userRole_Name, userRole_Desc) values ('Administrator','Default role for Administrator');
   Insert into userRole (userRole_Name, userRole_Desc) values ('Approver','Default role for Approver');
   Insert into userRole (userRole_Name, userRole_Desc) values ('Submitter','Default role for Submitter');
-=======
-  userRole varchar(20) NOT NULL,
-  userDesc varchar(255),
-  userAssign_id int(6) NOT NULL
-  );
->>>>>>> 0cfd94c1db0cdd70ace70e1d5ae67a52fba450b6
