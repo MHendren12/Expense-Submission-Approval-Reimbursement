@@ -81,7 +81,7 @@ include("Navbar/header.php");
 											<br>
 											<input id="password" class="form-control" name="Password" placeholder="Password" required="" style="width: 70%" type="password">
 											<br>
-											<input id="confirmpassword" class="form-control" name="confirmpassword" placeholder="Confirm Password" required="" style="width: 70%" type="password">
+											
 											<br>
 											<h4>
 											<div id="strength" class="figure">

@@ -23,13 +23,13 @@
 	 $check = mysqli_query($conn, $sql);
 	 $num_rows = mysqli_num_rows($check);
 	 
-	 if ($pass != $pass2){
+	 /*if ($pass != $pass2){
 	     header("../index.php");
 	     die();
 	 }
 	 else{
 	     header("../home.php");
-	 }
+	 }*/
 
 	 if ($num_rows == 0) 
      {
