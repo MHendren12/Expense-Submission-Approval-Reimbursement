@@ -64,6 +64,78 @@
 												</div>												
 											</div>
 										</td>
+<<<<<<< HEAD
+=======
+								</table>
+								<form action="Account/register.php" method="post" >
+									<table class="two">
+										<td align="center">
+											<div class="row">
+												<h1>Register</h1><hr>
+												<div class="col-md-6" align="right">
+													<input class="form-control" name="FName" placeholder="First Name" required="" style="width: 68%" type="text">													
+												</div>
+												<div class="col-md-6" align="left">
+													<input class="form-control" name="LName" placeholder="Last Name" required="" style="width: 68%" type="text">													
+												</div>
+											</div>											
+											<br>
+											<input class="form-control" name="Email" placeholder="Email" required="" style="width: 70%" type="text">
+											<br>
+											<input id="password" class="form-control" name="Password" placeholder="Password" required="" style="width: 70%" type="password">
+											<br>
+											
+											<br>
+											<h4>
+											<div id="strength" class="figure">
+											</div>
+											</h4>
+											<div id="strength_human" class="figure">
+											</div>
+											<div>
+											<h3>Date of Birth: </h3>
+											<select class="btn btn-default" name="DOBMonth" required="">
+											<option>----------------</option>
+											<?php $months = array("January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October","November", "December");
+											$count = 0;
+											foreach($months as $month){
+												echo "<option value='" . $count . "'>" . $month . "</option>";
+												$count++;
+											} ?>
+											</select>
+											<select class="btn btn-default" name="DOBDay" required="">
+											<option>---</option>
+											<?php
+											for($i=1; $i<=31; $i++){
+												echo "<option value='" . $i . "'>" . $i . "</option>";
+											} ?>
+											</select>
+											<select class="btn btn-default" name="DOBYear" required="">
+											<option>------</option>
+											<?php for($i=2017; $i>=1947; $i--){
+												echo "<option value='" . $i . "'>" . $i . "</option>";
+											} ?>
+											</select>
+											<br><br><br>
+											<p>By clicking Create Account, you will agree upon our Terms and our Policy Agreement. 
+											You will recieve an email notification regaurding your account verification and confirmation.</p>
+											<hr>
+                                            <div class="row" align="center" >
+                                                <input id="submit" input type="submit" class="btn btn-success" value="Create Account" name="submit" style="width:300px; height:50px; font-size:20px" />
+                                                
+                                                <script language="JavaScript">
+                                                /*
+                                                    window.onbeforeunload = confirmExit;
+                                                    function confirmExit()
+                                                    {
+                                                        // this shouldn't show if the user has filled out the page and wants to register
+                                                       
+                                                    }
+                                                    */
+                                                </script>
+                                            </div>
+                                        </td>
+>>>>>>> 0cfd94c1db0cdd70ace70e1d5ae67a52fba450b6
 									</table>
 									<form action="Account/register.php" onsubmit="return validateForm()" method="post" >
 										<table class="two">
