@@ -14,10 +14,16 @@ use expense_reimbursement
  
  CREATE TABLE userAssignment (
   userAssign_id int(6) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  
+  userRole_id int(6) UNSIGNED NOT NULL,
+  user_id int(6) UNSIGNED NOT NULL
   );
   
  CREATE TABLE userRole (
   userRole_id int(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  
+  userRole_Name  varchar(20) NOT NULL,
+  userRole_Desc varchar(200) 
   );
+  
+  Insert into userRole (userRole_Name, userRole_Desc) values ('Administrator','Default role for Administrator');
+  Insert into userRole (userRole_Name, userRole_Desc) values ('Approver','Default role for Approver');
+  Insert into userRole (userRole_Name, userRole_Desc) values ('Submitter','Default role for Submitter');

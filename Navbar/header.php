@@ -66,7 +66,7 @@
                                 <tr>
                                     <td></td>
                                     <td style="padding-top: 5px;">
-                                        <a href="" >Forgot Password?</a>
+                                        <a href="../retrievepassword.php" >Forgot Password?</a>
                                     </td>
                                 </tr>
                             </table>

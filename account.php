@@ -123,7 +123,6 @@
                 }
                 else
                 {
-                    
                     $("#changePasswordNewPassword").css("display", "");
                     $("#incorrectPassword").css("display","none");
                     $("#changePassword").css("display", "none");
@@ -134,9 +133,6 @@
     
     function validateForm()
     {
-        var thth = $("#password").val();
-        debugger;
-        
         //no errors
         if ( $("#passwordsNotEqual").css("display") == "none" && $("#incorrectPassword").css("display") == "none" )
         {
