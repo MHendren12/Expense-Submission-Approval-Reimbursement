@@ -8,7 +8,7 @@ use expense_reimbursement
   user_lname varchar(20) NOT NULL,
   user_email varchar(30) NOT NULL,
   user_pass varchar(64) NOT NULL,
-  user_activated int NOT NULL,
+  user_activated int(1) NOT NULL,
   salt varchar(64),
   user_dob date,
   is_admin int(1)

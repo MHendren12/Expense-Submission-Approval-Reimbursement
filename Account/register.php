@@ -41,7 +41,7 @@
          }
          else
          {
-             header("Location: ../home.php");
+             header("Location: ../sendEmail.php");
              die();
          }
      }
