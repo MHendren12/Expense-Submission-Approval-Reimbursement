@@ -91,7 +91,7 @@ if($user['user_activated'] == 0 && $user['user_activated'] != null){
                                 
                             </div>
                             <div class=\"col-lg-2\" align = \"center\">
-                              <form action=\"logout.php\" method=\"post\">
+                              <form action=\"../index.php\" method=\"post\">
                                    <input id=\"submit\" input type=\"submit\" class=\"btn btn-info\" value=\"OK\" name=\"submit\" style=\"width:100px; height:50px; font-size:20px\"/>
                               </form>                              
                             </div>

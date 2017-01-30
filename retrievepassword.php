@@ -92,13 +92,7 @@
                                                     <br>
                                                         <?php
                                                         session_start();
-            
-                                                        error_reporting(E_ERROR | E_PARSE);
                                                         
-                                                        include("Database/config.php");
-                                                        include("../Database/config.php");
-                                            
-                                                        $conn = getConnection();
                                                         $sql = "select * from user where user_email = '".$email."'";
                                                         $result = mysqli_query($conn,$sql);
                                                         $row=$result->fetch_object();
