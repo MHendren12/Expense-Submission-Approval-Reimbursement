@@ -1,8 +1,7 @@
 <?php
     session_start();
 	$id = $_SESSION['userid'];
-    include("Database/config.php");		 
-    $conn = getConnection();
+
     
 ?>
 <!DOCTYPE html>
@@ -21,7 +20,7 @@
         <?php
 		    include("Navbar/header.php");	
 	    ?>
-        <div class="container" align = "center" style="padding: 100px 0px 0px 0px">
+        <div class="container" id="listAllRoles" align="center" style="padding: 100px 0px 0px 0px">
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
@@ -37,7 +36,6 @@
                                                 Role Description
                                             </td>
                                             <td style="width:10%">
-                                                Edit Role
                                             </td>
                                         </tr>
                                         <?php
@@ -68,6 +66,52 @@
                                         }
                                     ?>
                                     </table>
+                                    <hr>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-default" onclick="addNewRole()" id="addNewRole" >Add New Role</a>
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="AddRole" align = "center" style="padding: 100px 0px 0px 0px; display:none;">
+            <div class="row">
+                <div class="well panel panel-default" >
+                    <div class="panel-body">
+                        <div class="row" align ="left">
+                            <div >
+                                <div class="container" align="left">
+                                    <table>
+                                        <tr>
+                                            <td style="width:20%;">
+                                                Role Name:
+                                            </td>
+                                            <td style="width:80%;">
+                                                <input class="form-control" name="roleName" placeholder="Name of Role" required type="text">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Role Description:
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="roleDesc" placeholder="Description of Role" type="text">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <hr>
+                                    <a href="" class="btn btn-default" onclick="addNewRole()" id="submit" >Add Role</a>
+                                    <a class="btn btn-default" onclick="cancelNewRole()" id="addNewRole" >Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -76,4 +120,16 @@
             </div>
         </div>
     </body>
+    <script>
+        function addNewRole()
+        {
+            $("#listAllRoles").css("display", "none");
+            $("#AddRole").css("display", "");
+        }
+        function cancelNewRole()
+        {
+            $("#listAllRoles").css("display", "");
+            $("#AddRole").css("display", "none");
+        }
+    </script>
 </html>

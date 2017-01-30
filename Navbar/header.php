@@ -1,8 +1,20 @@
 <?php
+    if (!$conn)
+    {
+        include("Database/config.php");		 
+        $conn = getConnection();
+    }
     $logged_in = false;
     if(isset($_SESSION['is_logged_in']))
     {
+        $user_id = $_SESSION['userid'];
         $logged_in = true;
+        $sql = "SELECT * FROM user WHERE user_id= '".$user_id."'";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result))
+        {     
+            $is_admin = $row['is_admin'];
+        }
     }
 ?>
 <style type="text/css">
@@ -90,7 +102,16 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li><a href="account.php">My Account</a></li>
+                                            <?php
+                                                if ($is_admin)
+                                                {
+                                            ?>
+                                            <li><a href="userroles.php">User Roles</a></li>
+                                            <?php
+                                                }
+                                            ?>
                                             <li><a href="Account/logout.php">Logout</a></li>
+                                            
                                         </ul>
                                     </div>
                                 </li>
