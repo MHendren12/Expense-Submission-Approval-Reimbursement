@@ -9,8 +9,14 @@ include("../Database/config.php");
 
 $conn = getConnection();
 $id = $_SESSION['userid'];
-$sql = "select * from user where user_id = '".$id."'";
-$result = mysqli_query($conn,$sql);
+$email = $_GET['id'];
+if($email != null){
+    $sql = "select * from user where user_email = '".$email."'";
+    $result = mysqli_query($conn,$sql);
+} else{
+    $sql = "select * from user where user_id = '".$id."'";
+    $result = mysqli_query($conn,$sql);
+}
 $row=$result->fetch_object();
 
 $user['user_email'] = $row->user_email;
@@ -20,6 +26,8 @@ $user['user_activated'] = $row->user_activated;
 $user['user_fname'] = $row->user_fname;
 $user['user_lname'] = $row->user_lname;
 
+
+
 $name = $user['user_fname'] . " " . $user['user_lname'];
 $domain = $_SERVER['HTTP_HOST'];
 $current_id = $user['user_pass'] . $user['salt'];
@@ -27,7 +35,7 @@ $initial_id = $user['salt'] . $user['user_pass'];
 $account_link_id = "/Account/activate.php?id=";
 
 
-if($user['user_activated'] == 0 && $user['user_activated'] != null){
+if($user['user_activated'] == 0 ){
   //Used when user creates a new account.
   shell_exec("curl -s \
     -X POST \

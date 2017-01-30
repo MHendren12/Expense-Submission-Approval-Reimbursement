@@ -7,6 +7,7 @@
 	 $email  = $_POST['Email'];
 	 $pass  = $_POST['Password'];
 	 $pass2 = $_POST['ConfirmPassword'];
+	 $user_activated = 0;
      $salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
      $saltedPW =  $pass . $salt;
      $hashedPW = hash('sha256', $saltedPW);
@@ -30,10 +31,9 @@
 	 else{
 	     header("../home.php");
 	 }*/
-
 	 if ($num_rows == 0) 
      {
-         $query = 'insert into user (user_fname, user_lname, user_email, user_pass, salt, user_dob) values ("'.$fname.'", "'.$lname.'", "'.$email.'", "'.$hashedPW.'","'.$salt.'","'.$dob.'" )';
+         $query = 'insert into user (user_fname, user_lname, user_email, user_pass, salt, user_dob, user_activated) values ("'.$fname.'", "'.$lname.'", "'.$email.'", "'.$hashedPW.'","'.$salt.'","'.$dob.'", "'.$user_activated.'")';
          $insert = mysqli_query($conn, $query);
          if(!$insert)
          {
@@ -41,8 +41,7 @@
          }
          else
          {
-             header("Location: ../sendEmail.php");
-             die();
+             header("Location: sendEmail.php?id=". $email);
          }
      }
 ?>

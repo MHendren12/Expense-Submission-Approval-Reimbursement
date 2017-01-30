@@ -66,7 +66,7 @@
 										</td>
 
 									</table>
-									<form action="Account/register.php" onsubmit="return validateForm()" method="post" >
+									<form action="Account/register.php" method="post" >
 										<table class="two">
 											<td align="center">
 												<div class="row">
