@@ -1,2 +1,0 @@
-<?php ?>
-Confirm Email.

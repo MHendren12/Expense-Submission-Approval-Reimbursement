@@ -14,7 +14,18 @@ session_start();
         $email  = $_POST['email'];
         $dob  = $_POST['dob'];
         $pass  = $_POST['newPassword'];
-        
+        if($_GET['id'] != null){
+    	    $id = $_GET['id'];
+    	    $sql = "select * from user where user_pass = '".$id."'";
+            $result = mysqli_query($conn,$sql);
+            $row=$result->fetch_object();
+
+            $user['user_fname'] = $row->user_fname;
+            $user['user_lname'] = $row->user_lname;
+            
+            $fname = $user['user_fname'];
+            $lname = $user['user_lname'];
+	    }
         if ($pass)
         {
              $salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
@@ -31,8 +42,12 @@ session_start();
             $res = mysqli_query($conn, $sql)
                 or die(mysqli_error($conn));
         }
-            
-        header("Location: ../account.php");
+        if($_GET['id'] != null){
+            header("Location: ../index.php");
+        } else{
+            header("Location: ../account.php");
+        }   
+        
     }
         
 ?>
