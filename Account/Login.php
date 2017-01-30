@@ -75,9 +75,7 @@
         }
         else 
         {
-            //header("Location: ../index.php");
-            echo $num_rows;
-            echo $user_activated;
+            header("Location: ../index.php");
         } 
 	}
 ?>	

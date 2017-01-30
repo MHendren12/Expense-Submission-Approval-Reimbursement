@@ -55,7 +55,7 @@ if($current_id == $link_id) {
                                 </p>
                                 <form action="editinfo.php?id=<?php echo $id ?> " onsubmit="return validateForm()" method="post">
                                     <div id = "changePasswordNewPassword">
-										<input id="newPassword" class="form-control" name="Password" placeholder="Password" required style="width: 70%" type="password">
+										<input id="newPassword" class="form-control" name="newPassword" placeholder="Password" required style="width: 70%" type="password">
 										<br>
 										<input id="confirmpassword" onchange="verifyPasswords();" class="form-control" name="confirmpassword" placeholder="Confirm Password" required style="width: 70%" type="password">
 										<br>
