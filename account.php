@@ -1,8 +1,6 @@
 <?php
     session_start();
 	$id = $_SESSION['userid'];
-    include("Database/config.php");		 
-    $conn = getConnection();
     
 ?>
 <!DOCTYPE html>
