@@ -16,7 +16,7 @@ session_start();
         $pass  = $_POST['newPassword'];
         if($_GET['id'] != null){
     	    $id = $_GET['id'];
-    	    $sql = "select * from user where user_pass = '".$id."'";
+    	    $sql = "select * from user where user_id = '".$id."'";
             $result = mysqli_query($conn,$sql);
             $row=$result->fetch_object();
 

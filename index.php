@@ -127,7 +127,7 @@
 												You will recieve an email notification regarding your account verification and confirmation.</p>
 												<hr>
 	                                            <div class="row" align="center" >
-	                                                <input id="submit" input type="submit" class="btn btn-success" value="Create Account" name="submit" style="width:300px; height:50px; font-size:20px" />
+	                                                <input id="submit" type="submit" class="btn btn-success" value="Create Account" name="submit" style="width:300px; height:50px; font-size:20px" />
 	                                                
 	                                                <script language="JavaScript">
 	                                                    window.onbeforeunload = confirmExit;

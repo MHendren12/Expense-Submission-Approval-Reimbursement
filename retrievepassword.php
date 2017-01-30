@@ -132,7 +132,7 @@
                                                         ?>
                                                 <div class="container" style="padding:15px 0px 0px 0px" align="center">
                                                     <input class="btn btn-default" type="submit" id="submit" value="Submit" name="submit" />
-                                                    <a class="btn btn-default" href="index.php" role="button">Cancel &raquo;</a>
+                                                    <a class="btn btn-default" href="index.php" role="button">Cancel</a>
                                                 </div>
                                             </div>
                                         </form>

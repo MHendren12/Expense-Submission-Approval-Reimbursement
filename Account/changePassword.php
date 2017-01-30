@@ -53,7 +53,7 @@ if($current_id == $link_id) {
                                     We have recieved a password change request from <?php echo $user['user_email'] ?>.
                                      To proceed type a new password in both fields then click the Submit button.
                                 </p>
-                                <form action="editinfo.php?id=<?php echo $user['user_id'] ?> " onsubmit="return validateForm()" method="post">
+                                <form action="editinfo.php?id=<?php echo $id ?> " onchange="return validateForm()" method="post">
                                     <div id = "changePasswordNewPassword">
                                         <h2>New Password</h2>
                                         <input type="password" placeholder="New Password" class="form-control" id="password" name="newPassword" style="width:65%">
