@@ -16,7 +16,7 @@
     </head>
     <body>
         <?php
-            include("Navbar/header.php");	
+            include("Navbar/header.php");
         ?>
         <div class="container" align = "center">
             <hr>

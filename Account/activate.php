@@ -2,23 +2,31 @@
 
 session_start();
 include("../Database/config.php");
+
 $conn = getConnection();
+$link_id = strval($_GET['id']);
 $id = $_SESSION['userid'];
-$sql = "select user_email, user_pass, salt, user_activated from user where user_id = '".$id."'";
-$result = mysqli_query($conn,$sql);
+    
+    if($link_id != null && $id == null){
+        $sql = "select * from user where salt = '".$link_id."'";
+        $result = mysqli_query($conn,$sql);
+    }else{
+        $sql = "select * from user where user_id = '".$id."'";
+        $result = mysqli_query($conn,$sql);
+    }
 $row=$result->fetch_object();
 
+$user['user_id'] = $row->user_id;
 $user['user_email'] = $row->user_email;
 $user['user_pass'] = $row->user_pass;
 $user['salt'] = $row->salt;
 $user['user_activated'] = $row->user_activated;
 
-$link_id = strval($_GET['id']);
-$current_id = strval($user['user_pass'] . $user['salt']);
+$current_id = strval($user['salt']);
 
 //current_id is the curent user session pass combined with salt from the user database table
 if($current_id == $link_id) {
-    $sql = 'update user set user_activated = 1 where user_id=' .$id;
+    $sql = 'update user set user_activated = 1 where user_id=' .$user['user_id'];
     mysqli_query($conn,$sql) or die(mysql_error());
 }
 ?>
@@ -64,7 +72,7 @@ if($current_id == $link_id) {
                                 
                             </div>
                             <div class="col-lg-2" align = "center">
-                              <form action="../index.php" method="post">
+                              <form action="../index.php?redirect=1" method="post">
                                    <input id="submit" input type="submit" class="btn btn-info" value="OK" name="submit" style="width:100px; height:50px; font-size:20px"/>
                               </form>                              
                             </div>

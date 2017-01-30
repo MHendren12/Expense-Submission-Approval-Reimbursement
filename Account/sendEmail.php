@@ -30,12 +30,11 @@ $user['user_lname'] = $row->user_lname;
 
 $name = $user['user_fname'] . " " . $user['user_lname'];
 $domain = $_SERVER['HTTP_HOST'];
-$current_id = $user['user_pass'] . $user['salt'];
-$initial_id = $user['salt'] . $user['user_pass'];
+$current_id = $user['salt'];
 $account_link_id = "/Account/activate.php?id=";
 
 
-if($user['user_activated'] == 0 ){
+if($user['user_activated'] == 0){
   //Used when user creates a new account.
   shell_exec("curl -s \
     -X POST \

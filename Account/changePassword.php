@@ -53,14 +53,15 @@ if($current_id == $link_id) {
                                     We have recieved a password change request from <?php echo $user['user_email'] ?>.
                                      To proceed type a new password in both fields then click the Submit button.
                                 </p>
-                                <form action="editinfo.php?id=<?php echo $id ?> " onchange="return validateForm()" method="post">
+                                <form action="editinfo.php?id=<?php echo $id ?> " onsubmit="return validateForm()" method="post">
                                     <div id = "changePasswordNewPassword">
-                                        <h2>New Password</h2>
-                                        <input type="password" placeholder="New Password" class="form-control" id="password" name="newPassword" style="width:65%">
-                                        <div class="figure" id="strength" style="font-weight:bold;"></div>
-                                        <h2>Confirm Password</h2>
-                                        <input type="password" placeholder="Confirm Password" class="form-control" id="confirmPassword" name="confirmPassword" style="width:65%">
-                                        <div id="passwordsNotEqual" style="display:none;"><span style="color:red;font-weight:bold;">The Password do not match</span></div>
+										<input id="newPassword" class="form-control" name="Password" placeholder="Password" required style="width: 70%" type="password">
+										<br>
+										<input id="confirmpassword" onchange="verifyPasswords();" class="form-control" name="confirmpassword" placeholder="Confirm Password" required style="width: 70%" type="password">
+										<br>
+										<div id="passNotEqual" style="display:none;width:70%;" align="left">
+											<span style="color:red;font-weight:bold;">The Passwords do not match!</span>
+										</div>
                                     </div>
                             </div>
                             <div class="col-lg-4 ">
@@ -85,33 +86,36 @@ if($current_id == $link_id) {
     </body>
 </html>
 <script>
+
+		function verifyPasswords()
+		{
+			
+			debugger;
+			var pass = $("#newPassword").val();
+			var pass2 =  $("#confirmpassword").val();
+			if (pass == pass2)
+			{
+				$("#passNotEqual").css("display","none");
+				return true;
+			}
+			else
+			{
+				$("#passNotEqual").css("display","");
+				return false;
+			}
+		}
+		
+		function validateForm()
+		{
+			var passMatch = $("#passNotEqual").css("display") == "none";
+			if ($("#passNotEqual").css("display") == "none" )
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
     
-    function validateForm()
-    {
-        //no errors
-        if ( $("#passwordsNotEqual").css("display") == "none")
-        {
-            //Blank new password 
-            if( $("#changePasswordNewPassword").css("display") != "none" &&  ( $("#password").val() == "" || $("#confirmPassword").val() == "" ) )
-            {
-                alert("Please enter your new password.");
-                return false;
-            }
-            //no issues
-            else
-            {
-                return true;
-            }
-            
-            
-        }
-        else
-        {
-            alert("Your password and confirmation do not match");
-            return false;
-        }
-        
-    }
-    
-   
 </script>

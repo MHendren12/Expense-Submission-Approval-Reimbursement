@@ -10,7 +10,7 @@
     
         $email  = $_POST['Email'];
         $pass  = $_POST['Password'];
-        $saltQuery = "select salt, user_activated from user where user_email = '".$email."' ";
+        $saltQuery = "select * from user where user_email = '".$email."' ";
         $result = mysqli_query($conn, $saltQuery);
         $row = mysqli_fetch_assoc($result);
         $salt = $row['salt'];
@@ -75,7 +75,9 @@
         }
         else 
         {
-            header("Location: ../index.php");
+            //header("Location: ../index.php");
+            echo $num_rows;
+            echo $user_activated;
         } 
 	}
 ?>	

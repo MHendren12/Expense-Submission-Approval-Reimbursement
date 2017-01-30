@@ -17,6 +17,9 @@
 	
 	<?php
 		include("Navbar/header.php");
+		if($_GET['redirect'] == 1){
+			header("Location: Account/logout.php");
+		}
 	?>
 	<div class="container">
 		<div class="row">
@@ -66,7 +69,7 @@
 										</td>
 
 									</table>
-									<form action="Account/register.php" method="post" >
+									<form action="Account/register.php" onsubmit="return validateForm()" method="post" >
 										<table class="two">
 											<td align="center">
 												<div class="row">
@@ -86,7 +89,7 @@
 												<input id="confirmpassword" onchange="verifyPasswords();" class="form-control" name="confirmpassword" placeholder="Confirm Password" required style="width: 70%" type="password">
 												<br>
 												<div id="passNotEqual" style="display:none;width:70%;" align="left">
-													<span style="color:red;font-weight:bold;">The Passwords do not match</span>
+													<span style="color:red;font-weight:bold;">The Passwords do not match!</span>
 												</div>
 												<h4>
 													<div id="strength" class="figure"></div>
@@ -182,11 +185,8 @@
 		
 		function validateForm()
 		{
-			var setDay = $("#DOBDay") == "- Day -";
-			var setMonth = $("#DOBMonth") == "- Month -";
-			var SetYear = $("#DOBYear") == "- Year -";
 			var passMatch = $("#passNotEqual").css("display") == "none";
-			if ( setDay && setMonth && SetYear && passMatch )
+			if ($("#passNotEqual").css("display") == "none" )
 			{
 				return true;
 			}

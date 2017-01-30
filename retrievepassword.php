@@ -26,12 +26,12 @@
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
               
               if (empty($_POST["email"])) {
-                $emailErr = "*Email is required";
+                    $emailErr = "*Email is required!";
               } 
               else {
                 $email = test_input($_POST["email"]);
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                  $emailErr = "*Invalid email format";
+                    $emailErr = "*Invalid email format!";
                 }
                 else{
                 $success = "<div id=\"resetPassword\" >
@@ -154,4 +154,3 @@
         }
     </script>
 </html>
-
