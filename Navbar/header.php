@@ -47,12 +47,12 @@
                                 if(isset($_SESSION['is_logged_in']))
                                 {
                             ?>
-                           <a href="../home.php" style="font-weight:bold"><h1>RASE</h1></a>
+                           <a href="../home.php" style="font-weight:bold"><img alt="" class="img" src="images/logo.png" height="50px"></a>
                             <?php
                                 }
                                 else {
                             ?>
-                            <a href="../index.php"style="font-weight:bold"><h2>RASE</h2></a>
+                            <a href="../index.php"style="font-weight:bold"><img alt="" class="img" src="images/logo.png" height="50px"></a>
                             <?php
                                 }
                             ?>

@@ -37,7 +37,7 @@
                 $success = "<div id=\"resetPassword\" >
                     <div class=\"row\">
                         <div class=\"col-lg-6 \">
-                             <h1>Password Reset Request!</h1><br>                                                                
+                             <h1>Password Reset Sent!</h1><br>                                                                
                         </div>
                         <div class=\"col-lg-6 \">
                            

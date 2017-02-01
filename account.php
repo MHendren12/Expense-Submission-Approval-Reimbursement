@@ -50,6 +50,17 @@
                                             <?php echo '<input type="text" placeholder="Email" class="form-control" value="'.$email.'" name="email" style="width:65%">';?>
                                             <h2>Date Of Birth</h2>
                                             <?php echo '<input type="date" placeholder="Date Of Birth" class="form-control" value="'.$dob.'" name="dob" style="width:65%">';?>
+                                            <h2>User Role</h2>
+                                            <?php $sql = "SELECT * FROM user WHERE user_id= '".$id."'";
+                                                    $result = mysqli_query($conn, $sql); 
+                                                    $row=$result->fetch_object();
+                                                    $user['is_admin'] = $row->is_admin;
+                                                    if($user['is_admin'] == 1){
+                                                        echo "<h4>Administrator</h4>";
+                                                    } else{
+                                                        echo "<h4>Normal User</h4>";
+                                                    }
+                                                    ?>
                                             <h3><a onclick="displayChangePassword(this)">Change Password</a></h3>
                                             <div id = "changePassword" style="display:none;">
                                                 <h2>Current Password</h2>

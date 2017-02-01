@@ -1,7 +1,7 @@
 
 
 <?php
-  include_once "config.php";
+  include_once "Database/config.php";
 ?>
 
 <?php
@@ -11,7 +11,7 @@
    // $user = mysqli_real_escape_string($db, $_POST['user']);
     //$target_dir = "upload/";
     $file_upload = $_FILES["file_upload"]["name"];
-    $image = addslashes(file_get_contents($_FILES["file_upload"]["name"]));
+    //$image = addslashes(file_get_contents($_FILES["file_upload"]["name"]));
     
     $explain_expense = mysqli_real_escape_string($db, $_POST['explain_expense']);
     $expense_id = mysqli_real_escape_string($db, $_POST['expense_id']);
