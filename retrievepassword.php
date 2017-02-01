@@ -5,12 +5,6 @@
 <html>
 
     <head>
-    <title>Expense Reimbursement</title>
-    <!-- Styles -->
-    <link href="/Styles/css/bootstrap.css" rel="stylesheet">
-    <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="/Scripts/bootstrap.min.js"></script>
     <style>
     .error {color: #FF0000; font-size: 20px;}
     </style>
@@ -19,6 +13,11 @@
     <body>
     
         <?php
+            include("Database/config.php");
+            $conn = getConnection();
+            $sql = "select * from user where user_email = '".$_POST["email"]."'";
+            $result = mysqli_query($conn,$sql);
+            $num_rows = mysqli_num_rows($result);
             include("Navbar/header.php");
             $emailErr = "";
             $email = "";
@@ -32,6 +31,8 @@
                 $email = test_input($_POST["email"]);
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $emailErr = "*Invalid email format!";
+                } else if ($num_rows == 0) {
+                     $emailErr = "*Email does not exists!";
                 }
                 else{
                 $success = "<div id=\"resetPassword\" >
