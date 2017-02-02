@@ -42,7 +42,7 @@
                         </button>
                     </div>
                 <div id="navbar" class="navbar-collapse collapse" style="float:none">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                             <?php
                                 if(isset($_SESSION['is_logged_in']))
                                 {
@@ -61,7 +61,7 @@
                         if(!isset($_SESSION['is_logged_in']))
                         {
                     ?>
-                    <div class="col-lg-8" float="right">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" float="right">
                         <form class="navbar-form navbar-right" action="Account/Login.php" method="post">
                             <table>
                                 <tr >
@@ -89,14 +89,14 @@
                         else
                         {
                     ?>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                         <div class="row">
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" style="color:white; padding:24px;">Hello <?php echo $_SESSION['name']; ?>!</li>
+                                <li role="presentation" style="color:white; top:15px;">Hello <?php echo $_SESSION['name']; ?>!</li>
                                 <li role="presentation">
-                                    <div class="dropdown" style="padding:24px">
+                                    <div class="dropdown" style="top:15px;left:10px">
                                         <a data-toggle="dropdown">
                                             <span class="glyphicon glyphicon-triangle-bottom"></span>
                                         </a>

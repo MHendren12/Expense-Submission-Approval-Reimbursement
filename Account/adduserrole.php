@@ -19,7 +19,7 @@
         }
         else
         {
-            //header("Location: ../configureroles.php?roleid=".$role_id);
+            header("Location: ../configureroles.php?roleid=".$role_id);
         }
     }
 ?>

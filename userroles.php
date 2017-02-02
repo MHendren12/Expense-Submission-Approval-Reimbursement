@@ -91,27 +91,29 @@
                         <div class="row" align ="left">
                             <div >
                                 <div class="container" align="left">
-                                    <table>
-                                        <tr>
-                                            <td style="width:20%;">
-                                                Role Name:
-                                            </td>
-                                            <td style="width:80%;">
-                                                <input class="form-control" name="roleName" placeholder="Name of Role" required type="text">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Role Description:
-                                            </td>
-                                            <td>
-                                                <input class="form-control" name="roleDesc" placeholder="Description of Role" type="text">
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <hr>
-                                    <a href="" class="btn btn-default" onclick="addNewRole()" id="submit" >Add Role</a>
-                                    <a class="btn btn-default" onclick="cancelNewRole()" id="addNewRole" >Cancel</a>
+                                    <form action="Account/addrole.php" method="post">
+                                        <table>
+                                            <tr>
+                                                <td style="width:20%;">
+                                                    Role Name:
+                                                </td>
+                                                <td style="width:80%;">
+                                                    <input class="form-control" name="roleName" placeholder="Name of Role" required type="text">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Role Description:
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" name="roleDesc" placeholder="Description of Role" type="text">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <hr>
+                                       <input id="submit" input type="submit" class="btn btn-success" value="Add User" name="submit" />
+                                        <a class="btn btn-default" onclick="cancelNewRole()" id="addNewRole" >Cancel</a>
+                                    </form>
                                 </div>
                             </div>
                         </div>
