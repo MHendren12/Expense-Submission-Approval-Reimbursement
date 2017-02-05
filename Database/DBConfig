@@ -29,3 +29,11 @@ use expense_reimbursement
   Insert into userRole (userRole_Name, userRole_Desc) values ('Administrator','Default role for Administrator');
   Insert into userRole (userRole_Name, userRole_Desc) values ('Approver','Default role for Approver');
   Insert into userRole (userRole_Name, userRole_Desc) values ('Submitter','Default role for Submitter');
+  
+  CREATE TABLE expense_reports(
+  explain_expense varchar(1000),
+  expense_id varchar(20),
+  number text,
+  date text,
+  file_upload blob
+  );

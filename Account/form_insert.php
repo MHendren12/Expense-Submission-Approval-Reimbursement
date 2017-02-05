@@ -11,9 +11,9 @@
     $expense_id = mysqli_real_escape_string($db, $_POST['expense_id']);
     $number = mysqli_real_escape_string($db, $_POST['number']);
     $rawdata = mysqli_real_escape_string($db, $_POST['date']);
-    $date = date('m-d-Y', strtotime($rawdate));
+    $date = date('m-d-Y', strtotime($rawdata));
     
-    $sql = "INSERT INTO reports(expense_id, number, date, explain_expense, file_upload) 
+    $sql = "INSERT INTO expense_reports(expense_id, number, date, explain_expense, file_upload) 
             VALUES ('$expense_id', '$number', '$date', '$explain_expense', '$file_upload')";
     if(mysqli_query($db, $sql)){
         echo "Records reported";
@@ -26,6 +26,7 @@
     echo $number;
     echo "<br>";
     echo $date;
+    echo $rawdata;
     echo "<br>";
     echo $explain_expense;
     echo "<br>";
