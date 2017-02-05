@@ -3,7 +3,7 @@
         <title>Email Sent</title>
         <!-- Styles -->
         <link href="/Styles/css/bootstrap.css" rel="stylesheet">
-        
+        <link href="/Styles/css/customStyles.css" rel="stylesheet">
         <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="/Scripts/bootstrap.min.js"></script>
@@ -11,7 +11,7 @@
         
     </head>
     <body>
-        <div class="container" align = "left">
+        <div class="container contentContainer" align = "left">
             <div class="row">
               <h1>RASE Account Activation Complete!</h1>
             </div>

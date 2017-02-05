@@ -12,6 +12,9 @@
             case comparePasswords:
                 return comparePasswords($_GET['pass'], $id, $conn);
                 break;
+            case compareEmails:
+                return compareEmails($_GET['email'], $conn);
+                break;
             default:
                 break;
         }
@@ -33,13 +36,26 @@
     		$sql = "select * from user where user_pass='".$hashedPW."' and user_id='".$uid."'";
     		$result = mysqli_query($conn, $sql);
     		$num_rows = mysqli_num_rows($result);
-    		echo $num_rows;
     		if ($num_rows >= 1)
     		    echo true;
     		else
     		    echo false;
 		}
 
+    }
+    function compareEmails($email, $conn)
+    {
+        $sql = "select * from user where user_email = '".$email."'";
+		$result = mysqli_query($conn, $sql);
+		$num_rows = mysqli_num_rows($result);
+		if ($num_rows == 1)
+		{
+		    echo true;
+    		
+		}
+        else {
+            echo false;
+        }
     }
     
 ?>

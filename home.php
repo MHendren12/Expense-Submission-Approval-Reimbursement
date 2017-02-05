@@ -7,7 +7,7 @@
         <title>Expense Reimbursement</title>
         <!-- Styles -->
         <link href="/Styles/css/bootstrap.css" rel="stylesheet">
-        
+        <link href="/Styles/css/customStyles.css" rel="stylesheet">
         <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="/Scripts/bootstrap.min.js"></script>
@@ -21,18 +21,17 @@
                 header("Location: index.php");
             }
         ?>
-        <div class="container" align = "center">
-            <hr>
+        <div class="container loggedInContainer" align = "center">
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
                         <div class="row" ><br><br>
                             <ul class="nav nav-tabs nav-justified">
-                              <li class="active"><a data-toggle="tab" href="#home"><h4>HOME</h4></a></li>
-                              <li><a data-toggle="tab" href="#myform"><h4>MY FORM</h4></a></li>
-                              <li><a data-toggle="tab" href="#myactivity"><h4>MY ACTIVITY</h4></a></li>
-                              <li><a data-toggle="tab" href="#aboutus"><h4>ABOUT US</h4></a></li>
-                              <li><a data-toggle="tab" href="#contactus"><h4>CONTACT US</h4></a></li>                              
+                              <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
+                              <li><a data-toggle="tab" href="#myform"><h4>My forms</h4></a></li>
+                              <li><a data-toggle="tab" href="#myactivity"><h4>My activity</h4></a></li>
+                              <li><a data-toggle="tab" href="#aboutus"><h4>About us</h4></a></li>
+                              <li><a data-toggle="tab" href="#contactus"><h4>Contact us</h4></a></li>                              
                             </ul>
                             <br><br>
                             <div class="row">
@@ -73,7 +72,7 @@
             </div>
         </div>
         <div align="center">
-            <label>© Copyright 2017, RASE Corp. English(US). All Right Reserved.</label>
+            <label>&#169; Copyright 2017, RASE Corp. English(US). All Right Reserved.</label>
         </div>
     </body>
 </html>
