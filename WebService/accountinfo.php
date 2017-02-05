@@ -1,7 +1,7 @@
 <?php
 
     session_start();
-    include("../Database/config.php");
+    include("Database/config.php");
     $conn = getConnection();
     $id = $_SESSION['userid'];
     
@@ -15,6 +15,8 @@
             case compareEmails:
                 return compareEmails($_GET['email'], $conn);
                 break;
+            case isadmin:
+                return isadmin($_GET['user_id'], $conn);
             default:
                 break;
         }
@@ -57,5 +59,23 @@
             echo false;
         }
     }
+    function isadmin($user_id, $conn)
+    {
+        $sql = "SELECT is_admin FROM user WHERE user_id= '".$user_id."'";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result))
+        {     
+            $admin = $row['is_admin'];
+        }
+        $sql = "SELECT * FROM userAssignment WHERE userRole_id = (select userRole_id from userRole where userRole_Name ='Administrator' ) and user_id = '".$user_id."'";
+        $result = mysqli_query($conn, $sql);
+        $num_rows = mysqli_num_rows($result);
+        
+        $isAdmin = ( $num_rows == 1 || $admin ) == true ? true : false;
+        return $isAdmin;
+        
+    }
+    
+    
     
 ?>

@@ -144,6 +144,7 @@
                                                 echo "<option value=".$id.">".$fullName."</option>";  
                                             }
                                         ?>    
+                                    </select>
                                     <input id="submit" input type="submit" class="btn btn-success" value="Add User" name="submit" />
                                 </div>
                            </form>

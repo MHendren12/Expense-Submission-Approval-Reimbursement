@@ -1,5 +1,7 @@
 <?php
     session_start();
+    $user_id = $_SESSION['userid'];
+    include("WebService/accountinfo.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,16 +29,27 @@
                     <div class="panel-body">
                         <div class="row" ><br><br>
                             <ul class="nav nav-tabs nav-justified">
-                              <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
-                              <li><a data-toggle="tab" href="#myform"><h4>My forms</h4></a></li>
-                              <li><a data-toggle="tab" href="#myactivity"><h4>My activity</h4></a></li>
-                              <li><a data-toggle="tab" href="#aboutus"><h4>About us</h4></a></li>
-                              <li><a data-toggle="tab" href="#contactus"><h4>Contact us</h4></a></li>                              
+                                <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
+                                <li><a data-toggle="tab" href="#myform"><h4>My forms</h4></a></li>
+                                <li><a data-toggle="tab" href="#myactivity"><h4>My activity</h4></a></li>
+                                <!--
+                                <li><a data-toggle="tab" href="#aboutus"><h4>About us</h4></a></li>
+                                <li><a data-toggle="tab" href="#contactus"><h4>Contact us</h4></a></li>     
+                                -->
+                                <?php
+                                    
+                                    $isadmin = isadmin($user_id, $conn);
+                                    if ($isadmin)
+                                    {
+                                ?>
+                                <li><a data-toggle="tab" href="#routing"><h4>Routing</h4></a></li>
+                                <?php
+                                    }
+                                ?>
                             </ul>
                             <br><br>
                             <div class="row">
                                 <div class="col-lg-1">
-                                    
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="tab-content" align="left">
@@ -59,7 +72,11 @@
                                         <div id="contactus" class="tab-pane fade">
                                             <h2>Contact Us</h2>
                                             <?php include('contactus.php'); ?>
-                                        </div>                                        
+                                        </div>    
+                                        <div id="routing" class="tab-pane fade">
+                                            <h2>Routing</h2>
+                                            <?php include('routing.php'); ?>
+                                        </div>
                                     </div>     
                                 </div>
                                 <div class="col-lg-1">

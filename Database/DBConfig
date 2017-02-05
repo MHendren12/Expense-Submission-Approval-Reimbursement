@@ -29,3 +29,19 @@ use expense_reimbursement
   Insert into userRole (userRole_Name, userRole_Desc) values ('Administrator','Default role for Administrator');
   Insert into userRole (userRole_Name, userRole_Desc) values ('Approver','Default role for Approver');
   Insert into userRole (userRole_Name, userRole_Desc) values ('Submitter','Default role for Submitter');
+
+
+DROP TABLE routingCondition;
+create table routingCondition (
+  routingCondition_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  routingConditionType varchar(25),
+  routingConditionType_id int(10) UNSIGNED
+);
+
+DROP TABLE routing;
+create table routing (
+  routing_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  routingRow_id int(10) UNSIGNED NOT NULL,
+  routingColumn_id int(10) UNSIGNED NOT NULL,
+  routingUser_id int(10) UNSIGNED NOT NULL
+);
