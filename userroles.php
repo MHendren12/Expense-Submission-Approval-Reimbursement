@@ -11,7 +11,7 @@
         
 		<!-- Styles -->
 		<link href="/Styles/css/bootstrap.css" rel="stylesheet">
-		
+		<link href="/Styles/css/customStyles.css" rel="stylesheet">
 		<!-- Scripts -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="/Scripts/bootstrap.min.js"></script>
@@ -20,22 +20,22 @@
         <?php
 		    include("Navbar/header.php");	
 	    ?>
-        <div class="container" id="listAllRoles" align="center" style="padding: 100px 0px 0px 0px">
+        <div class="container loggedInContainer" id="listAllRoles" align="center" >
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
-                        <div class="row" align ="left">
-                            <div >
-                                <div class="container" align="left">
-                                    <table>
+                        <div class="row">
+                            <div>
+                                <div class="container">
+                                    <table style="width:100%"> 
                                         <tr>
                                             <td style="width:20%">
                                                 Role Name
-                                            </td style="width:70%">
+                                            </td style="width:60%">
                                             <td>
                                                 Role Description
                                             </td>
-                                            <td style="width:10%">
+                                            <td style="width:20%">
                                             </td>
                                         </tr>
                                         <?php
@@ -58,7 +58,8 @@
                                                 <?php echo'<span>'.$userRole_Desc.'</span>';?>
                                             </td>
                                             <td>
-                                                <?php echo'<a href="'.$editRoleLink.'">Edit Role</a>'; ?>
+                                                <?php echo'<a href="'.$editRoleLink.'"><span class="glyphicon glyphicon-pencil" title="Edit Role" ></span></a>'; ?>
+                                                <?php echo '<a href="Roles/deleterole.php?roleid='.$userRole_id.'" title="Delete Role" ><span class="glyphicon glyphicon-remove"></span></a>'; ?>
                                             </td>
                                         </tr>
                                     
@@ -84,14 +85,14 @@
                 </div>
             </div>
         </div>
-        <div class="container" id="AddRole" align = "center" style="padding: 100px 0px 0px 0px; display:none;">
+        <div class="container loggedInContainer" id="AddRole" align = "center" style="display:none;">
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
                         <div class="row" align ="left">
                             <div >
                                 <div class="container" align="left">
-                                    <form action="Account/addrole.php" method="post">
+                                    <form action="Roles/addrole.php" method="post">
                                         <table>
                                             <tr>
                                                 <td style="width:20%;">
@@ -111,7 +112,7 @@
                                             </tr>
                                         </table>
                                         <hr>
-                                       <input id="submit" input type="submit" class="btn btn-success" value="Add User" name="submit" />
+                                       <input id="submit" input type="submit" class="btn btn-success" value="Add Role" name="submit" />
                                         <a class="btn btn-default" onclick="cancelNewRole()" id="addNewRole" >Cancel</a>
                                     </form>
                                 </div>

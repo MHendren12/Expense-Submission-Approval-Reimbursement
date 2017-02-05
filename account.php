@@ -9,7 +9,7 @@
         <title>My Account</title>
         <!-- Styles -->
         <link href="/Styles/css/bootstrap.css" rel="stylesheet">
-        
+        <link href="/Styles/css/customStyles.css" rel="stylesheet">
         <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="/Scripts/bootstrap.min.js"></script>
@@ -21,7 +21,7 @@
         <?php
             include("Navbar/header.php");	
         ?>
-        <div class="container" align="center" style="padding-top:30px;">
+        <div class="container loggedInContainer" align="center">
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
@@ -120,12 +120,12 @@
    
     
     $("#oldPassword").bind("change",function(){
-        debugger;
         var password = $("#oldPassword").val();
         jQuery.ajax({
-            url: 'Account/accountinfo.php?val=comparePasswords&pass=" + password,',
+            url: 'WebService/accountinfo.php?val=comparePasswords&pass=' + password,
             data: ({val : 'comparePasswords'},{ pass : $("#oldPassword").val() }),
             success: function(match) {
+                debugger;
                 if (match == 0)
                 {
                     $("#incorrectPassword").css("display","");

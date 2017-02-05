@@ -8,6 +8,7 @@
 		<title>Expense Reimbursement</title>
 		<!-- Styles -->
 		<link href="/Styles/css/bootstrap.css" rel="stylesheet">
+		<link href="/Styles/css/customStyles.css" rel="stylesheet">
 		<!-- Scripts -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="/Scripts/bootstrap.min.js"></script>
@@ -21,14 +22,13 @@
 			header("Location: Account/logout.php");
 		}
 	?>
-	<div class="container">
+	<div class="container contentContainer" >
 		<div class="row">
 			<div class="well panel panel-default">
 				<div class="panel-body">
 					<div id="content" class="site-content">
 						<article id="post-8" class="single-post post-8 page type-page status-publish hentry">
 							<div class="entry-content">
-								<hr>
 								<div align="center">
 									<table class="one">
 										<td>

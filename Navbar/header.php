@@ -15,6 +15,16 @@
         {     
             $is_admin = $row['is_admin'];
         }
+        
+        $sql = "SELECT * FROM userAssignment WHERE userRole_id = (select userRole_id from userRole where userRole_Name ='Administrator' ) and user_id = '".$user_id."'";
+        $result = mysqli_query($conn, $sql);
+        $num_rows = mysqli_num_rows($result);
+        
+        $hasRoleAuthority = ( $num_rows == 1 || $is_admin ) == true ? true : false;
+        
+        
+       
+        
     }
 ?>
 <style type="text/css">
@@ -103,7 +113,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="account.php">My Account</a></li>
                                             <?php
-                                                if ($is_admin)
+                                                if ($hasRoleAuthority)
                                                 {
                                             ?>
                                             <li><a href="userroles.php">User Roles</a></li>

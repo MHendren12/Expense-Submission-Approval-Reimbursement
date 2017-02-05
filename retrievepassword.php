@@ -1,80 +1,27 @@
 <?php
-
+    $emailSent = $_GET['emailsent'];
+    $email = base64_decode($_GET['email']);
 ?>
 <!DOCTYPE html>
 <html>
-
     <head>
-    <style>
-    .error {color: #FF0000; font-size: 20px;}
-    </style>
+        <link href="/Styles/css/bootstrap.css" rel="stylesheet">
+        <link href="/Styles/css/customStyles.css" rel="stylesheet">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="/Scripts/bootstrap.min.js"></script>
+		
+        <style>
+        .error {color: #FF0000; font-size: 20px;}
+        </style>
     </head>
-    
     <body>
-    
-        <?php
-            include("Database/config.php");
-            $conn = getConnection();
-            $sql = "select * from user where user_email = '".$_POST["email"]."'";
-            $result = mysqli_query($conn,$sql);
-            $num_rows = mysqli_num_rows($result);
+        <?php 
             include("Navbar/header.php");
-            $emailErr = "";
-            $email = "";
-            
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-              
-              if (empty($_POST["email"])) {
-                    $emailErr = "*Email is required!";
-              } 
-              else {
-                $email = test_input($_POST["email"]);
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $emailErr = "*Invalid email format!";
-                } else if ($num_rows == 0) {
-                     $emailErr = "*Email does not exists!";
-                }
-                else{
-                $success = "<div id=\"resetPassword\" >
-                    <div class=\"row\">
-                        <div class=\"col-lg-6 \">
-                             <h1>Password Reset Sent!</h1><br>                                                                
-                        </div>
-                        <div class=\"col-lg-6 \">
-                           
-                        </div>                                                             
-                    </div>
-                    <div class=\"row\" align =\"center\">
-                        <div class=\"col-lg-2 \">
-                            <img alt=\"\" class=\"img\" height=\"125\" src=\"../images/key.png\" width=\"125\" style=\"border:4px solid #021a40\">
-                        </div>
-                        <div class=\"col-lg-8\" align = \"left\">
-                            <h4>An email notfication has been sent to the following email:" . $email . "
-                            <p>
-                                Please check your email and follow the email instruction to change you RASE account password.
-                                <br><br>
-                                Didn't recieve any email, <a href=\"retrievepassword.php?\"> reset and try again</a>.
-                            </p>
-                        </div>
-                        <div class=\"col-lg-2 \">
-                            
-                        </div>                            
-                    </div>
-                </div>";
-                }
-
-              }
-                
-            }
-            
-            function test_input($data) {
-              $data = trim($data);
-              $data = stripslashes($data);
-              $data = htmlspecialchars($data);
-              return $data;
-            }
+            if ($emailSent != 1)
+            {
         ?>
-        <div class="container">
+        <div class="container contentContainer" >
         	<div class="row">
         		<div class="well panel panel-default">
         			<div class="panel-body">
@@ -83,75 +30,96 @@
         						<div class="entry-content">
         							<hr>
         							<div align="center">
-        							    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> " onsubmit="return sendResetPassEmail();">
+        							    
+        							    <form method="post" action="Account/sendpasswordreset.php" onsubmit="return checkValidEmail();"> 
+        							    <!--<form method="post" action="WebService/accountinfo.php?val=compareEmails&email=jccalver@oakland.edu"> -->
                                             <div class="container" style="padding:20px px 0px 0px;" align="left">
-  
                                                     <h4>Please provide your email address to reset your password:</h4>
-                                                    <input type="text" placeholder="Email" class="form-control" value="<?php echo $email;?>" name="email" style="width:65%"><br>
-                                                    <span class="error"><?php echo $emailErr;?></span>
-                                                    <span class=""><?php echo $success;?></span>
-                                                    <br>
-                                                        <?php
-                                                        session_start();
-                                                        
-                                                        $sql = "select * from user where user_email = '".$email."'";
-                                                        $result = mysqli_query($conn,$sql);
-                                                        $row=$result->fetch_object();
-                                                        
-                                                        $user['user_email'] = $row->user_email;
-                                                        $user['user_pass'] = $row->user_pass;
-                                                        $user['salt'] = $row->salt;
-                                                        $user['user_fname'] = $row->user_fname;
-                                                        $user['user_lname'] = $row->user_lname;
-                                                        
-                                                        $name = $user['user_fname'] . " " . $user['user_lname'];
-                                                        $domain = $_SERVER['HTTP_HOST'];
-                                                        $password_link_id = "/Account/changePassword.php?id=";
-                                                        $initial_id = $user['user_pass'];
-                                                        
-                                                          shell_exec("curl -s \
-                                                            -X POST \
-                                                            --user \"fd53dceb11de74bfc08124b30aabfbe0:96e43f32048e212b9d94cb45191c62ce\" \
-                                                            https://api.mailjet.com/v3/send \
-                                                            -H 'Content-Type: application/json' \
-                                                            -d '{
-                                                              \"FromEmail\": \"mrhendre@oakland.edu\",
-                                                              \"FromName\": \"RASE Corp.\",
-                                                              \"Subject\": \"RASE - Password Reset Request!\",
-                                                              \"MJ-TemplateID\": \"99747\",
-                                                              \"MJ-TemplateLanguage\": true,
-                                                              \"Recipients\": [
-                                                                { \"Email\": \"" . $email . "\" }
-                                                              ],
-                                                              \"Vars\": {
-                                                             \"name\": \"" . $name . "\",
-                                                              \"confirmation_link\": \"" . $domain . $password_link_id . $initial_id . "\",
-                                                              \"reset_password_link\": \"" . $domain . $password_link_id . $initial_id . "\",
-                                                              \"email\": \"" . $email . "\"
-                                                              }
-                                                            }'");
-                                                        ?>
-                                                <div class="container" style="padding:15px 0px 0px 0px" align="center">
+                                                    <input type="text" placeholder="Email" id="userEmail" class="form-control" value="<?php echo $email;?>" name="email" style="width:65%"><br>
+                                                    <div id="emailError" style="display:none;"><span style="color:red;font-weight:bold;">The email you entered does not exist!</span></div>
+                                                    <div class="container" style="padding:15px 0px 0px 0px" align="center">
                                                     <input class="btn btn-default" type="submit" id="submit" value="Submit" name="submit" />
                                                     <a class="btn btn-default" href="index.php" role="button">Cancel</a>
                                                 </div>
                                             </div>
                                         </form>
         							</div>
+    							</div>
         					</article>
         				</div>
         			</div>
         		</div>
         	</div>
         </div>
+        <?php
+            }
+            else
+            {
+        ?>
+        <div class="contentContainer">
+            <div id="resetPassword" >
+                <div class="row">
+                    <div class="col-lg-6 ">
+                         <h1>Password Reset Sent!</h1><br>                                                                
+                    </div>
+                    <div class="col-lg-6">
+                       
+                    </div>                                                             
+                </div>
+                <div class="row" align ="center">
+                    <div class="col-lg-2 ">
+                        <img alt="" class="img" height="125" src="images/key.png" width="125" style="border:4px solid #021a40">
+                    </div>
+                    <div class="col-lg-8" align = "left">
+                        <h4>An email notfication has been sent to the following email:"<?php echo $email; ?>"
+                        <p>
+                            Please check your email and follow the email instruction to change you RASE account password.
+                            <br><br>
+                            Didn't recieve any email, <a href="retrievepassword.php?"> reset and try again</a>.
+                        </p>
+                    </div>
+                    <div class="col-lg-2">
+                        
+                    </div>                            
+                </div>
+            </div>
+        </div>
+        <?php
+            }
+        ?>
     </body>
+    
+                                                        
+                                                
     <script>
-        function sendResetPassEmail()
+        function checkValidEmail()
         {
-            var x = document.getElementById("mytext").value;
-            document.getElementById("address").innerHTML = x;            
-            $("#resetPassword").css("display","");
-            return false;
+            var isValid = $("#emailError").css("display") == "none";
+            if (isValid)
+                return isValid;
+            else
+                alert("Enter a valid email address");
+            return isValid;
         }
+        
+        
+        $("#userEmail").bind("change",function(){
+        var userEmail = $("#userEmail").val();
+        jQuery.ajax({
+            url: 'WebService/accountinfo.php?val=compareEmails&email='+userEmail,
+            data: ({val : 'compareEmails'},{ pass : $("#userEmail").val() }),
+            success: function(match) {
+                debugger;
+                if (match == 1)
+                {
+                    $("#emailError").css("display","none");
+                }
+                else
+                {
+                    $("#emailError").css("display","");
+                }
+            }
+        });
+    });
     </script>
 </html>

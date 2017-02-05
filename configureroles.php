@@ -27,7 +27,7 @@
         
 		<!-- Styles -->
 		<link href="/Styles/css/bootstrap.css" rel="stylesheet">
-		
+		<link href="/Styles/css/customStyles.css" rel="stylesheet">
 		<!-- Scripts -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="/Scripts/bootstrap.min.js"></script>
@@ -36,7 +36,7 @@
         <?php
 		    include("Navbar/header.php");
 	    ?>
-        <div class="container" align = "center" style="padding: 100px 0px 0px 0px">
+        <div class="container loggedInContainer" align = "center" >
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
@@ -102,7 +102,7 @@
                                                 <?php echo'<span>'.$userFullName.'</span>';?>
                                             </td>
                                             <td>
-                                                <?php echo '<a href="Account/removeuserfromrole.php?user='.$user_id.'&role='.$role_id.'" ><span class="glyphicon glyphicon-remove"></span></a>'; ?>
+                                                <?php echo '<a href="Roles/removeuserfromrole.php?user='.$user_id.'&role='.$role_id.'" ><span class="glyphicon glyphicon-remove"></span></a>'; ?>
                                             </td>
                                         </tr>
                                     <?php
@@ -120,13 +120,13 @@
                 </div>
             </div>
         </div>
-        <div class="container" id="addUser" align = "center" style="padding: 10px 0px 0px 0px; display:none;">
+        <div class="container " id="addUser" align = "center" style="display:none;">
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
                         <div class="row" align ="left">
 
-                            <form action="Account/adduserrole.php" onsubmit="return validateUser()" method="post" >
+                            <form action="Roles/adduserrole.php" onsubmit="return validateUser()" method="post" >
                                 <input value="<?php echo $roleId; ?>" id="roleId" name="roleId" style="display:none;"/>
                                 <div class="container" align="left">
                                     <h2>
@@ -144,6 +144,7 @@
                                                 echo "<option value=".$id.">".$fullName."</option>";  
                                             }
                                         ?>    
+                                    </select>
                                     <input id="submit" input type="submit" class="btn btn-success" value="Add User" name="submit" />
                                 </div>
                            </form>
