@@ -29,7 +29,6 @@ use expense_reimbursement
   Insert into userRole (userRole_Name, userRole_Desc) values ('Administrator','Default role for Administrator');
   Insert into userRole (userRole_Name, userRole_Desc) values ('Approver','Default role for Approver');
   Insert into userRole (userRole_Name, userRole_Desc) values ('Submitter','Default role for Submitter');
-<<<<<<< HEAD
   
   CREATE TABLE expense_reports(
   explain_expense varchar(1000),
@@ -38,7 +37,6 @@ use expense_reimbursement
   date text,
   file_upload blob
   );
-=======
 
 
 DROP TABLE routingCondition;
@@ -55,4 +53,3 @@ create table routing (
   routingColumn_id int(10) UNSIGNED NOT NULL,
   routingUser_id int(10) UNSIGNED NOT NULL
 );
->>>>>>> 9fe2e1d122e776031476b81d996a7b67aeee9afa

@@ -84,10 +84,18 @@
 												<br>
 												<input class="form-control" name="Email" placeholder="Email" required style="width: 70%" type="text">
 												<br>
-												<input id="password" class="form-control" name="Password" placeholder="Password" required style="width: 70%" type="password">
+												<div style="inline-block;position: relative; overflow: hidden;width:70%">
+											        <input class="form-control" id="Password" name="password" placeholder="Password" required type="password">
+											        <a onclick="showPassword(this, Password)" style="right:3%;position:absolute; top:10px;"><span class="glyphicon glyphicon-eye-open" ></span></a>
+											    </div>  
 												<br>
-												<input id="confirmpassword" onchange="verifyPasswords();" class="form-control" name="confirmpassword" placeholder="Confirm Password" required style="width: 70%" type="password">
-												<br>
+												<div style="inline-block;position: relative; overflow: hidden;width:70%">
+											        <input class="form-control" id="confirmpassword" onchange="verifyPasswords();" name="confirmpassword" placeholder="Confirm Password" required type="password">
+											        <a onclick="showPassword(this, confirmpassword)" style="right:3%;position:absolute; top:10px;"><span class="glyphicon glyphicon-eye-open" ></span></a>
+											    </div> 
+												
+												<!--<input id="confirmpassword" onchange="verifyPasswords();" class="form-control" name="confirmpassword" placeholder="Confirm Password" required style="width: 70%" type="password">
+												--><br>
 												<div id="passNotEqual" style="display:none;width:70%;" align="left">
 													<span style="color:red;font-weight:bold;">The Passwords do not match!</span>
 												</div>
@@ -167,9 +175,8 @@
 	<script>
 		function verifyPasswords()
 		{
-			
 			debugger;
-			var pass = $("#password").val();
+			var pass = $("#Password").val();
 			var pass2 =  $("#confirmpassword").val();
 			if (pass == pass2)
 			{
@@ -195,5 +202,22 @@
 				return false;
 			}
 		}
+		
+		function showPassword(link, fieldId)
+        {
+        	debugger;
+            var type = $(fieldId).attr("type");
+            if (type == "text")
+            {
+                $(link).find("span").attr("class","glyphicon glyphicon-eye-open");
+                $(fieldId).attr("type","password");
+            }
+            else
+            {
+                $(link).find("span").attr("class","glyphicon glyphicon-eye-close");
+                $(fieldId).attr("type","text");
+            }
+            
+        }
 	</script>
 </html>

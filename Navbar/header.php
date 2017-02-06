@@ -117,6 +117,7 @@
                                                 {
                                             ?>
                                             <li><a href="userroles.php">User Roles</a></li>
+                                            <li><a href="userlist.php">User List</a></li>
                                             <?php
                                                 }
                                             ?>
