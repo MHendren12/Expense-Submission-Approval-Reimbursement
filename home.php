@@ -23,7 +23,7 @@
                     <div class="panel-body">
                         <div class="row" ><br><br>
                         <!-- Menu tabs are generated from bootstrap, the bootstap is included from the header.php file. -->
-                            <ul class="nav nav-tabs nav-justified">
+                            <ul class="nav nav-tabs nav-justified" id="homeTabs">
                               <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
                               <!-- Subpannel for My Form -->
                               <li class="dropdown">
@@ -98,4 +98,20 @@
             <label>&#169; Copyright 2017, RASE Corp. English(US). All Right Reserved.</label>
         </div>
     </body>
+    <script>
+        $('#homeTabs a').click(function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+        
+        // store the currently selected tab in the hash value
+        $("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+            var id = $(e.target).attr("href").substr(1);
+            window.location.hash = id;
+        });
+        
+        // on load of the page: switch to the currently selected tab
+        var hash = window.location.hash;
+        $('#homeTabs a[href="' + hash + '"]').tab('show');
+    </script>
 </html>

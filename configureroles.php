@@ -23,9 +23,7 @@
 <!DOCTYPE html>
 <html>
     <header>
-
 		<link href="/Styles/css/customStyles.css" rel="stylesheet">
-
     </header>
     <body>
         <?php
@@ -115,7 +113,8 @@
                 </div>
             </div>
         </div>
-        <div class="container " id="addUser" align = "center" style="display:none;">
+        <br>
+        <div class="container normalContainer" id="addUser" align = "center" style="display:none;padding-top:20px;">
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">

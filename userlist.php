@@ -9,17 +9,15 @@
     <head>
         <title>Expense Reimbursement</title>
         <!-- Styles -->
-        <link href="/Styles/css/bootstrap.css" rel="stylesheet">
         <link href="/Styles/css/customStyles.css" rel="stylesheet">
+        
         <style>
             input.form-control
             {
-                width:35%;
+                width:50%;
             }
         </style>
         <!-- Scripts -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="/Scripts/bootstrap.min.js"></script>
         
         
     </head>
@@ -91,59 +89,101 @@
                 <div class="well panel panel-default" >
                     <div class="panel-body">
                         <div class="row" >
-                            <table style="width:100%">
-                                <?php
-                                $sql = 'select * from user where user_id = "'.$editUser.'"';
-                                $result = mysqli_query($conn,$sql);
-                                while($row = mysqli_fetch_assoc($result))
-                                {     
-                                    $userid = $row['user_id'];
-                                    $username = $row['user_fname']." ".$row['user_lname'];
-                                    $email = $row['user_email'];
-                                    $dob = $row['user_dob'];
-                                    $isadmin = $row['is_admin'] == 1 ? "Administrator" : "User";
-                                    $status = $row['user_activated'] == 1 ? "Active" : "Inactive";
-                                    echo 
-                                        '<tr>
-                                            <td>
-                                                <b>Name</b>
-                                                <input class="form-control" value="'.$username.'"> 
-                                                <br>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <b>Email</b>
-                                                <input class="form-control" value="'.$email.'">
-                                                <br>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <b>Date of Birth</b>
-                                                <input type="date" class="form-control" value="'.$dob.'"> 
-                                                <br>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <b>Account Type</b><br>
-                                                '.$isadmin.'
-                                                <br>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <b>Status</b><br>
-                                                '.$status.'
-                                                <br>
-                                            </td>
-                                            
-                                        </tr>'; 
-                                }
-                            ?>
-                            </table>
-                            
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <form action="<?php echo '/Account/editinfo.php?editUser='.$editUser; ?>" method="post">
+                                    <table style="width:100%">
+                                        <?php
+                                        $sql = 'select * from user where user_id = "'.$editUser.'"';
+                                        $result = mysqli_query($conn,$sql);
+                                        while($row = mysqli_fetch_assoc($result))
+                                        {     
+                                            $userid = $row['user_id'];
+                                            $username = $row['user_fname']." ".$row['user_lname'];
+                                            $email = $row['user_email'];
+                                            $dob = $row['user_dob'];
+                                            $isadmin = $row['is_admin'] == 1 ? "Administrator" : "User";
+                                            $status = $row['user_activated'] == 1 ? "Active" : "Inactive";
+                                            echo 
+                                                '<tr>
+                                                    <td>
+                                                        <b>Name</b>
+                                                        <input class="form-control" name="name" value="'.$username.'"> 
+                                                        <br>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Email</b>
+                                                        <input class="form-control" name="email" value="'.$email.'">
+                                                        <br>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Date of Birth</b>
+                                                        <input type="date" class="form-control" name="dob" value="'.$dob.'"> 
+                                                        <br>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Account Type</b><br>
+                                                        '.$isadmin.'
+                                                        <br>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Status</b><br>
+                                                        '.$status.'
+                                                        <br>
+                                                    </td>
+                                                    
+                                                </tr>'; 
+                                        }
+                                    ?>
+                                    </table>
+                                    <input id="submit" type="submit" class="btn btn-success" value="Submit" name="submit"  />
+        						    <a href="userlist.php" class="btn btn-default">Cancel</a>
+                                </form>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <table style="width:100%">
+                                    <?php
+                                    $sql = 'select userRole_Name from userAssignment 
+                                    join userRole on userAssignment.userRole_id = userRole.userRole_id
+                                    where user_id = "'.$editUser.'"';
+                                    $result = mysqli_query($conn,$sql);
+                                    $num_rows = mysqli_num_rows($result);
+                                    if ($num_rows > 0)
+                                    {
+                                        echo    '<tr>
+                                                    <td>
+                                                        <b>Roles</b>
+                                                        <br>
+                                                    </td>
+                                                </tr>';
+                                    }
+                                    else
+                                    {
+                                        echo 'No Roles';
+                                    }
+                                    while($row = mysqli_fetch_assoc($result))
+                                    {     
+                                        $userRole_Name = $row['userRole_Name'];
+                                        
+                                        echo 
+                                            '<tr>
+                                                <td>
+                                                    '.$userRole_Name.'
+                                                    <br><br>
+                                                </td>
+                                            </tr>
+                                            '; 
+                                    }
+                                ?>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,12 +198,15 @@
             <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
-                        <form action="Account/register.php">
+                        <form action="Account/adduser.php" method="post">
                             <div class="row" align="left">
-								<input class="form-control" name="FName" placeholder="First Name" required style="display:inline-block;" type="text">													
-								<input class="form-control" name="LName" placeholder="Last Name" required style="display:inline-block;" type="text">													
+								<input class="form-control" name="FName" placeholder="First Name" required style="display:inline-block;" type="text">
     						</div>											
     						<br>
+    						<div class="row" align="left">
+    						    <input class="form-control" name="LName" placeholder="Last Name" required style="display:inline-block;" type="text">
+						    </div>
+						    <br>
     						<div class="row" align="left">
     						    <input class="form-control" name="Email" placeholder="Email" required type="text">
     						</div>
@@ -204,7 +247,7 @@
     						<br>
     						
     						<div class="row" align="left">
-    						    <!--<input id="submit" type="submit" class="btn btn-success" value="Add User" name="submit"  />-->
+    						    <input id="submit" type="submit" class="btn btn-success" value="Add User" name="submit"  />
     						    <a onclick="hideAddUser()" class="btn btn-default">Cancel</a>
     						    
 						    </div>
@@ -229,6 +272,11 @@
         function hideAddUser()
         {
              $("#addUser").css("display","none");
+             var fields = $("#addUser").find("input.form-control");
+             for (var i = 0; i <= fields.length-1; i++)
+             {
+                 $(fields[i]).val("");
+             }
         }
         
     </script>

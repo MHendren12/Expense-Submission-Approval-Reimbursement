@@ -4,7 +4,8 @@ session_start();
 	
     include("../Database/config.php");		 
     $conn = getConnection();
-	$id = $_SESSION['userid'];
+	$id = $_GET['editUser'] != "" ? $_GET['editUser'] :  $_SESSION['userid'];
+	$redirectUrl = $_GET['editUser'] != "" ? "../userlist.php" : "../account.php";
     
     if(isset($_POST['submit'])) 
     {
@@ -45,7 +46,7 @@ session_start();
         if($_GET['id'] != null){
             header("Location: ../index.php");
         } else{
-            header("Location: ../account.php");
+            header("Location: ".$redirectUrl);
         }   
         
     }
