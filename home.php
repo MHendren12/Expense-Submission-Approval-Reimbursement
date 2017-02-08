@@ -6,14 +6,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Expense Reimbursement</title>
-        <!-- Styles -->
-        <link href="/Styles/css/bootstrap.css" rel="stylesheet">
+
         <link href="/Styles/css/customStyles.css" rel="stylesheet">
-        <!-- Scripts -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="/Scripts/bootstrap.min.js"></script>
-        
         
     </head>
     <body>
@@ -28,10 +22,20 @@
                 <div class="well panel panel-default" >
                     <div class="panel-body">
                         <div class="row" ><br><br>
+                        <!-- Menu tabs are generated from bootstrap, the bootstap is included from the header.php file. -->
                             <ul class="nav nav-tabs nav-justified">
-                                <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
-                                <li><a data-toggle="tab" href="#myform"><h4>My forms</h4></a></li>
-                                <li><a data-toggle="tab" href="#myactivity"><h4>My activity</h4></a></li>
+                              <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
+                              <!-- Subpannel for My Form -->
+                              <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h4>My Form</h4>
+                                <ul class="dropdown-menu" style="min-width: 100%;";>
+                                  <li><a data-toggle="tab" href="#expenseform">Expense Form</a></li>
+                                  <li><a data-toggle="tab" href="#submissionform">Submission Form</a></li>
+                                  <li><a data-toggle="tab" href="#approverform">Approver Form</a></li>
+                                </ul>
+                              </li>
+                              
+                              <li><a data-toggle="tab" href="#myactivity"><h4>My activity</h4></a></li>
                                 <!--
                                 <li><a data-toggle="tab" href="#aboutus"><h4>About us</h4></a></li>
                                 <li><a data-toggle="tab" href="#contactus"><h4>Contact us</h4></a></li>     
@@ -45,7 +49,7 @@
                                 <li><a data-toggle="tab" href="#routing"><h4>Routing</h4></a></li>
                                 <?php
                                     }
-                                ?>
+                                ?>                              
                             </ul>
                             <br><br>
                             <div class="row">
@@ -65,14 +69,16 @@
                                             <h2>Activity Stream</h2>
                                             <?php include('activity.php'); ?>
                                         </div>
+                                        <!--
                                         <div id="aboutus" class="tab-pane fade">
                                             <h2>About Us</h2>
-                                            <?php include('aboutus.php'); ?>
+                                            <?php //include('aboutus.php'); ?>
                                         </div>  
                                         <div id="contactus" class="tab-pane fade">
                                             <h2>Contact Us</h2>
-                                            <?php include('contactus.php'); ?>
-                                        </div>    
+                                            <?php //include('contactus.php'); ?>
+                                        </div>  
+                                        -->
                                         <div id="routing" class="tab-pane fade">
                                             <h2>Routing</h2>
                                             <?php include('routing.php'); ?>

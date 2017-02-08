@@ -28,10 +28,6 @@
     }
 ?>
 <style type="text/css">
-    .nav-tabs
-    {
-        border-bottom:0px;
-    }
     td
     {
         padding: 0px 5px 0px 0px;
@@ -39,7 +35,15 @@
 </style>
 <!DOCTYPE html>
 <html lang="en">
-    <head></head>
+	<head>
+		<title>Expense Reimbursement</title>
+		<!-- Styles -->
+		<link href="/Styles/css/bootstrap.css" rel="stylesheet">
+		<link href="/Styles/css/customStyles.css" rel="stylesheet">
+		<!-- Scripts -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="/Scripts/bootstrap.min.js"></script>
+	</head>
         <body>
             <nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
@@ -103,7 +107,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                         <div class="row">
-                            <ul class="nav nav-tabs" role="tablist">
+                            <ul class="nav nav-tabs" style="border-bottom:0px;" role="tablist">
                                 <li role="presentation" style="color:white; top:15px;">Hello <?php echo $_SESSION['name']; ?>!</li>
                                 <li role="presentation">
                                     <div class="dropdown" style="top:15px;left:10px">

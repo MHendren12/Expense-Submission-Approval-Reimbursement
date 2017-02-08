@@ -4,16 +4,6 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<title>Expense Reimbursement</title>
-		<!-- Styles -->
-		<link href="/Styles/css/bootstrap.css" rel="stylesheet">
-		<link href="/Styles/css/customStyles.css" rel="stylesheet">
-		<!-- Scripts -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script src="/Scripts/bootstrap.min.js"></script>
-	</head>
-
 	<body>
 	
 	<?php
@@ -154,8 +144,36 @@
 						</article>
 					</div>
 				</div>
+				<hr>
+				  <ul class="nav nav-pills nav-justified">
+	                  <li><a data-toggle="tab" href="#aboutus"><h4>About us</h4></a></li>
+	                  <li><a data-toggle="tab" href="#contactus"><h4>Contact us</h4></a></li>  
+				  </ul>
+                <div class="row">
+                    <div class="col-lg-1">
+                        
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="tab-content" align="left">
+                            <div id="aboutus" class="tab-pane fade">
+                                <h2>About Us</h2>
+                                <?php include('aboutus.php'); ?>
+                            </div>  
+                            <div id="contactus" class="tab-pane fade">
+                                <h2>Contact Us</h2>
+                                <?php include('contactus.php'); ?>
+                            </div>                                        
+                        </div>     
+                    </div>
+                    <div class="col-lg-1">
+                        
+                    </div>                                    
+                </div>				
 			</div>
 		</div>
+        <div align="center">
+            <label>&#169; Copyright 2017, RASE Corp. English(US). All Right Reserved.</label>
+        </div>		
 		<!--
 	    <nav class="navbar navbar-inverse navbar-fixed-bottom">
 	        <div class="container">

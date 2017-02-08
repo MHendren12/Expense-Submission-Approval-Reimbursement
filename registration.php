@@ -1,18 +1,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta name="description" content="Expense Reimbursement Registration">
-
-    <title>Expense Reimbursement Register</title>
-
-        <!-- Styles -->
-        <link href="/Styles/css/bootstrap.css" rel="stylesheet">
-        
-        <!-- Scripts -->
-        <script src="/Scripts/bootstrap.min.js"></script>
-    </head>
-
   <body>
       <?php
             include("Navbar/header.php");	

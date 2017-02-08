@@ -4,17 +4,6 @@
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <link href="/Styles/css/bootstrap.css" rel="stylesheet">
-        <link href="/Styles/css/customStyles.css" rel="stylesheet">
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script src="/Scripts/bootstrap.min.js"></script>
-		
-        <style>
-        .error {color: #FF0000; font-size: 20px;}
-        </style>
-    </head>
     <body>
         <?php 
             include("Navbar/header.php");
