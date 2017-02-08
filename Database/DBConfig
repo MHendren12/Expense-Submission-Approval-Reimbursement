@@ -1,5 +1,5 @@
-reCREATE DATABASE expense_reimbursement
-use expense_reimbursement
+CREATE DATABASE expense_reimbursement;
+use expense_reimbursement;
 
  DROP TABLE user;
  CREATE TABLE user (
