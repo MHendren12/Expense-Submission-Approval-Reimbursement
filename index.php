@@ -3,7 +3,6 @@
 ?>
 <!DOCTYPE html>
 <html>
-
 	<body>
 	
 	<?php
@@ -99,7 +98,7 @@
 													<option>- Month -</option>
 													<?php 
 														$months = array("January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October","November", "December");
-														$count = 0;
+														$count = 1;
 														foreach($months as $month){
 															echo "<option value='" . $count . "'>" . $month . "</option>";
 															$count++;
