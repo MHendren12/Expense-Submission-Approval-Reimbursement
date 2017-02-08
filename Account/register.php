@@ -5,11 +5,15 @@
 	 $fname = $_POST['FName'];
 	 $lname = $_POST['LName'];
 	 $email  = $_POST['Email'];
-	 $pass  = $_POST['Password'];
+	 $pass  = $_POST['password'];
 	 $user_activated = 0;
-     $salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
+	 
+	 
+	 $salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
      $saltedPW =  $pass . $salt;
      $hashedPW = hash('sha256', $saltedPW);
+	 
+	
 
   
   

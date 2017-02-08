@@ -13,8 +13,9 @@
         $saltQuery = "select * from user where user_email = '".$email."' ";
         $result = mysqli_query($conn, $saltQuery);
         $row = mysqli_fetch_assoc($result);
-        $salt = $row['salt'];
         $user_activated = $row['user_activated'];
+        $salt = $row['salt'];
+        
         $saltedPW =  $pass . $salt;
         $hashedPW = hash('sha256', $saltedPW);
         
@@ -26,7 +27,6 @@
             die(mysqli_error($res));
         }
         $num_rows = mysqli_num_rows($res);
-
         if($num_rows == 1 && $user_activated == 1) 
         {
             $id = "select user_id from user where user_email = '".$email."'";
