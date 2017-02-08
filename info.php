@@ -16,27 +16,38 @@
                   <br>
                     <table class="table table-bordered table-style table-responsive">
                       <tr>
-                        <th colspan="2"><a href="?ym=<?php echo $prev; ?>"><span class="glyphicon glyphicon-chevron-left"></span></a></th>
-                        <th colspan="3"> Feb - 2017<!--?php echo $html_title; ?--></th>
-                        <th colspan="2"><a href="?ym=<?php echo $next; ?>"><span class="glyphicon glyphicon-chevron-right"></span></a></th>
+                        <th colspan="2"><button class="btn btn-default" onclick=""><span class="glyphicon glyphicon-chevron-left"></span></button></th>
+                        <th colspan="3"> <?php echo date("M - Y"); ?></th>
+                        <th colspan="2"><button class="btn btn-default" onclick=""><span class="glyphicon glyphicon-chevron-right"></span></button></th>
                       </tr>
                       <tr>
-                        <th>S</th>
-                        <th>M</th>
-                        <th>T</th>
-                        <th>W</th>
-                        <th>T</th>
-                        <th>F</th>
-                        <th>S</th>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
                       </tr>
                       <?php
                       $count = 1;
                       $value = 1;
+                      $start = (new DateTime('first day of this month'))->format('D');
+                      $end = (new DateTime('last day of this month'))->format('D');
+                      $initial = date('N', strtotime($start));
+                      $final = date('N', strtotime($end));
+                        if($initial == 7){
+                            $initial = 0;
+                        }
+                        if($final == 7){
+                            $final = 0;
+                        }
                       for($i=0; $i<5; $i++){
                         echo "<tr></tr>";
                         for($j=0; $j<7; $j++){
-                            if(3<$count && $count<32){
-                                if($value==6){
+                        
+                            if($initial<$count && $count<34-$final){
+                                if($value==date("j")){
                                     echo "<td class='today'>".$value."</td>";
                                     $value++;
                                     $count++; 
@@ -50,6 +61,7 @@
                                 echo "<td></td>";
                                 $count++;
                             }
+                                
                         }
                       }
                      
@@ -100,4 +112,7 @@
         </div>
     </div>	
 </body>
-</html>   
+<script>
+    
+</script>
+</html>
