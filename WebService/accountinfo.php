@@ -1,7 +1,14 @@
 <?php
 
     session_start();
-    include("../Database/config.php");
+    if (file_exists('Database/config.php') )
+    {
+        include("Database/config.php");
+    }
+    else 
+    {
+        include("../Database/config.php");
+    }
     $conn = getConnection();
     $id = $_SESSION['userid'];
     
