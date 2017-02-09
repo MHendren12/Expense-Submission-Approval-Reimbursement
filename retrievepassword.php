@@ -94,21 +94,26 @@
         
         $("#userEmail").bind("change",function(){
         var userEmail = $("#userEmail").val();
-        jQuery.ajax({
-            url: 'WebService/accountinfo.php?val=compareEmails&email='+userEmail,
-            data: ({val : 'compareEmails'},{ pass : $("#userEmail").val() }),
-            success: function(match) {
-                debugger;
-                if (match == 1)
-                {
-                    $("#emailError").css("display","none");
+        debugger;
+        if (userEmail != "" )
+            jQuery.ajax({
+                url: 'WebService/accountinfo.php?val=compareEmails&email='+userEmail,
+                data: ({val : 'compareEmails'},{ pass : $("#userEmail").val() }),
+                success: function(match) {
+                    if (match == 1)
+                    {
+                        $("#emailError").css("display","none");
+                    }
+                    else
+                    {
+                        $("#emailError").css("display","");
+                    }
                 }
-                else
-                {
-                    $("#emailError").css("display","");
-                }
-            }
-        });
+            });
+        else
+        {
+            $("#emailError").css("display","none");
+        }
     });
     </script>
 </html>

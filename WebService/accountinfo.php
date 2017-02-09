@@ -1,7 +1,7 @@
 <?php
 
     session_start();
-    include("Database/config.php");
+    include("../Database/config.php");
     $conn = getConnection();
     $id = $_SESSION['userid'];
     
