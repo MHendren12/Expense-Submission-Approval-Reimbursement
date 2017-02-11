@@ -51,7 +51,7 @@
                     <div class="well panel panel-default" >
                         <div class="panel-body">
                             <div class="row">
-                              <h1>RASE Account Activation Complete!</h1>
+                              <h1>Password Reset Sent!</h1>
                             </div>                            
                             <div class="row" align ="center">
                                 <div class="col-lg-2 ">

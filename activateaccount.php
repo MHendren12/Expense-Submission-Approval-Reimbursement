@@ -3,11 +3,11 @@
     <body>
         <div class="container contentContainer" align = "left">
             <div class="row">
-              <h1>RASE Account Activation Complete!</h1>
-            </div>
-            <div class="row">
                 <div class="well panel panel-default" >
                     <div class="panel-body">
+                        <div class="row">
+                          <h1>RASE Account Activation Complete!</h1>
+                        </div>                        
                         <div class="row" align ="center">
                             <div class="col-lg-2 ">
                                 <img alt="" class="img" height="150" src="../images/check.png" width="150" style="border:4px solid #021a40">

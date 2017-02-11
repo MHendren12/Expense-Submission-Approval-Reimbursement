@@ -66,15 +66,5 @@
         </div>
     </div>	
 </body>
-<script>
-    
-    function incrementMonth(n){
-        
-    }
-    
-    function decrementMonth(n){
-        
-    }
 
-</script>
 </html>
