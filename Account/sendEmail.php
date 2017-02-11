@@ -5,7 +5,7 @@ error_reporting(E_ERROR | E_PARSE);
 
 include("Database/config.php");
 include("../Database/config.php");
-
+include("../Navbar/header.php");
 
 $conn = getConnection();
 $id = $_SESSION['userid'];
@@ -81,7 +81,7 @@ if($user['user_activated'] == 0){
                                 <img alt=\"\" class=\"img\" height=\"150\" src=\"../images/email.png\" width=\"150\" style=\"border:4px solid #021a40\">
                             </div>
                             <div class=\"col-lg-8\" align = \"left\">
-                                <h3>A email has been sent to " . $user['user_email'] . " inbox.</h3>
+                                <h3>An email has been sent to " . $user['user_email'] . " inbox.</h3>
                                 <p>
                                     Please check your email and follow the email instruction to login to your RASE account.
                                     You will not be able to login to your account until your email has been verified.<br><br>

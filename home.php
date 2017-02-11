@@ -34,9 +34,9 @@
                                   <li><a data-toggle="tab" href="#approverform">Approver Form</a></li>
                                 </ul>
                               </li>
-                              
+                              <!--
                               <li><a data-toggle="tab" href="#myactivity"><h4>My activity</h4></a></li>
-                                <!--
+                                
                                 <li><a data-toggle="tab" href="#aboutus"><h4>About us</h4></a></li>
                                 <li><a data-toggle="tab" href="#contactus"><h4>Contact us</h4></a></li>     
                                 -->
@@ -65,11 +65,11 @@
                                             <h2>Create a New Expense Form</h2>
                                             <?php include('expense_form.php'); ?>
                                         </div>
+                                        <!--
                                         <div id="myactivity" class="tab-pane fade">
                                             <h2>Activity Stream</h2>
-                                            <?php include('activity.php'); ?>
+                                            <?php //include('activity.php'); ?>
                                         </div>
-                                        <!--
                                         <div id="aboutus" class="tab-pane fade">
                                             <h2>About Us</h2>
                                             <?php //include('aboutus.php'); ?>
@@ -113,5 +113,11 @@
         // on load of the page: switch to the currently selected tab
         var hash = window.location.hash;
         $('#homeTabs a[href="' + hash + '"]').tab('show');
+        
+        /*$(document).ready(function () {
+        if (window.location.hash) {
+        $('.nav a[href="#'+window.location.hash+'"]').tab('show');
+         }*/
+});
     </script>
 </html>

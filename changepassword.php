@@ -1,9 +1,10 @@
 <?php
+    include("Navbar/header.php");
     $id = base64_decode($_GET['id']);
 ?>
 <html>
     <body>
-        <div class="container contentContainer" align = "left">
+        <div class="container contentContainer" align = "center">
             <div class="row">
               <h1>RASE Password Request Successful!</h1>
             </div>

@@ -1,5 +1,6 @@
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <style type="text/css">
             .table-style .today {background: #2A3F54; color: #ffffff;}
             .table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}        
@@ -14,60 +15,13 @@
                 </p>
                 <div class="col-md-12" style="padding:0px;">
                   <br>
-                    <table class="table table-bordered table-style table-responsive">
-                      <tr>
-                        <th colspan="2"><button class="btn btn-default" onclick=""><span class="glyphicon glyphicon-chevron-left"></span></button></th>
-                        <th colspan="3"> <?php echo date("M - Y"); ?></th>
-                        <th colspan="2"><button class="btn btn-default" onclick=""><span class="glyphicon glyphicon-chevron-right"></span></button></th>
-                      </tr>
-                      <tr>
-                        <th>Sun</th>
-                        <th>Mon</th>
-                        <th>Tue</th>
-                        <th>Wed</th>
-                        <th>Thu</th>
-                        <th>Fri</th>
-                        <th>Sat</th>
-                      </tr>
-                      <?php
-                      $count = 1;
-                      $value = 1;
-                      $start = (new DateTime('first day of this month'))->format('D');
-                      $end = (new DateTime('last day of this month'))->format('D');
-                      $initial = date('N', strtotime($start));
-                      $final = date('N', strtotime($end));
-                        if($initial == 7){
-                            $initial = 0;
-                        }
-                        if($final == 7){
-                            $final = 0;
-                        }
-                      for($i=0; $i<5; $i++){
-                        echo "<tr></tr>";
-                        for($j=0; $j<7; $j++){
-                        
-                            if($initial<$count && $count<34-$final){
-                                if($value==date("j")){
-                                    echo "<td class='today'>".$value."</td>";
-                                    $value++;
-                                    $count++; 
-                                } else{
-                                    echo "<td>".$value."</td>";
-                                    $value++;
-                                    $count++;                                    
-                                }
-                            }
-                            else{
-                                echo "<td></td>";
-                                $count++;
-                            }
-                                
-                        }
-                      }
+                    <?php
+                    include 'Account/calendar.php';
                      
-                      ?>
-                    </table>
-            
+                    $calendar = new Calendar();
+                     
+                    echo $calendar->show();
+                    ?>
                 </div>
               </div>           
         </div>
@@ -114,5 +68,13 @@
 </body>
 <script>
     
+    function incrementMonth(n){
+        
+    }
+    
+    function decrementMonth(n){
+        
+    }
+
 </script>
 </html>

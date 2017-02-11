@@ -1,3 +1,4 @@
+<?php include("Navbar/header.php"); ?>
 <html>
     <body>
         <div class="container contentContainer" align = "left">

@@ -45,34 +45,35 @@
             else
             {
         ?>
-        <div class="contentContainer">
+        <div class="container contentContainer" align="left">
             <div id="resetPassword" >
                 <div class="row">
-                    <div class="col-lg-6 ">
-                         <h1>Password Reset Sent!</h1><br>                                                                
+                    <div class="well panel panel-default" >
+                        <div class="panel-body">
+                            <div class="row">
+                              <h1>RASE Account Activation Complete!</h1>
+                            </div>                            
+                            <div class="row" align ="center">
+                                <div class="col-lg-2 ">
+                                    <img alt="" class="img" height="125" src="images/key.png" width="125" style="border:4px solid #021a40">
+                                </div>
+                                <div class="col-lg-8" align = "left">
+                                    <h4>An email notfication has been sent to the following email:"<?php echo $email; ?>"
+                                    <p>
+                                        Please check your email and follow the email instruction to change you RASE account password.
+                                        <br><br>
+                                        Didn't recieve any email, <a href="retrievepassword.php?"> reset and try again</a>.
+                                    </p>
+                                </div>
+                                <div class="col-lg-2">
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-6">
-                       
-                    </div>                                                             
-                </div>
-                <div class="row" align ="center">
-                    <div class="col-lg-2 ">
-                        <img alt="" class="img" height="125" src="images/key.png" width="125" style="border:4px solid #021a40">
-                    </div>
-                    <div class="col-lg-8" align = "left">
-                        <h4>An email notfication has been sent to the following email:"<?php echo $email; ?>"
-                        <p>
-                            Please check your email and follow the email instruction to change you RASE account password.
-                            <br><br>
-                            Didn't recieve any email, <a href="retrievepassword.php?"> reset and try again</a>.
-                        </p>
-                    </div>
-                    <div class="col-lg-2">
-                        
-                    </div>                            
                 </div>
             </div>
-        </div>
+        </div>        
         <?php
             }
         ?>
@@ -94,26 +95,21 @@
         
         $("#userEmail").bind("change",function(){
         var userEmail = $("#userEmail").val();
-        debugger;
-        if (userEmail != "" )
-            jQuery.ajax({
-                url: 'WebService/accountinfo.php?val=compareEmails&email='+userEmail,
-                data: ({val : 'compareEmails'},{ pass : $("#userEmail").val() }),
-                success: function(match) {
-                    if (match == 1)
-                    {
-                        $("#emailError").css("display","none");
-                    }
-                    else
-                    {
-                        $("#emailError").css("display","");
-                    }
+        jQuery.ajax({
+            url: 'WebService/accountinfo.php?val=compareEmails&email='+userEmail,
+            data: ({val : 'compareEmails'},{ pass : $("#userEmail").val() }),
+            success: function(match) {
+                debugger;
+                if (match == 1)
+                {
+                    $("#emailError").css("display","none");
                 }
-            });
-        else
-        {
-            $("#emailError").css("display","none");
-        }
+                else
+                {
+                    $("#emailError").css("display","");
+                }
+            }
+        });
     });
     </script>
 </html>
