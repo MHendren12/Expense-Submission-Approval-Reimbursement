@@ -6,6 +6,22 @@
   $conn = getConnection();
 ?>
 
+<script>
+function DoCheckUncheckDisplay(d,dchecked,dunchecked)
+{
+   if( d.checked == true )
+   {
+      document.getElementById(dchecked).style.display = "block";
+      document.getElementById(dunchecked).style.display = "none";
+   }
+   else
+   {
+      document.getElementById(dchecked).style.display = "none";
+      document.getElementById(dunchecked).style.display = "block";
+   }
+}
+</script>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,29 +35,37 @@
 </style>
 
 <body>
-  
-<form action="form_insert.php" method="post" enctype="multipart/form-data">
-<p>
-  <label for="expense_id">Type of Expense: </label>
-  <input type="text" name="expense_id" id="expense_id">
-</p>
-<p>
-  <label for="explain_expense">Describe: </label>
-  <input type="text" name="explain_expense" id="explain_expense">
-</p>
-<p>
-  <label for="date">Date of Expense: </label>
-  <input type="date" name="date" id="date">
-</p>
-<p>
-  <label for="file_upload">Upload a Receipt: </label>
-  <input type="file" name="file_upload" id="file_upload">
-</p>
-<p>
-  <label for="number">Amount ($):</label>
-  <input type="number" step="0.01" name="number" id="number">
-</p>
+<form action="form_insert.php" method="POST" enctype="multipart/form-data" > 
+What type of expense?<br>
+
+  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'air_expense', '')"  value="Air">Air Travel<br>
+  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'land_expense', '')"  value="Land">Land Travel<br>
+  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'hotel_expense', '')"  value="Hotel">Hotel<br>
+  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'food_expense', '')" value="Food">Food<br>
+  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'other_expense', '')" value="Other">Other
+<div>
+<div id="air_expense", style="display:none">
+ <?php include("../Account/air_expense_form.php")?>
+</div>
+
+<div id="land_expense", style="display:none">
+  <?php include("land_expense_form.php")?>
+</div>
+
+<div id="hotel_expense", style="display:none">
+  <?php include("hotel_expense_form.php")?>
+</div>
+
+<div id="food_expense", style="display:none">
+  <?php include("food_expense_form.php")?>
+</div>
+
+<div id="other_expense", style="display:none">
+  <?php include("other_expense_form.php")?>
+</div>
+
 <input class="btn btn-default" type= "submit" id="submit" value="submit" name="submit" value="">
+</div>
 </form>
 </body>
 </html>
