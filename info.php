@@ -26,45 +26,128 @@
               </div>           
         </div>
         <div class="col-lg-6">
-            <table class="table table-striped">
+            <table class="table table-striped table-bordered">
             	<thead>
             		<tr>
             			<th>ID #</th>
-            			<th>Date of Submission</th>
-            			<th>Date of Approval</th>
+            			<th>Submission Date</th>
+            			<th>Approval Date</th>
             			<th>Approver</th>
             			<th>View Form</th>
             			<th>Status</th>
             		</tr>
             	</thead>
-            	<tr class="warning">
-            		<th>1324213</th>
-            		<td>02/01/17</td>
-            		<td>--/--/----</td>
-            		<td>Bill Johnson</td>
-            		<td><a class="btn btn-default" href="#" role="button">View</a></td>	
-            		<td>Pending</td>
-            	</tr>
-            	<tr class="success">
-            		<th>2342324</th>
-            		<td>02/01/17</td>
-            		<td>02/03/17</td>		
-            		<td>Jacob Thornton</td>
-            		<td><a class="btn btn-default" href="#" role="button">View</a></td>	
-            		<td>Accepted</td>
-            	</tr>
-            	<tr class="success">
-            		<th>3234324</th>
-            		<td>02/01/17</td>
-            		<td>02/03/17</td>
-            		<td>Larry Bird</td>
-            		<td><a class="btn btn-default" href="#" role="button">View</a></td>	
-            		<td>Accepted</td>
-            	</tr>
-            </table>
-               
+                <tbody>
+                       
+                    <?php
+                        $sql = "select user.user_id, user.user_fname, user.user_lname, userRole.userRole_Name, expense_activity.date_of_submission, 
+                        expense_activity.date_of_approval, expense_activity.expense_activity_id, 
+                        expense_activity.status from user left outer join userAssignment on 
+                        user.user_id=userAssignment.user_id left outer join userRole on userRole.userRole_id=userAssignment.userRole_id left outer join expense_reports on expense_reports.userAssign_id=userAssignment.userAssign_id 
+                        left outer join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id where user.user_id = ". $_SESSION['userid'];
+
+                        $result = mysqli_query($conn, $sql);
+                        
+                        
+                        while($row = mysqli_fetch_assoc($result))
+                        {     
+                            $expense_activity_id= $row['expense_activity_id'];
+                            $userRole_Name = $row['userRole_Name'];
+                            $fname= $row['user_fname'];
+                            $lname= $row['user_lname'];
+                            $date_of_submission = $row ['date_of_submission'];
+                            $date_of_approval = $row ['date_of_approval'];
+                            $status = $row ['status'];
+                            
+                            if($expense_activity_id == null){
+                                echo "<td colspan='6' align='center'>No Results or History.</td>";
+                            }
+                            else{
+                    ?>
+                                <tr>
+                                <td><?php echo $expense_activity_id;?></td>
+                                <td><?php echo $date_of_submission;?></td>
+                                <td><?php echo $date_of_approval;?></td>
+                                <td><?php echo $fname . " ". $lname ?></td>                            
+                                <td>
+                                <button data-toggle="modal" data-target="#view-modal" data-id="<?php //echo $row['user_id']; ?>" id="getUser" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i> View</button>
+                                </td>
+                                <td><?php echo $status;?></td>
+                                </tr>
+                            <?php
+                            }
+                        }
+               ?>
+            
+               </tbody>
+            </table>            
+        	<div class="container">
+                <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                     <div class="modal-dialog"> 
+                          <div class="modal-content"> 
+                          
+                               <div class="modal-header"> 
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                    <h4 class="modal-title">
+                                    	<i class="glyphicon glyphicon-user"></i> Expense Form
+                                    </h4> 
+                               </div> 
+                               <div class="modal-body"> 
+                               
+                               	   <div id="modal-loader" style="display: none; text-align: center;">
+                               	   	<img src="ajax-loader.gif">
+                               	   </div>
+                                    
+                                   <!-- content will be load here -->                          
+                                   <div id="dynamic-content"></div>
+                                     
+                                </div> 
+                                <div class="modal-footer"> 
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+                                </div> 
+                                
+                         </div> 
+                      </div>
+               </div>
+            </div>               
         </div>
     </div>	
 </body>
 
+<script>
+$(document).ready(function(){
+	
+	$(document).on('click', '#getUser', function(e){
+		
+		e.preventDefault();
+		
+		var uid = $(this).data('id');   // it will get id of clicked row
+		
+		$('#dynamic-content').html(''); // leave it blank before ajax call
+		$('#modal-loader').show();      // load ajax loader
+		
+		$.ajax({
+			url: 'getuser.php',
+			type: 'POST',
+			data: 'id='+uid,
+			dataType: 'html'
+		})
+		.done(function(data){
+			console.log(data);	
+			$('#dynamic-content').html('');    
+			$('#dynamic-content').html(data); // load response 
+			$('#modal-loader').hide();		  // hide ajax loader	
+		})
+		.fail(function(){
+			$('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+			$('#modal-loader').hide();
+		});
+		
+	});
+	
+});
+
+</script>
+
+</body>
 </html>

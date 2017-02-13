@@ -46,7 +46,7 @@
                                     if ($isadmin)
                                     {
                                 ?>
-                                <li><a data-toggle="tab" href="#routing"><h4>Routing</h4></a></li>
+                                <li><a data-toggle="tab" class="active" href="#routing"><h4>Routing</h4></a></li>
                                 <?php
                                     }
                                 ?>                              
@@ -61,7 +61,7 @@
                                             <h2>Your RASE Home</h2>
                                             <?php include('info.php'); ?>
                                         </div>
-                                        <div id="myform" class="tab-pane fade">
+                                        <div id="expenseform" class="tab-pane fade">
                                             <h2>Create a New Expense Form</h2>
                                             <?php include('expense_form.php'); ?>
                                         </div>
@@ -114,10 +114,5 @@
         var hash = window.location.hash;
         $('#homeTabs a[href="' + hash + '"]').tab('show');
         
-        /*$(document).ready(function () {
-        if (window.location.hash) {
-        $('.nav a[href="#'+window.location.hash+'"]').tab('show');
-         }*/
-});
     </script>
 </html>

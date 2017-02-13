@@ -31,6 +31,8 @@ use expense_reimbursement;
   Insert into userRole (userRole_Name, userRole_Desc) values ('Submitter','Default role for Submitter');
   
   CREATE TABLE expense_reports(
+  expense_reports_id  int(6) UNSIGNED NOT NULL PRIMARY KEY,
+  userRole_id int(6) UNSIGNED NOT NULL,
   explain_expense varchar(1000),
   expense_id varchar(20),
   number text,
@@ -47,9 +49,18 @@ create table routingCondition (
 );
 
 DROP TABLE routing;
-create table routing (
+create table routing 
   routing_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   routingRow_id int(10) UNSIGNED NOT NULL,
   routingColumn_id int(10) UNSIGNED NOT NULL,
   routingUser_id int(10) UNSIGNED NOT NULL
 );
+
+CREATE TABLE expense_activity(
+  expense_activity_id int (8) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  expense_reports_id int(8) NOT NULL,
+  date_of_submission DATE NOT NULL,
+  date_of_approval DATE,
+  status varchar(20)
+);
+
