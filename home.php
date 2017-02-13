@@ -99,6 +99,7 @@
         </div>
     </body>
     <script>
+    
         $('#homeTabs a').click(function(e) {
             e.preventDefault();
             $(this).tab('show');
