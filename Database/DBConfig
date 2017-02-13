@@ -32,6 +32,7 @@ use expense_reimbursement;
   
   CREATE TABLE expense_reports(
   expense_reports_id  int(6) UNSIGNED NOT NULL PRIMARY KEY,
+  userAssign_id int(6) UNSIGNED NOT NULL,
   userRole_id int(6) UNSIGNED NOT NULL,
   explain_expense varchar(1000),
   expense_id varchar(20),
@@ -49,7 +50,7 @@ create table routingCondition (
 );
 
 DROP TABLE routing;
-create table routing 
+create table routing (
   routing_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   routingRow_id int(10) UNSIGNED NOT NULL,
   routingColumn_id int(10) UNSIGNED NOT NULL,
