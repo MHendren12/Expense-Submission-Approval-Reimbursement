@@ -57,19 +57,19 @@
                     </div>
                 <div id="navbar" class="navbar-collapse collapse" style="float:none">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <?php
-                            if(isset($_SESSION['is_logged_in']))
-                            {
-                        ?>
-                       <a href="../home.php" style="font-weight:bold"><img alt="" class="img" src="images/logo.png" height="50px"></a>
-                        <?php
-                            }
-                            else {
-                        ?>
-                        <a href="../index.php"style="font-weight:bold"><img alt="" class="img" src="images/logo.png" height="50px"></a>
-                        <?php
-                            }
-                        ?>
+                            <?php
+                                if(isset($_SESSION['is_logged_in']))
+                                {
+                            ?>
+                           <a href="../home.php" style="font-weight:bold"><img alt="" class="img" src="images/logo.png" height="50px"></a>
+                            <?php
+                                }
+                                else {
+                            ?>
+                            <a href="../index.php"style="font-weight:bold"><img alt="" class="img" src="images/logo.png" height="50px"></a>
+                            <?php
+                                }
+                            ?>
                     </div>
                     <?php
                         if(!isset($_SESSION['is_logged_in']))
