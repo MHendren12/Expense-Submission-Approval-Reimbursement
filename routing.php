@@ -209,7 +209,7 @@
                             <form action="Routing/reassignapprover.php" method="post" id="reassignroutingcondition" style="display:none;" >
                                 <div align="left" style="padding:0px 15px 15px 15px">
                                     <h2 style="display:inline-block; padding-right:15px;">
-                                        New Condition:
+                                        New Approver:
                                     </h2>
                                     <select type="text" placeholder="User" class="form-control" id="Condition" name="userSearchBox" list = "list1" style="display:inline-block; width:80%">
                                         <?php

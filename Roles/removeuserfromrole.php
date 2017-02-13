@@ -4,9 +4,7 @@
 	 
     $userid = $_GET['user'];
     $role_id = $_GET['role'];
-    echo "hello";
-    echo $userid;
-    echo $role_id;
+
     
     
     $query = 'select * from user where user_id = "'.$userid.'"';
