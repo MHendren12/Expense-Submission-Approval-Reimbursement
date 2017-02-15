@@ -41,16 +41,22 @@
                        
                     <?php
                         $sql = "select user.user_id, user.user_fname, user.user_lname, userRole.userRole_Name, expense_activity.date_of_submission, 
-                        expense_activity.date_of_approval, expense_activity.expense_activity_id, 
-                        expense_activity.status from user left outer join userAssignment on 
-                        user.user_id=userAssignment.user_id left outer join userRole on userRole.userRole_id=userAssignment.userRole_id left outer join expense_reports on expense_reports.userAssign_id=userAssignment.userAssign_id 
-                        left outer join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id where user.user_id = ". $_SESSION['userid'];
+                        expense_activity.date_of_approval, expense_activity.expense_activity_id, expense_activity.status, routing.routingUser_id, routingCondition.routingConditionType_id
+                        from user
+                        left outer join userAssignment on user.user_id=userAssignment.user_id
+                        left outer join routing on routing.routingUser_id=user.user_id
+                        left outer join routingCondition on routingCondition.routingConditionType_id= user.user_id
+                        left outer join userRole on userRole.userRole_id=userAssignment.userRole_id
+                        left outer join expense_reports on expense_reports.userAssign_id=userAssignment.userAssign_id 
+                        left outer join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id 
+                        where routing.routingUser_id=user.user_id and routingCondition.routingConditionType_id= user.user_id";
 
                         $result = mysqli_query($conn, $sql);
                         
                         
                         while($row = mysqli_fetch_assoc($result))
-                        {     
+                        {   
+                            $user_id = $row['user_id'];
                             $expense_activity_id= $row['expense_activity_id'];
                             $userRole_Name = $row['userRole_Name'];
                             $fname= $row['user_fname'];
@@ -59,10 +65,10 @@
                             $date_of_approval = $row ['date_of_approval'];
                             $status = $row ['status'];
                             
-                            if($expense_activity_id == null){
+                            if($row == 0 && $expense_activity_id == null){
                                 echo "<td colspan='6' align='center'>No Results or History.</td>";
                             }
-                            else{
+                            else if ($expense_activity_id != null){
                     ?>
                                 <tr>
                                 <td><?php echo $expense_activity_id;?></td>
@@ -70,7 +76,7 @@
                                 <td><?php echo $date_of_approval;?></td>
                                 <td><?php echo $fname . " ". $lname ?></td>                            
                                 <td>
-                                <button data-toggle="modal" data-target="#view-modal" data-id="<?php //echo $row['user_id']; ?>" id="getUser" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i> View</button>
+                                <button data-toggle="modal" data-target="#view-modal" data-id="<?php echo $user_id; ?>" id="getexpenseform" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i> View</button>
                                 </td>
                                 <td><?php echo $status;?></td>
                                 </tr>
@@ -87,7 +93,7 @@
                           <div class="modal-content"> 
                           
                                <div class="modal-header"> 
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button> 
                                     <h4 class="modal-title">
                                     	<i class="glyphicon glyphicon-user"></i> Expense Form
                                     </h4> 
@@ -95,7 +101,7 @@
                                <div class="modal-body"> 
                                
                                	   <div id="modal-loader" style="display: none; text-align: center;">
-                               	   	<img src="ajax-loader.gif">
+                               	   	<img src="images/ajax-loader.gif">
                                	   </div>
                                     
                                    <!-- content will be load here -->                          
@@ -117,19 +123,19 @@
 <script>
 $(document).ready(function(){
 	
-	$(document).on('click', '#getUser', function(e){
+	$(document).on('click', '#getexpenseform', function(e){
 		
 		e.preventDefault();
 		
-		var uid = $(this).data('id');   // it will get id of clicked row
+		var user_id = $(this).data('id');   // it will get id of clicked row
 		
 		$('#dynamic-content').html(''); // leave it blank before ajax call
 		$('#modal-loader').show();      // load ajax loader
 		
 		$.ajax({
-			url: 'getuser.php',
+			url: 'getexpenseform.php',
 			type: 'POST',
-			data: 'id='+uid,
+			data: 'id='+user_id,
 			dataType: 'html'
 		})
 		.done(function(data){
