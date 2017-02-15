@@ -40,16 +40,33 @@
                 <tbody>
                        
                     <?php
-                        $sql = "select user.user_id, user.user_fname, user.user_lname, userRole.userRole_Name, expense_activity.date_of_submission, 
-                        expense_activity.date_of_approval, expense_activity.expense_activity_id, expense_activity.status, routing.routingUser_id, routingCondition.routingConditionType_id
-                        from user
-                        left outer join userAssignment on user.user_id=userAssignment.user_id
-                        left outer join routing on routing.routingUser_id=user.user_id
-                        left outer join routingCondition on routingCondition.routingConditionType_id= user.user_id
-                        left outer join userRole on userRole.userRole_id=userAssignment.userRole_id
-                        left outer join expense_reports on expense_reports.userAssign_id=userAssignment.userAssign_id 
-                        left outer join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id 
-                        where routing.routingUser_id=user.user_id and routingCondition.routingConditionType_id= user.user_id";
+                        $sql = "select user.user_id, user.user_fname, user.user_lname, expense_activity.date_of_submission,
+                                expense_activity.date_of_approval, expense_activity.expense_activity_id, expense_activity.status, routing.routingUser_id
+                                from user
+                                 left join userAssignment on user.user_id=userAssignment.user_id
+                                 
+                                left join routing on routing.routingUser_id=user.user_id
+                                    
+                                left join expense_reports on expense_reports.userAssign_id=userAssignment.userAssign_id 
+                                   
+                                left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id 
+                                  
+                                where routing.routingUser_id=user.user_id
+                                
+                                union
+                                
+                                select user.user_id, user.user_fname, user.user_lname, expense_activity.date_of_submission,
+                                expense_activity.date_of_approval, expense_activity.expense_activity_id, expense_activity.status, routingCondition.routingConditionType_id
+                                from user
+                                left join userAssignment on user.user_id=userAssignment.user_id
+                                 
+                                left join expense_reports on expense_reports.userAssign_id=userAssignment.userAssign_id 
+                                   
+                                left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id 
+                                  
+                                left join routingCondition on routingCondition.routingConditionType_id= user.user_id
+                                                                         
+                                where routingCondition.routingConditionType_id= user.user_id";
 
                         $result = mysqli_query($conn, $sql);
                         
@@ -88,7 +105,7 @@
                </tbody>
             </table>            
         	<div class="container">
-                <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                      <div class="modal-dialog"> 
                           <div class="modal-content"> 
                           
@@ -118,11 +135,9 @@
             </div>               
         </div>
     </div>	
-</body>
 
 <script>
 $(document).ready(function(){
-	
 	$(document).on('click', '#getexpenseform', function(e){
 		
 		e.preventDefault();

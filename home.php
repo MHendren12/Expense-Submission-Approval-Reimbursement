@@ -8,15 +8,14 @@
     <head>
 
         <link href="/Styles/css/customStyles.css" rel="stylesheet">
-        
-    </head>
-    <body>
         <?php
             include("Navbar/header.php");
             if($_SESSION['userid'] == null){
                 header("Location: index.php");
             }
         ?>
+    </head>
+    <body>
         <div class="container loggedInContainer" align = "center">
             <div class="row">
                 <div class="well panel panel-default" >

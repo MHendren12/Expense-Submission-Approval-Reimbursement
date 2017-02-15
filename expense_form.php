@@ -24,12 +24,6 @@ function DoCheckUncheckDisplay(d,dchecked,dunchecked)
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!--<link href="/css/style.css" rel="stylesheet">-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-   <script src="Scripts/bootstrap.min.js"></script>
-  <title>Pulldown</title>
-</head>
 <style type="text/css">
   
 </style>
