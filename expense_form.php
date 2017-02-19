@@ -29,6 +29,8 @@ function DoCheckUncheckDisplay(d,dchecked,dunchecked)
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
    <script src="Scripts/bootstrap.min.js"></script>
   <title>Pulldown</title>
+  <link href="/Styles/css/customStyles.css" rel="stylesheet">
+  <link href="/Styles/css/bootstrap.css" rel="stylesheet">
 </head>
 <style type="text/css">
   
@@ -63,7 +65,7 @@ What type of expense?<br>
 <div id="other_expense", style="display:none">
   <?php include("other_expense_form.php")?>
 </div>
-
+<br>
 <input class="btn btn-default" type= "submit" id="submit" value="submit" name="submit" value="">
 </div>
 </form>

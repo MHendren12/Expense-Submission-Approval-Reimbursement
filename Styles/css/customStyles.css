@@ -79,7 +79,10 @@ a#close:hover{
     margin-left: -25%;
     font-family:'Raleway',sans-serif
     }
+
 }
 
-
+.i [type="text"],[type="date"]{
+    color: red;
+}
 
