@@ -24,6 +24,7 @@ function DoCheckUncheckDisplay(d,dchecked,dunchecked)
 
 <!DOCTYPE html>
 <html>
+<<<<<<< HEAD
 <head>
   <!--<link href="/css/style.css" rel="stylesheet">-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -32,6 +33,8 @@ function DoCheckUncheckDisplay(d,dchecked,dunchecked)
   <link href="/Styles/css/customStyles.css" rel="stylesheet">
   <link href="/Styles/css/bootstrap.css" rel="stylesheet">
 </head>
+=======
+>>>>>>> 6b8db872b1ff80ee2eaf00b412eade45e8cb44c1
 <style type="text/css">
   
 </style>
