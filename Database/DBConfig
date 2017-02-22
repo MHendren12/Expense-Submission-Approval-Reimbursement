@@ -30,15 +30,30 @@ use expense_reimbursement;
   Insert into userRole (userRole_Name, userRole_Desc) values ('Approver','Default role for Approver');
   Insert into userRole (userRole_Name, userRole_Desc) values ('Submitter','Default role for Submitter');
   
+  drop table expense_reports;
   CREATE TABLE expense_reports(
-  expense_reports_id  int(6) UNSIGNED NOT NULL PRIMARY KEY,
-  userAssign_id int(6) UNSIGNED NOT NULL,
-  userRole_id int(6) UNSIGNED NOT NULL,
-  explain_expense varchar(1000),
-  expense_id varchar(20),
-  number text,
-  date text,
-  file_upload blob
+  expense_reports_id  int(6) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  submitter_id int(6) UNSIGNED NOT NULL,
+  approver_id int(6) UNSIGNED NOT NULL,
+  expense_types varchar(255) NOT NULL,
+  expense_fields text NOT NULL,
+  submission_date date,
+  expensereport_status
+  );
+  
+  drop TABLE attachments;
+  create table attachments(
+  attachment_id int(6) AUTO_INCREMENT not null primary key,
+  expenseform_id int(6) not null,
+  uploadfile blob
+  );
+  
+  drop table expensereport_history;
+  create table expensereport_history(
+  history_id int(6) UNSIGNED AUTO_INCREMENT not null primary key,
+  expense_reports_id  int(6) UNSIGNED NOT NULL,
+  approver_id int(6) UNSIGNED NOT NULL,
+  revieweddate date
   );
 
 
@@ -60,8 +75,6 @@ create table routing (
 CREATE TABLE expense_activity(
   expense_activity_id int (8) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   expense_reports_id int(8) NOT NULL,
-  date_of_submission DATE NOT NULL,
-  date_of_approval DATE,
   status varchar(20)
 );
 
