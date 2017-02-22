@@ -38,7 +38,7 @@ use expense_reimbursement;
   expense_types varchar(255) NOT NULL,
   expense_fields text NOT NULL,
   submission_date date,
-  expensereport_status
+  expensereport_status varchar(15) not null
   );
   
   drop TABLE attachments;
