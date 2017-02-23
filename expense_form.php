@@ -2,6 +2,7 @@
 
 <?php
   session_start();
+  $id = intval($_REQUEST['id']);
   //include("Database/config.php");
   //$conn = getConnection();
 ?>
@@ -24,7 +25,6 @@ function DoCheckUncheckDisplay(d,dchecked,dunchecked)
 
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
 <head>
   <!--<link href="/css/style.css" rel="stylesheet">-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -33,21 +33,19 @@ function DoCheckUncheckDisplay(d,dchecked,dunchecked)
   <link href="/Styles/css/customStyles.css" rel="stylesheet">
   <link href="/Styles/css/bootstrap.css" rel="stylesheet">
 </head>
-=======
->>>>>>> 6b8db872b1ff80ee2eaf00b412eade45e8cb44c1
 <style type="text/css">
   
 </style>
 
 <body>
-<form action="form_insert.php" method="POST" enctype="multipart/form-data" > 
+<form action="Forms/submitform.php" method="POST" enctype="multipart/form-data" > 
 What type of expense?<br>
 
-  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'air_expense', '')"  value="Air">Air Travel<br>
-  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'land_expense', '')"  value="Land">Land Travel<br>
-  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'hotel_expense', '')"  value="Hotel">Hotel<br>
-  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'food_expense', '')" value="Food">Food<br>
-  <input type="checkbox" onclick="DoCheckUncheckDisplay(this, 'other_expense', '')" value="Other">Other
+  <input type="checkbox" name="Air" id="Air" onclick="DoCheckUncheckDisplay(this, 'air_expense', '')"  value="Air">Air Travel<br>
+  <input type="checkbox" name="Land" id="Land"onclick="DoCheckUncheckDisplay(this, 'land_expense', '')"  value="Land">Land Travel<br>
+  <input type="checkbox" name="Hotel" id="Hotel" onclick="DoCheckUncheckDisplay(this, 'hotel_expense', '')"  value="Hotel">Hotel<br>
+  <input type="checkbox" name="Food" id="Food" onclick="DoCheckUncheckDisplay(this, 'food_expense', '')" value="Food">Food<br>
+  <input type="checkbox" name="Other" id="Other" onclick="DoCheckUncheckDisplay(this, 'other_expense', '')" value="Other">Other
 <div>
 <div id="air_expense", style="display:none">
  <?php include("air_expense_form.php")?>
@@ -73,4 +71,66 @@ What type of expense?<br>
 </div>
 </form>
 </body>
+<script>
+    $(document).ready(function()
+    {
+        debugger;
+        var form_id = " <?php echo $id ?> ";
+    
+    
+    
+        $.ajax({
+			url: 'WebService/forminfo.php',
+			type: 'POST',
+			data: { "val": "getExpenseTypes","formid":form_id },
+
+		})
+		.done(function(data){
+		    var expenseTypes = JSON.parse(data);
+            for (var i = 0; i<= expenseTypes.length-1; i++)
+            {
+                var fieldId = expenseTypes[i].fieldId;
+                var fieldValue = expenseTypes[i].fieldValue;
+                var checked = fieldValue == "checked" ? true : false;
+                var expenseTypeField = document.getElementById(fieldId);
+                $(expenseTypeField).attr("checked",checked);
+                $(expenseTypeField).trigger("onclick");
+            }
+           
+		})
+		.fail(function(){
+			
+		});
+		
+		$.ajax({
+			url: 'WebService/forminfo.php',
+			type: 'POST',
+			data: { "val": "getExpenseFields","formid":form_id },
+
+		})
+		.done(function(data){
+		    var expenseFields = JSON.parse(data);
+            for (var i = 0; i<= expenseFields.length-1; i++)
+            {
+                debugger;
+                var fieldId = expenseFields[i].fieldId;
+                var fieldValue = expenseFields[i].fieldValue;
+                var expenseTypeField = document.getElementById(fieldId);
+                if (fieldId.indexOf("date")> -1)
+                {
+
+                }
+                $(expenseTypeField).val(fieldValue);
+
+                
+            }
+           
+		})
+		.fail(function(){
+			
+		});
+    });
+
+     
+</script>
 </html>

@@ -37,7 +37,7 @@ use expense_reimbursement;
   approver_id int(6) UNSIGNED NOT NULL,
   expense_types varchar(255) NOT NULL,
   expense_fields text NOT NULL,
-  submission_date date,
+  submission_date datetime,
   expensereport_status varchar(15) not null
   );
   
@@ -52,8 +52,8 @@ use expense_reimbursement;
   create table expensereport_history(
   history_id int(6) UNSIGNED AUTO_INCREMENT not null primary key,
   expense_reports_id  int(6) UNSIGNED NOT NULL,
-  approver_id int(6) UNSIGNED NOT NULL,
-  revieweddate date
+  reviewer_id int(6) UNSIGNED NOT NULL,
+  revieweddate datetime
   );
 
 

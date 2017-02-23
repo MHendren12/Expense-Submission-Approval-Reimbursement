@@ -1,3 +1,4 @@
+
 <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -17,6 +18,7 @@
                   <br>
                     <?php
                     include 'Account/calendar.php';
+                    //include("WebService/accountinfo.php");
                      
                     $calendar = new Calendar();
                      
@@ -31,8 +33,7 @@
             		<tr>
             			<th>ID #</th>
             			<th>Submission Date</th>
-            			<th>Approval Date</th>
-            			<th>Approver</th>
+            			<th>Submitter</th>
             			<th>View Form</th>
             			<th>Status</th>
             		</tr>
@@ -40,60 +41,56 @@
                 <tbody>
                        
                     <?php
-                        $sql = "select user.user_id, user.user_fname, user.user_lname, expense_activity.date_of_submission,
-                                expense_activity.date_of_approval, expense_activity.expense_activity_id, expense_activity.status, routing.routingUser_id
-                                from user
-                                 left join userAssignment on user.user_id=userAssignment.user_id
-                                 
+                        $sql = "select user.user_id , user.user_fname, user.user_lname, expense_reports.submission_date, routing.routingUser_id, expense_reports.expense_reports_id, expense_reports.expensereport_status
+                                from expense_reports
+                                
+                                left join user on user.user_id  = expense_reports.approver_id
+                                
                                 left join routing on routing.routingUser_id=user.user_id
-                                    
-                                left join expense_reports on expense_reports.userAssign_id=userAssignment.userAssign_id 
-                                   
-                                left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id 
-                                  
-                                where routing.routingUser_id=user.user_id
+
+                                where routing.routingUser_id=8
                                 
                                 union
                                 
-                                select user.user_id, user.user_fname, user.user_lname, expense_activity.date_of_submission,
-                                expense_activity.date_of_approval, expense_activity.expense_activity_id, expense_activity.status, routingCondition.routingConditionType_id
-                                from user
-                                left join userAssignment on user.user_id=userAssignment.user_id
-                                 
-                                left join expense_reports on expense_reports.userAssign_id=userAssignment.userAssign_id 
-                                   
-                                left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id 
+                                select user.user_id as submitter_id, user.user_fname, user.user_lname,expense_reports.submission_date, routingCondition.routingConditionType_id, expense_reports.expense_reports_id, expense_reports.expensereport_status
+                                from expense_reports
+                                
+                                left join user on user.user_id  = expense_reports.submitter_id
                                   
                                 left join routingCondition on routingCondition.routingConditionType_id= user.user_id
-                                                                         
-                                where routingCondition.routingConditionType_id= user.user_id";
+                                
+                                where routingCondition.routingConditionType_id= 8";
 
                         $result = mysqli_query($conn, $sql);
                         
                         
                         while($row = mysqli_fetch_assoc($result))
                         {   
+                            $expense_reports_id = $row['expense_reports_id'];
                             $user_id = $row['user_id'];
-                            $expense_activity_id= $row['expense_activity_id'];
-                            $userRole_Name = $row['userRole_Name'];
                             $fname= $row['user_fname'];
                             $lname= $row['user_lname'];
-                            $date_of_submission = $row ['date_of_submission'];
-                            $date_of_approval = $row ['date_of_approval'];
-                            $status = $row ['status'];
+                            $submission_date = $row ['submission_date'];
+                            $submitter_id = $row['routingConditionType_id'];
+                            $status = $row ['expensereport_status'];
+                            $submitterName = getUserNameById($submitter_id, $conn);
                             
                             if($row == 0 && $expense_activity_id == null){
                                 echo "<td colspan='6' align='center'>No Results or History.</td>";
                             }
-                            else if ($expense_activity_id != null){
+                            else{
                     ?>
                                 <tr>
-                                <td><?php echo $expense_activity_id;?></td>
-                                <td><?php echo $date_of_submission;?></td>
-                                <td><?php echo $date_of_approval;?></td>
-                                <td><?php echo $fname . " ". $lname ?></td>                            
+                                <td><?php echo $expense_reports_id;?></td>
+                                <td><?php echo $submission_date;?></td>
                                 <td>
-                                <button data-toggle="modal" data-target="#view-modal" data-id="<?php echo $user_id; ?>" id="getexpenseform" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i> View</button>
+                                    <?php 
+                                        echo $submitterName;
+                                        // $fname . " ". $lname;
+                                    ?>
+                                </td>                            
+                                <td>
+                                <button data-toggle="modal" data-target="#view-modal" data-id="<?php echo $expense_reports_id; ?>" id="getexpenseform" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i> View</button>
                                 </td>
                                 <td><?php echo $status;?></td>
                                 </tr>
@@ -138,23 +135,23 @@
 
 <script>
 $(document).ready(function(){
+    
 	$(document).on('click', '#getexpenseform', function(e){
 		
 		e.preventDefault();
 		
-		var user_id = $(this).data('id');   // it will get id of clicked row
+		var formid = $(this).data('id');   // it will get id of clicked row
 		
 		$('#dynamic-content').html(''); // leave it blank before ajax call
 		$('#modal-loader').show();      // load ajax loader
 		
 		$.ajax({
-			url: 'getexpenseform.php',
+			url: 'expense_form.php',
 			type: 'POST',
-			data: 'id='+user_id,
+			data: 'id='+formid,
 			dataType: 'html'
 		})
 		.done(function(data){
-			console.log(data);	
 			$('#dynamic-content').html('');    
 			$('#dynamic-content').html(data); // load response 
 			$('#modal-loader').hide();		  // hide ajax loader	
