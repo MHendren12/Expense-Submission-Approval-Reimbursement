@@ -82,6 +82,14 @@
         return $isAdmin;
         
     }
+    function getUserNameById($user_id, $conn)
+    {
+        $sql = "SELECT user_fname, user_lname FROM user WHERE user_id= '".$user_id."'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $users_name = $row['user_fname']." ".$row['user_lname'];
+        return $users_name;
+    }
     
     
     

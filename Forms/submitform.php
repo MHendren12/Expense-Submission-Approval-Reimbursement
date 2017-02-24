@@ -45,8 +45,8 @@
     //$distance_traveled = mysqli_real_escape_string($db, $mile_to_money);
     $date = mysqli_real_escape_string($db, $_POST['land_date']);
     $land_date = date('d-M-Y', strtotime($date));
+    $distance_traveled = mysqli_real_escape_string($conn, $_POST['distance_traveled']);
     
-        
     $hotel_explain_expense = mysqli_real_escape_string($conn, $_POST['hotel_explain_expense']);
     $hotel_amount = mysqli_real_escape_string($conn, $_POST['hotel_amount']);
     $date = mysqli_real_escape_string($db, $_POST['hotel_date']);
@@ -70,6 +70,7 @@
     $fieldValues .= '{"fieldId":"air_return_date","fieldValue":"' . $air_return_date. '"},';
     $fieldValues .= '{"fieldId":"land_explain_expense","fieldValue":"' . $land_explain_expense. '"},';
     $fieldValues .= '{"fieldId":"land_date", "fieldValue":"' . $land_date. '"},';
+    $fieldValues .= '{"fieldId":"distance_traveled", "fieldValue":"' . $distance_traveled. '"},';
     $fieldValues .= '{"fieldId":"hotel_explain_expense", "fieldValue":"' . $hotel_explain_expense. '"},';
     $fieldValues .= '{"fieldId":"hotel_amount", "fieldValue":"' . $hotel_amount. '"},';
     $fieldValues .= '{"fieldId":"food_explain_expense", "fieldValue":"' . $food_explain_expense. '"},';

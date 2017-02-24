@@ -9,7 +9,7 @@ session_start();
     
     if(isset($_POST['submit'])) 
     {
-    
+        echo $id;
         $fname  = explode(" ",$_POST['name'])[0];
         $lname = explode(" ",$_POST['name'])[1];
         $email  = $_POST['email'];
@@ -33,20 +33,20 @@ session_start();
              $saltedPW =  $pass . $salt;
              $hashedPW = hash('sha256', $saltedPW);
              
-            $sql = "update user set user_fname='".$fname."',  user_lname='".$lname."', user_pass='".$hashedPW."', salt='".$salt."', user_dob='".$dob."' where user_id='".$id."'";
+            $sql = "update user set user_fname='".$fname."',  user_lname='".$lname."', user_email='".$email."', user_pass='".$hashedPW."', salt='".$salt."', user_dob='".$dob."' where user_id='".$id."'";
             $res = mysqli_query($conn, $sql)
                 or die(err);
         }
         else
         {
-            $sql = "update user set user_fname='".$fname."',  user_lname='".$lname."', user_dob='".$dob."' where user_id='".$id."'";
+            $sql = "update user set user_fname='".$fname."',  user_lname='".$lname."',user_email='".$email."', user_dob='".$dob."' where user_id='".$id."'";
             $res = mysqli_query($conn, $sql)
                 or die(mysqli_error($conn));
         }
         if($_GET['id'] != null){
-            header("Location: ../index.php");
+            //header("Location: ../index.php");
         } else{
-            header("Location: ".$redirectUrl);
+            //header("Location: ".$redirectUrl);
         }   
         
     }

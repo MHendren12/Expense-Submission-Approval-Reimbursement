@@ -34,6 +34,7 @@
             			<th>ID #</th>
             			<th>Submission Date</th>
             			<th>Submitter</th>
+            			<th>Current Approver</th>
             			<th>View Form</th>
             			<th>Status</th>
             		</tr>
@@ -41,7 +42,25 @@
                 <tbody>
                        
                     <?php
-                        $sql = "select user.user_id , user.user_fname, user.user_lname, expense_reports.submission_date, routing.routingUser_id, expense_reports.expense_reports_id, expense_reports.expensereport_status
+                        $sql = "select * from expense_reports
+                                join user on user.user_id = expense_reports.submitter_id
+                                where submitter_id = '".$_SESSION['userid']."'
+                                union
+                                select * from expense_reports
+                                join user on user.user_id = expense_reports.approver_id
+                                where approver_id = '".$_SESSION['userid']."'";
+                                
+                                
+                                /*
+                                "select * from expense_reports
+                                join user on user.user_id = expense_reports.submitter_id
+                                where submitter_id = 11
+                                union
+                                select * from expense_reports
+                                join user on user.user_id = expense_reports.approver_id
+                                where approver_id = 11";
+                                */
+                        /*$sql = "select user.user_id , user.user_fname, user.user_lname, expense_reports.submission_date, routing.routingUser_id, expense_reports.expense_reports_id, expense_reports.expensereport_status
                                 from expense_reports
                                 
                                 left join user on user.user_id  = expense_reports.approver_id
@@ -60,45 +79,44 @@
                                 left join routingCondition on routingCondition.routingConditionType_id= user.user_id
                                 
                                 where routingCondition.routingConditionType_id= 8";
-
+*/
                         $result = mysqli_query($conn, $sql);
+                        $num_rows = mysqli_num_rows($result);
                         
-                        
-                        while($row = mysqli_fetch_assoc($result))
-                        {   
-                            $expense_reports_id = $row['expense_reports_id'];
-                            $user_id = $row['user_id'];
-                            $fname= $row['user_fname'];
-                            $lname= $row['user_lname'];
-                            $submission_date = $row ['submission_date'];
-                            $submitter_id = $row['routingConditionType_id'];
-                            $status = $row ['expensereport_status'];
-                            $submitterName = getUserNameById($submitter_id, $conn);
-                            
-                            if($row == 0 && $expense_activity_id == null){
-                                echo "<td colspan='6' align='center'>No Results or History.</td>";
-                            }
-                            else{
+                        if ($num_rows > 0)
+                        {
+                            while($row = mysqli_fetch_assoc($result))
+                            {   
+                                
+                                $expense_reports_id = $row['expense_reports_id'];
+                                $user_id = $row['user_id'];
+                                $fname = $row['user_fname'];
+                                $lname = $row['user_lname'];
+                                $name = $fname . " ". $lname;
+                                $submission_date = $row ['submission_date'];
+                                $approver_id = $row['approver_id'];
+                                $status = $row ['expensereport_status'];
+                                $approver = getUserNameById($approver_id, $conn);
                     ?>
                                 <tr>
-                                <td><?php echo $expense_reports_id;?></td>
-                                <td><?php echo $submission_date;?></td>
-                                <td>
-                                    <?php 
-                                        echo $submitterName;
-                                        // $fname . " ". $lname;
-                                    ?>
-                                </td>                            
-                                <td>
-                                <button data-toggle="modal" data-target="#view-modal" data-id="<?php echo $expense_reports_id; ?>" id="getexpenseform" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i> View</button>
-                                </td>
-                                <td><?php echo $status;?></td>
+                                    <td><?php echo $expense_reports_id; ?></td>
+                                    <td><?php echo $submission_date; ?></td>
+                                    <td><?php echo $name; ?></td>    
+                                    <td><?php echo $approver; ?></td>
+                                    <td>
+                                        <button data-toggle="modal" data-target="#view-modal" data-id="<?php echo $expense_reports_id; ?>" id="getexpenseform" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i> View</button>
+                                    </td>
+                                    <td><?php echo $status;?></td>
                                 </tr>
-                            <?php
+                        <?php
                             }
                         }
+                        else {
+                            echo "<td colspan='6' align='center'>No Results or History.</td>";
+                            echo $_SESSION['userid'];
+                        }
+                    
                ?>
-            
                </tbody>
             </table>            
         	<div class="container">

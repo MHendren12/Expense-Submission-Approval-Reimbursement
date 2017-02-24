@@ -8,18 +8,19 @@
 ?>
 
 <script>
-function DoCheckUncheckDisplay(d,dchecked,dunchecked)
+function DoCheckUncheckDisplay(element, sectionId)
 {
-   if( d.checked == true )
-   {
-      document.getElementById(dchecked).style.display = "block";
-      document.getElementById(dunchecked).style.display = "none";
-   }
-   else
-   {
-      document.getElementById(dchecked).style.display = "none";
-      document.getElementById(dunchecked).style.display = "block";
-   }
+    var section = document.getElementById(sectionId);
+    if( element.checked == true )
+    {
+      
+        $(section).css("display", "block");
+        //document.getElementById(dunchecked).style.display = "none";
+    }
+    else
+    {
+        $(section).css("display", "none");
+    }
 }
 </script>
 
@@ -41,11 +42,11 @@ function DoCheckUncheckDisplay(d,dchecked,dunchecked)
 <form action="Forms/submitform.php" method="POST" enctype="multipart/form-data" > 
 What type of expense?<br>
 
-  <input type="checkbox" name="Air" id="Air" onclick="DoCheckUncheckDisplay(this, 'air_expense', '')"  value="Air">Air Travel<br>
-  <input type="checkbox" name="Land" id="Land"onclick="DoCheckUncheckDisplay(this, 'land_expense', '')"  value="Land">Land Travel<br>
-  <input type="checkbox" name="Hotel" id="Hotel" onclick="DoCheckUncheckDisplay(this, 'hotel_expense', '')"  value="Hotel">Hotel<br>
-  <input type="checkbox" name="Food" id="Food" onclick="DoCheckUncheckDisplay(this, 'food_expense', '')" value="Food">Food<br>
-  <input type="checkbox" name="Other" id="Other" onclick="DoCheckUncheckDisplay(this, 'other_expense', '')" value="Other">Other
+  <input type="checkbox" name="Air" id="Air" onchange="DoCheckUncheckDisplay(this,'air_expense')"  value="Air">Air Travel<br>
+  <input type="checkbox" name="Land" id="Land"onchange="DoCheckUncheckDisplay(this,'land_expense')"  value="Land">Land Travel<br>
+  <input type="checkbox" name="Hotel" id="Hotel" onchange="DoCheckUncheckDisplay(this,'hotel_expense')"  value="Hotel">Hotel<br>
+  <input type="checkbox" name="Food" id="Food" onchange="DoCheckUncheckDisplay(this,'food_expense')" value="Food">Food<br>
+  <input type="checkbox" name="Other" id="Other" onchange="DoCheckUncheckDisplay(this,'other_expense')" value="Other">Other
 <div>
 <div id="air_expense", style="display:none">
  <?php include("air_expense_form.php")?>
@@ -94,7 +95,7 @@ What type of expense?<br>
                 var checked = fieldValue == "checked" ? true : false;
                 var expenseTypeField = document.getElementById(fieldId);
                 $(expenseTypeField).attr("checked",checked);
-                $(expenseTypeField).trigger("onclick");
+                $(expenseTypeField).trigger("change");
             }
            
 		})
