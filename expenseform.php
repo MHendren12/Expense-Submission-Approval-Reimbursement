@@ -65,7 +65,7 @@ What type of expense?<br>
     $(document).ready(function()
     {
         debugger;
-        var form_id = " <?php echo $id ?> ";
+        var form_id = "<?php echo $id ?>";
     
     
     
@@ -119,7 +119,7 @@ What type of expense?<br>
 		.fail(function(){
 			
 		});
-    });
+});
 
      
 </script>

@@ -1,6 +1,4 @@
 <?php
-   
- include ('Database/config.php');
  
  if (isset($_REQUEST['id'])) {
    

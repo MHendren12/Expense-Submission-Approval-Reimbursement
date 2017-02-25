@@ -3,7 +3,7 @@
     include("../Database/config.php");		 
     $conn = getConnection();
     $sid = $_SESSION['userid'];
-    
+    echo $sid;
     $getApprover = "select routing.routingUser_id from routing
     left join routingCondition on routingCondition.routingCondition_id = routing.routingRow_id
     where routingCondition.routingConditionType_id = '".$sid."'";
