@@ -15,6 +15,43 @@
         ?>
     </head>
     <body>
+        <div class="container">
+            <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                 <div class="modal-dialog" style="width:70%"> 
+                      <div class="modal-content"> 
+                      
+                           <div class="modal-header"> 
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button> 
+                                <h4 class="modal-title">
+                                	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
+                                </h4> 
+                           </div> 
+                           <div class="modal-body"> 
+                           
+                           	   <div id="modal-loader" style="display: none; text-align: center;">
+                           	   	<img src="images/ajax-loader.gif">
+                           	   </div>
+                               <div class="row">
+                                    <div class="col-lg-1"></div>
+                                    <div class="col-lg-10">
+                                        <div class="well panel panel-default" >
+                                            <div class="panel-body">                                       
+                                                <!-- content will be load here -->                          
+                                                <div id="dynamic-content"></div>   
+                                            </div>
+                                            <div class="col-lg-1"></div>
+                                        </div>
+                                    </div>
+                               </div> 
+                            </div> 
+                            <div class="modal-footer"> 
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+                            </div> 
+                            
+                     </div> 
+                  </div>
+           </div>
+        </div>         
         <div class="container loggedInContainer" align = "center">
             <div class="row">
                 <div class="well panel panel-default" >
@@ -58,13 +95,12 @@
                                     <div class="tab-content" align="left">
                                         <div id="home" class="tab-pane fade in active">
                                             <h2>Your RASE Home</h2>
-                                            <?php 
-                                            include_once('info.php'); ?>
+                                            <?php include_once('info.php'); ?>
                                         </div>
                                         <div id="expenseform" class="tab-pane fade">
                                             <h2>Create a New Expense Form</h2>
                                             <?php include_once('expenseform.php'); ?>
-                                        </div>
+                                        </div>                                        
                                         <div id="mysaved" class="tab-pane fade">
                                             <h2>My Saved</h2>
                                             <?php include_once('mysaved.php'); ?>
@@ -76,7 +112,7 @@
                                         <div id="myprocessed" class="tab-pane fade">
                                             <h2>My Processed</h2>
                                             <?php include_once('myprocessed.php'); ?>
-                                        </div>
+                                        </div>                                        
                                         <div id="routing" class="tab-pane fade">
                                             <h2>Routing</h2>
                                             <?php include_once('routing.php'); ?>
@@ -113,7 +149,7 @@
         // on load of the page: switch to the currently selected tab
         var hash = window.location.hash;
         $('#homeTabs a[href="' + hash + '"]').tab('show');
-        
+
         // generate view dialog
         $(document).ready(function(){
         	$(document).on('click', '#getexpenseform', function(e){
@@ -144,7 +180,7 @@
         		
         	});
         	
-        });
+        });       
         
     </script>
 </html>

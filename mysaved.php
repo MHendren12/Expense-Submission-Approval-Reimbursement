@@ -40,43 +40,6 @@
                     ?>
                </tbody>
             </table>            
-            <div class="container">
-                <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                     <div class="modal-dialog" style="width:70%"> 
-                          <div class="modal-content"> 
-                          
-                               <div class="modal-header"> 
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button> 
-                                    <h4 class="modal-title">
-                                    	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
-                                    </h4> 
-                               </div> 
-                               <div class="modal-body"> 
-                               
-                               	   <div id="modal-loader" style="display: none; text-align: center;">
-                               	   	<img src="images/ajax-loader.gif">
-                               	   </div>
-                                   <div class="row">
-                                        <div class="col-lg-1"></div>
-                                        <div class="col-lg-10">
-                                            <div class="well panel panel-default" >
-                                                <div class="panel-body">                                       
-                                                    <!-- content will be load here -->                          
-                                                    <div id="dynamic-content"></div>   
-                                                </div>
-                                                <div class="col-lg-1"></div>
-                                            </div>
-                                        </div>
-                                   </div> 
-                                </div> 
-                                <div class="modal-footer"> 
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
-                                </div> 
-                                
-                         </div> 
-                      </div>
-               </div>
-            </div>               
         </div>
     </div>	
 
