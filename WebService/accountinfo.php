@@ -192,7 +192,7 @@
             
     }
     
-    function isApproverTable($user_id, $conn){
+    function getApproverTable($user_id, $conn){
                     
     $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id=" . $user_id .
             " order by expense_reports.submission_date desc";
@@ -210,7 +210,7 @@
                 $lname= $row['user_lname'];
                 $submission_date = $row ['submission_date'];
                 $revieweddate = $row ['revieweddate'];
-                $expensereport_status = $row ['status'];
+                $expensereport_status = $row ['expensereport_status'];
 ?>
                 <tr>
                 <td><?php echo $expense_activity_id;?></td>
@@ -230,7 +230,7 @@
                 }
         }
     
-    function isSubmitterTable($user_id, $conn){
+    function getSubmitterTable($user_id, $conn){
 
     $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id=expense_reports.approver_id and routingCondition.routingConditionType_id=" . $user_id.
             " order by expense_reports.submission_date desc";
@@ -248,7 +248,7 @@
                 $lname= $row['user_lname'];
                 $submission_date = $row ['submission_date'];
                 $revieweddate = $row ['revieweddate'];
-                $expensereport_status = $row ['status'];
+                $expensereport_status = $row ['expensereport_status'];
 
 ?>
                 <tr>
@@ -268,7 +268,7 @@
                     echo "<td colspan='7' align='center'>No Results or History.</td>";
                 }
     }
-function isAdminTable($conn){
+function getAdminTable($conn){
                     
     $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id is not null and user.user_id=expense_reports.approver_id" .
             " order by expense_reports.submission_date desc";

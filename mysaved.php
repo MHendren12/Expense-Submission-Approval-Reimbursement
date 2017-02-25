@@ -16,18 +16,21 @@
             	</thead>
                 <tbody>
                     <?php
+                    // First checks if expense form is set to Saved, then
+                    // checks whether the user role is admin, submitter, approver, or submitter and approver (lower admin version)
+                    // then assigns that current user a table based on thier session user id.
                     if(isMySaved($_SESSION['userid'], $conn)){
                         if(isadmin($_SESSION['userid'], $conn)){
-                            isAdminTable($conn);
+                            getAdminTable($conn);
                         }
                         else if(isSubmitter($_SESSION['userid'], $conn)){
-                            isSubmitterTable($_SESSION['userid'], $conn);
+                            getSubmitterTable($_SESSION['userid'], $conn);
                         }
                         else if(isApprover($_SESSION['userid'], $conn)){
-                            isApproverTable($_SESSION['userid'], $conn);
+                            getApproverTable($_SESSION['userid'], $conn);
                         }
                         else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
-                            isSubmitterTable($_SESSION['userid'], $conn);
+                            getSubmitterTable($_SESSION['userid'], $conn);
                             isApproverTable($_SESSION['userid'], $conn);
                         }
                         else{
