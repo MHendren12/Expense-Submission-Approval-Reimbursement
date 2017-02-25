@@ -21,7 +21,8 @@
                       <div class="modal-content"> 
                       
                            <div class="modal-header"> 
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button> 
+                                <button align="left" type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                <button data-toggle="modal" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
                                 <h4 class="modal-title">
                                 	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
                                 </h4> 
@@ -85,6 +86,7 @@
                                 <li><a data-toggle="tab" href="#routing"><h4>Routing</h4></a></li>
                                 <?php
                                     }
+                                    
                                 ?>                              
                             </ul>
                             <br><br>

@@ -91,6 +91,19 @@
         return $users_name;
     }
     
+    function getExpenseTableQuerry(){
+        $expenseTableQuerry = "select user.user_id, user.user_fname, user_lname, routingColumn_id, routingCondition.routingConditionType_id, expense_reports.approver_id, expense_reports.submitter_id,
+            expense_reports.submission_date, expensereport_history.revieweddate, expense_reports.expense_reports_id, expense_activity.expense_activity_id, expense_reports.expensereport_status
+            from routing
+            left join user on routing.routingUser_id = user.user_id 
+            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
+            left join userAssignment on userAssignment.user_id=user.user_id
+            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
+            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
+            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id";
+        return $expenseTableQuerry;
+    }
+    
     function isSubmitter($user_id, $conn)
     {
         $sql = "SELECT * FROM user left join userAssignment on user.user_id=userAssignment.user_id WHERE user.user_id=" .$user_id. " and userAssignment.userRole_id=3";
@@ -144,15 +157,7 @@
     
     
     function isApprovalDate($user_id, $conn){
-    $sql = "select user.user_id, routingColumn_id, expensereport_history.revieweddate
-            from routing
-            left join user on routing.routingUser_id = user.user_id 
-            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
-            left join userAssignment on userAssignment.user_id=user.user_id
-            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
-            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
-            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
-            where expense_reports.expense_reports_id is not null and user.user_id=" . $user_id .
+    $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id=" . $user_id .
             " order by expense_reports.submission_date desc";
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
@@ -164,15 +169,7 @@
     }
     
     function isSubmittedDate($user_id, $conn){
-    $sql = "select user.user_id, routingColumn_id, expense_reports.submission_date
-            from routing
-            left join user on routing.routingUser_id = user.user_id 
-            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
-            left join userAssignment on userAssignment.user_id=user.user_id
-            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
-            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
-            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
-            where expense_reports.expense_reports_id is not null and user.user_id=" . $user_id .
+    $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id=" . $user_id .
             " order by expense_reports.submission_date desc";
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
@@ -184,15 +181,7 @@
     }
     
     function isFinalApprovalDate($user_id, $conn){
-    $sql = "select user.user_id, routingColumn_id, expense_activity.status, expense_reports.expensereport_status
-            from routing
-            left join user on routing.routingUser_id = user.user_id 
-            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
-            left join userAssignment on userAssignment.user_id=user.user_id
-            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
-            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
-            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
-            where expense_reports.expense_reports_id is not null and user.user_id=" . $user_id .
+    $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id=" . $user_id .
             " order by expense_reports.submission_date desc";
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
@@ -205,16 +194,7 @@
     
     function isApproverTable($user_id, $conn){
                     
-    $sql = "select user.user_id, user.user_fname, user_lname, routingColumn_id, routingCondition.routingConditionType_id, expense_reports.submission_date,
-            expensereport_history.revieweddate, expense_reports.expense_reports_id, expense_activity.expense_activity_id, expense_activity.status, expense_reports.expensereport_status
-            from routing
-            left join user on routing.routingUser_id = user.user_id 
-            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
-            left join userAssignment on userAssignment.user_id=user.user_id
-            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
-            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
-            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
-            where expense_reports.expense_reports_id is not null and user.user_id=" . $user_id .
+    $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id=" . $user_id .
             " order by expense_reports.submission_date desc";
             
             $result = mysqli_query($conn, $sql);
@@ -252,16 +232,7 @@
     
     function isSubmitterTable($user_id, $conn){
 
-    $sql = "select user.user_id, user.user_fname, user_lname, routingColumn_id, routingCondition.routingConditionType_id, expense_reports.submission_date,
-            expensereport_history.revieweddate, expense_reports.expense_reports_id, expense_reports.approver_id, expense_activity.expense_activity_id, expense_activity.status, expense_reports.expensereport_status
-            from routing
-            left join user on routing.routingUser_id = user.user_id 
-            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
-            left join userAssignment on userAssignment.user_id=user.user_id
-            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
-            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
-            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
-            where expense_reports.expense_reports_id is not null and user.user_id=expense_reports.approver_id and routingCondition.routingConditionType_id=" . $user_id.
+    $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id=expense_reports.approver_id and routingCondition.routingConditionType_id=" . $user_id.
             " order by expense_reports.submission_date desc";
             
             $result = mysqli_query($conn, $sql);
@@ -299,16 +270,7 @@
     }
 function isAdminTable($conn){
                     
-    $sql = "select user.user_id, user.user_fname, user_lname, routingColumn_id, routingCondition.routingConditionType_id, expense_reports.submission_date,
-            expensereport_history.revieweddate, expense_reports.expense_reports_id, expense_activity.expense_activity_id, expense_activity.status, expense_reports.expensereport_status, expense_reports.expensereport_status
-            from routing
-            left join user on routing.routingUser_id = user.user_id 
-            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
-            left join userAssignment on userAssignment.user_id=user.user_id
-            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
-            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
-            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
-            where expense_reports.expense_reports_id is not null and user.user_id is not null and user.user_id=expense_reports.approver_id" .
+    $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id is not null and user.user_id=expense_reports.approver_id" .
             " order by expense_reports.submission_date desc";
             
             $result = mysqli_query($conn, $sql);
@@ -347,16 +309,7 @@ function isAdminTable($conn){
     
     function isMyPending($user_id, $conn){
                     
-    $sql = "select user.user_id, user.user_fname, user_lname, routingColumn_id, routingCondition.routingConditionType_id, expense_reports.submission_date,
-            expensereport_history.revieweddate, expense_reports.expense_reports_id, expense_reports.approver_id, expense_activity.expense_activity_id, expense_activity.status, expense_reports.expensereport_status
-            from routing
-            left join user on routing.routingUser_id = user.user_id 
-            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
-            left join userAssignment on userAssignment.user_id=user.user_id
-            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
-            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
-            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
-            where expense_reports.expense_reports_id is not null and user.user_id is not null and expense_reports.expensereport_status='Pending' and expense_reports.approver_id=user.user_id and routingCondition.routingConditionType_id=" . $user_id .
+    $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id is not null and expense_reports.expensereport_status='Pending' and expense_reports.approver_id=user.user_id and routingCondition.routingConditionType_id=" . $user_id .
             " or expense_reports.expense_reports_id is not null and user.user_id is not null and expense_reports.expensereport_status='Pending' and expense_reports.approver_id=user.user_id and user.user_id=" . $user_id .
             " order by expense_reports.submission_date desc";
             
@@ -372,16 +325,7 @@ function isAdminTable($conn){
         }
     function isMySaved($user_id, $conn){
                     
-    $sql = "select user.user_id, user.user_fname, user_lname, routingColumn_id, routingCondition.routingConditionType_id, expense_reports.submission_date,
-            expensereport_history.revieweddate, expense_reports.expense_reports_id, expense_reports.approver_id, expense_activity.expense_activity_id, expense_activity.status, expense_reports.expensereport_status
-            from routing
-            left join user on routing.routingUser_id = user.user_id 
-            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
-            left join userAssignment on userAssignment.user_id=user.user_id
-            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
-            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
-            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
-            where expense_reports.expense_reports_id is not null and user.user_id is not null and expense_reports.expensereport_status='saved' and expense_reports.approver_id=user.user_id and routingCondition.routingConditionType_id=" . $user_id .
+    $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id is not null and expense_reports.expensereport_status='saved' and expense_reports.approver_id=user.user_id and routingCondition.routingConditionType_id=" . $user_id .
             " or expense_reports.expense_reports_id is not null and user.user_id is not null and expense_reports.expensereport_status='saved' and expense_reports.approver_id=user.user_id and user.user_id=" . $user_id .
             " order by expense_reports.submission_date desc";
             
@@ -397,16 +341,7 @@ function isAdminTable($conn){
         }
     function isMyProcessed($user_id, $conn){
                     
-    $sql = "select user.user_id, user.user_fname, user_lname, routingColumn_id, routingCondition.routingConditionType_id, expense_reports.submission_date,
-            expensereport_history.revieweddate, expense_reports.expense_reports_id, expense_reports.approver_id, expense_activity.expense_activity_id, expense_activity.status, expense_reports.expensereport_status
-            from routing
-            left join user on routing.routingUser_id = user.user_id 
-            left join routingCondition on routingCondition.routingCondition_id=routing.routingRow_id
-            left join userAssignment on userAssignment.user_id=user.user_id
-            left join expense_reports on expense_reports.submitter_id=routingCondition.routingConditionType_id 
-            left join expense_activity on expense_activity.expense_reports_id=expense_reports.expense_reports_id
-            left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
-            where expense_reports.expense_reports_id is not null and user.user_id is not null and expense_reports.expensereport_status='approved' and expense_reports.approver_id=user.user_id and routingCondition.routingConditionType_id=" . $user_id .
+    $sql = getExpenseTableQuerry()." where expense_reports.expense_reports_id is not null and user.user_id is not null and expense_reports.expensereport_status='approved' and expense_reports.approver_id=user.user_id and routingCondition.routingConditionType_id=" . $user_id .
             " or expense_reports.expense_reports_id is not null and user.user_id is not null and expense_reports.expensereport_status='approved' and expense_reports.approver_id=user.user_id and user.user_id=" . $user_id .
             " order by expense_reports.submission_date desc";
             
