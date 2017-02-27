@@ -34,7 +34,7 @@
                 <div class="well panel panel-default" >
                     <div class="panel-body">
                         <div class="row" align ="left">
-                            <div >
+                            <div>
                                 <div class="container" align="left">
                                     <?php
                                         $sql = "SELECT userRole_Name, userRole_Desc
@@ -48,6 +48,9 @@
                                         
                                     ?>
                                     <table>
+                                        <tr>
+                                            <b>Role</b>
+                                        </tr>
                                         <tr style="width:100%">
                                             <td>
                                                 Role Name
@@ -64,17 +67,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <hr>
-                                    <table style="width:100%">
-                                        <tr>
-                                            <td style="width:80%; " >
-                                                <b>Users</b>
-                                            </td>
-                                            
-                                            <td style="width:20%">
-                                                <b>Action</b>
-                                            </td>
-                                        </tr>
+                                    
                                     <?php
                                         $sql = "SELECT user_fname, user_lname, userAssignment.userRole_id, userAssignment.user_id 
                                         FROM userRole 
@@ -83,31 +76,82 @@
                                         where userRole.userRole_id = '".$roleId."'  ";
                                         
                                         $result = mysqli_query($conn, $sql);
-                                        while($row = mysqli_fetch_assoc($result))
-                                        {    
-                                            $userFullName = $row['user_fname']. '&nbsp;'.$row['user_lname'];
-                                            $role_id = $row['userRole_id'];
-                                            $user_id = $row['user_id'];
-                                                
+                                        if (mysqli_num_rows($result) > 0)
+                                        {
+                                            echo '
+                                            <hr>
+                                            <table style="width:100%">
+                                                <tr>
+                                                    <td style="width:80%; " >
+                                                        <b>Users</b>
+                                                    </td>
+                                                    
+                                                    <td style="width:20%">
+                                                        <b>Action</b>
+                                                    </td>
+                                                </tr>
+                                                ';
+                                            while($row = mysqli_fetch_assoc($result))
+                                            {    
+                                                $userFullName = $row['user_fname']. '&nbsp;'.$row['user_lname'];
+                                                $role_id = $row['userRole_id'];
+                                                $user_id = $row['user_id'];
+                                                    
                                     ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo'<span>'.$userFullName.'</span>';?>
-                                            </td>
-                                            <td>
-                                                <?php echo '<a href="Roles/removeuserfromrole.php?user='.$user_id.'&role='.$role_id.'" ><span class="glyphicon glyphicon-remove"></span></a>'; ?>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>
+                                                    <?php echo'<span>'.$userFullName.'</span>';?>
+                                                </td>
+                                                <td>
+                                                    <?php echo '<a href="Roles/removeuserfromrole.php?user='.$user_id.'&role='.$role_id.'" ><span class="glyphicon glyphicon-remove"></span></a>'; ?>
+                                                </td>
+                                            </tr>
                                     <?php
+                                            }
                                         }
+                                        
                                     ?>
                                     </table>
-                                    
+                                    <br><br>
+                                    <?php
+                                        
+                                        
+                                        //"select userRole_Name from userRole where userRole_id = '".$roleId."'
+                                        //join role_permissions on role_permissions.userRole_id = userRole.userRole_id";
+                                        
+                                        
+                                        
+                                    ?>
+                                    <b>Permissions</b>
+                                    <br>
+                                    <table style="width:100%">
+                                        <thead>
+                                            <td style="width:80%;">
+                                                
+                                            </td>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <?php
+                                                $sql = "select permission_name from permissions";
+                                                
+                                                //where role_permissions.userRole_id = '".$roleId."'";
+                                                $res = mysqli_query($conn, $sql);
+                                                echo '<div id="permissions">';
+                                                while($row = mysqli_fetch_assoc($res))
+                                                {    
+                                                    echo '<input type="checkbox" id="'.$row['permission_name'].'" name="permissions" value="'.$row['permission_name'].'" margin-left="5px">'.$row['permission_name']. '&nbsp' ;
+                                                }
+                                                echo '</div>';
+                                            ?>
+                                        </tr>
+                                        </tbody>
+                                        
+                                    </table>
                                     <hr>
                                     <a  onclick="addUserToRole()" id="addUserToRole">Add a user to this role</a>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -149,6 +193,33 @@
         </div>
     </body>
     <script>
+        $(document).ready(function()
+        {
+            var role_id = "<?php echo $roleId ?>";
+            $.ajax({
+    			url: 'WebService/roleinfo.php',
+    			type: 'POST',
+    			data: { "val": "getPermissionsForRole","roleid":role_id },
+    
+    		})
+    		.done(function(data){
+    		   debugger;
+    		    var data = JSON.parse(data);
+    		    //var chboxes = $("#permissions").find("input[type=checkbox]");
+                for (var i = 0; i<= data.length-1; i++)
+                {
+                    document.getElementById(data[i].permission).checked = true;
+                }
+               
+    		})
+    		.fail(function(){
+    			
+    		});
+        });
+    		
+    
+    
+    
         function addUserToRole()
         {
             $("#addUserToRole").css("display", "none");
@@ -161,6 +232,8 @@
             var isSet = $("#userRole")[0].value != "" ;
             return isSet;
         }
+        
+    
         
         
     </script>

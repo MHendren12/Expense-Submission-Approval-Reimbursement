@@ -2,6 +2,7 @@
     session_start();
     $user_id = $_SESSION['userid'];
     include("WebService/accountinfo.php");
+    include("WebService/forminfo.php");
     include("Account/expenseEmail.php");
 ?>
 <!DOCTYPE html>

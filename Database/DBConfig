@@ -23,7 +23,7 @@ use expense_reimbursement;
  CREATE TABLE userRole (
   userRole_id int(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   userRole_Name  varchar(20) NOT NULL,
-  userRole_Desc varchar(200) 
+  userRole_Desc varchar(200)
   );
   
   Insert into userRole (userRole_Name, userRole_Desc) values ('Administrator','Default role for Administrator');
@@ -78,3 +78,32 @@ CREATE TABLE expense_activity(
   status varchar(20)
 );
 
+
+DROP TABLE permissions;
+create table permissions(
+   permission_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   permission_name varchar(25),
+   permission_desc text
+);
+
+insert into permissions (permission_name, permission_desc) values ("Submit Form" , "Allow a user to submit a form." );
+insert into permissions (permission_name, permission_desc) values ("Approve Form" , "Allow a user to approve a form." );
+insert into permissions (permission_name, permission_desc) values ("Routing Conditions" , "Allow a user to access the routing conditions page." );
+insert into permissions (permission_name, permission_desc) values ("User list" , "Allow a user to access the user list page." );
+insert into permissions (permission_name, permission_desc) values ("User roles" , "Allow a user to access the user roles page." );
+
+DROP TABLE role_permissions
+CREATE TABLE role_permissions(
+  role_permissions_id int(6) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  permission_id int(6) UNSIGNED NOT NULL,
+  userRole_id int(6) UNSIGNED NOT NULL
+  );
+
+
+insert into role_permissions (permission_id, userRole_id) values (1, (select userRole_id from userRole where userRole_Name = "Submitter"));
+insert into role_permissions (permission_id, userRole_id) values (2, (select userRole_id from userRole where userRole_Name = "Approver"));
+insert into role_permissions (permission_id, userRole_id) values (1, (select userRole_id from userRole where userRole_Name = "Administrator"));
+insert into role_permissions (permission_id, userRole_id) values (2, (select userRole_id from userRole where userRole_Name = "Administrator"));
+insert into role_permissions (permission_id, userRole_id) values (3, (select userRole_id from userRole where userRole_Name = "Administrator"));
+insert into role_permissions (permission_id, userRole_id) values (4, (select userRole_id from userRole where userRole_Name = "Administrator"));
+insert into role_permissions (permission_id, userRole_id) values (5, (select userRole_id from userRole where userRole_Name = "Administrator"));

@@ -6,6 +6,15 @@
 ?>
 <!DOCTYPE html>
 <html>
+    <head>
+        <style>
+            .form-control
+            {
+                margin-top:10px;
+                margin-left: 10px;
+            }
+        </style>
+    </head>
     <body>
         <?php
 		    include("Navbar/header.php");	
@@ -98,6 +107,30 @@
                                                 </td>
                                                 <td>
                                                     <input class="form-control" name="roleDesc" placeholder="Description of Role" type="text">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <b>
+                                                        Permissions
+                                                    </b>
+                                                </td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <?php 
+                                                        $sql = "select permission_name, permission_id from permissions";
+                                                                
+                                                        $res = mysqli_query($conn, $sql);
+                                                        while($row = mysqli_fetch_assoc($res))
+                                                        {
+                                                            echo '<input type="checkbox" id="'.$row['permission_name'].'" name="permissions[]" value="'.$row['permission_id'].'" margin-left="5px">'.$row['permission_name']. '&nbsp' ;
+                                                        }
+                                                    ?>
                                                 </td>
                                             </tr>
                                         </table>

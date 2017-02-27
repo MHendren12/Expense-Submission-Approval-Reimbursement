@@ -50,16 +50,17 @@
                     if(isadmin($_SESSION['userid'], $conn)){
                         getAdminTable($conn);
                     }
-                    else if(isSubmitter($_SESSION['userid'], $conn)){
-                        getSubmitterTable($_SESSION['userid'], $conn);
+                    else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
+                        //getSubmitterTable($_SESSION['userid'], $conn);
+                        getApproverTable($_SESSION['userid'], $conn);
                     }
                     else if(isApprover($_SESSION['userid'], $conn)){
                         getApproverTable($_SESSION['userid'], $conn);
                     }
-                    else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
+                    else if(isSubmitter($_SESSION['userid'], $conn)){
                         getSubmitterTable($_SESSION['userid'], $conn);
-                        getApproverTable($_SESSION['userid'], $conn);
                     }
+                    
                     else{
                         echo "<td colspan='7' align='center'>No Results or History.</td>";
                     }
