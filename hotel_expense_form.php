@@ -25,7 +25,7 @@
   <label for="hotel_amount">Amount ($):</label><br>
   <input type="number" step="0.01" name="hotel_amount" id="hotel_amount" style="width:30%"> 
 </p>
-<p>
+<!--<p>
   <label for="hotel_receipt_upload">Upload a Receipt: </label><br>
   <input type="file" name="hotel_receipt_upload" id="hotel_receipt_upload">
 </p>

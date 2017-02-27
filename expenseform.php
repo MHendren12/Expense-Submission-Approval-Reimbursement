@@ -29,6 +29,11 @@ function DoCheckUncheckDisplay(element, sectionId)
 
 <body>
 <form action="Forms/submitform.php" method="POST" enctype="multipart/form-data" > 
+
+  <div id="General">
+   <?php include("general_information_form.php")?>
+  </div>
+
 What type of expense?<br>
 
   <input type="checkbox" name="Air" id="Air" onchange="DoCheckUncheckDisplay(this,'air_expense')"  value="Air">Air Travel<br>
@@ -55,6 +60,10 @@ What type of expense?<br>
 
 <div id="other_expense", style="display:none">
   <?php include("other_expense_form.php")?>
+</div>
+<div>
+  <label for="air_receipt_upload">Upload a Receipt: </label><br>
+  <input type="file" name="air_receipt_upload" id="air_receipt_upload">
 </div>
 <br>
 <input class="btn btn-default" type= "submit" id="submit" value="submit" name="submit" value="">

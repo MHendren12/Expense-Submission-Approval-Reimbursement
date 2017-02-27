@@ -23,21 +23,28 @@
     //$num_mile = $_GET['distance_traveled'];
     //$mile_to_money = .52 + 'distance_traveled';
     
+    //$GeneralChecked = isset($_POST['General'] );
     $AirChecked =  isset( $_POST['Air'] ) ? "checked" : "unchecked";
     $LandChecked = isset( $_POST['Land'] ) ? "checked" : "unchecked";
     $HotelChecked = isset( $_POST['Hotel'] ) ? "checked" : "unchecked";
     $FoodChecked = isset( $_POST['Food'] ) ? "checked" : "unchecked";
     $OtherChecked = isset( $_POST['Other'] ) ? "checked" : "unchecked";
     
-    $expenseTypes .= '[{"fieldId":"Air", "fieldValue":"' . $AirChecked. '"},';
+   // $expenseTypes .= '[{"fieldId":"General", "fieldValue":"' . $GeneralChecked. '"},';
+    $expenseTypes .= '{"fieldId":"Air", "fieldValue":"' . $AirChecked. '"},';
     $expenseTypes .= '{"fieldId":"Land", "fieldValue":"' . $LandChecked. '"},';
     $expenseTypes .= '{"fieldId":"Hotel","fieldValue":"' . $HotelChecked. '"},';
     $expenseTypes .= '{"fieldId":"Food", "fieldValue" :"' . $FoodChecked. '"},';
     $expenseTypes .= '{"fieldId":"Other","fieldValue":"' . $OtherChecked. '"}]';
 
+    $general_name = mysqli_real_escape_string($conn, $_POST['general_name']);
+    $general_address = mysqli_real_escape_string($conn, $_POST['general_address']);
+    $general_city = mysqli_real_escape_string($conn, $_POST['general_city']);
+    $general_postal_code = mysqli_real_escape_string($conn, $_POST['general_postal_code']);
+    $general_department = mysqli_real_escape_string($conn, $_POST['general_department']);
+
     $air_explain_expense = mysqli_real_escape_string($conn, $_POST['air_explain_expense']);
     $air_amount = mysqli_real_escape_string($conn, $_POST['air_amount']);
-    
     $air_depart_date = date('d-M-Y', strtotime($_POST['air_depart_date']));
     $air_return_date = date('d-M-Y', strtotime($_POST['air_return_date']));
     
@@ -62,9 +69,13 @@
     $date = mysqli_real_escape_string($db, $_POST['other_date']);
     $other_date = date('d-M-Y', strtotime($date));
 
-
     $fieldValues = "";
-    $fieldValues .= '[{"fieldId":"air_explain_expense", "fieldValue":"' . $air_explain_expense. '"},';
+    $fieldValues .= '[{"fieldId":"general_name", "fieldValue":"' . $general_name. '"},';
+    $fieldValues .= '{"fieldId":"general_address","fieldValue":"' . $general_address. '"},';
+    $fieldValues .= '{"fieldId":"general_city","fieldValue":"' . $general_city. '"},';
+    $fieldValues .= '{"fieldId":"general_postal_code","fieldValue":"' . $general_postal_code. '"},';
+    $fieldValues .= '{"fieldId":"general_department","fieldValue":"' . $general_department. '"},';
+    $fieldValues .= '{"fieldId":"air_explain_expense","fieldValue":"' . $air_explain_expense. '"},';
     $fieldValues .= '{"fieldId":"air_amount","fieldValue":"' . $air_amount. '"},';
     $fieldValues .= '{"fieldId":"air_depart_date","fieldValue":"' . $air_depart_date. '"},';
     $fieldValues .= '{"fieldId":"air_return_date","fieldValue":"' . $air_return_date. '"},';

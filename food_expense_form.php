@@ -23,7 +23,7 @@
   <label for="food_amount">Amount ($):</label><br>
   <input type="number" step="0.01" name="food_amount" id="food_amount" style="width:30%">
 </p>
-<p>
+<!--<p>
   <label for="food_receipt_upload">Upload a Receipt: </label><br>
   <input type="file" name="food_receipt_upload" id="food_receipt_upload">
 </p>

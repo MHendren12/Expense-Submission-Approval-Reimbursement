@@ -22,7 +22,7 @@
   <label for="other_amount">Amount ($):</label><br>
   <input type="number" step="0.01" name="other_amount" id="other_amount" style="width:30%">
 </p>
-<p>
+<!--<p>
   <label for="other_receipt_upload">Upload a Receipt: </label><br>
   <input type="file" name="other_receipt_upload" id="other_receipt_upload">
 </p>
