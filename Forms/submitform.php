@@ -4,16 +4,19 @@
     $conn = getConnection();
     $sid = $_SESSION['userid'];
 
-    $getApprover = "select routing.routingUser_id from routing
+    $getApprover = "select routing.routingUser_id, routingColumn_id from routing
     left join routingCondition on routingCondition.routingCondition_id = routing.routingRow_id
     where routingCondition.routingConditionType_id = '".$sid."'";
     $approvers =  mysqli_query($conn, $getApprover);
+    
     $firstApprover = -1;
+    $approverLevel = -1;
     while($row = mysqli_fetch_assoc($approvers))
     {
         if ( $row['routingUser_id']  )
         {
             $firstApprover = $row['routingUser_id'];
+            $approverLevel = $row['routingColumn_id'];
             break;
         }
     }
@@ -31,7 +34,7 @@
     $OtherChecked = isset( $_POST['Other'] ) ? "checked" : "unchecked";
     
    // $expenseTypes .= '[{"fieldId":"General", "fieldValue":"' . $GeneralChecked. '"},';
-    $expenseTypes .= '{"fieldId":"Air", "fieldValue":"' . $AirChecked. '"},';
+    $expenseTypes .= '[{"fieldId":"Air", "fieldValue":"' . $AirChecked. '"},';
     $expenseTypes .= '{"fieldId":"Land", "fieldValue":"' . $LandChecked. '"},';
     $expenseTypes .= '{"fieldId":"Hotel","fieldValue":"' . $HotelChecked. '"},';
     $expenseTypes .= '{"fieldId":"Food", "fieldValue" :"' . $FoodChecked. '"},';
@@ -45,29 +48,29 @@
 
     $air_explain_expense = mysqli_real_escape_string($conn, $_POST['air_explain_expense']);
     $air_amount = mysqli_real_escape_string($conn, $_POST['air_amount']);
-    $air_depart_date = date('d-M-Y', strtotime($_POST['air_depart_date']));
-    $air_return_date = date('d-M-Y', strtotime($_POST['air_return_date']));
+    $air_depart_date = date('Y-m-d', strtotime($_POST['air_depart_date']));
+    $air_return_date = date('Y-m-d', strtotime($_POST['air_return_date']));
     
     $land_explain_expense = mysqli_real_escape_string($conn, $_POST['land_explain_expense']);
     //$distance_traveled = mysqli_real_escape_string($db, $mile_to_money);
-    $date = mysqli_real_escape_string($db, $_POST['land_date']);
-    $land_date = date('d-M-Y', strtotime($date));
+    $date = $_POST['land_date'];
+    $land_date = date('Y-m-d', strtotime($date));
     $distance_traveled = mysqli_real_escape_string($conn, $_POST['distance_traveled']);
     
     $hotel_explain_expense = mysqli_real_escape_string($conn, $_POST['hotel_explain_expense']);
     $hotel_amount = mysqli_real_escape_string($conn, $_POST['hotel_amount']);
-    $date = mysqli_real_escape_string($db, $_POST['hotel_date']);
-    $hotel_date = date('d-M-Y', strtotime($date));
+    $date = $_POST['hotel_date'];
+    $hotel_date = date('Y-m-d', strtotime($date));
 
     $food_explain_expense = mysqli_real_escape_string($conn, $_POST['food_explain_expense']);
     $food_amount = mysqli_real_escape_string($conn, $_POST['food_amount']);
     $date = mysqli_real_escape_string($db, $_POST['food_date']);
-    $food_date = date('d-M-Y', strtotime($date));
+    $food_date = date('Y-m-d', strtotime($date));
     
     $other_explain_expense = mysqli_real_escape_string($conn, $_POST['other_explain_expense']);
     $other_amount = mysqli_real_escape_string($conn, $_POST['other_amount']);
-    $date = mysqli_real_escape_string($db, $_POST['other_date']);
-    $other_date = date('d-M-Y', strtotime($date));
+    $date = $_POST['other_date'];
+    $other_date = date('Y-m-d', strtotime($date));
 
     $fieldValues = "";
     $fieldValues .= '[{"fieldId":"general_name", "fieldValue":"' . $general_name. '"},';
@@ -92,8 +95,8 @@
     $fieldValues .= '{"fieldId":"other_date", "fieldValue":"' . $other_date. '"}]';
     
     
-    $sql = "INSERT INTO expense_reports( submitter_id, approver_id, expense_types, expense_fields, submission_date, expensereport_status) 
-            VALUES ('".$sid."', '" . $firstApprover. "','" .$expenseTypes. "','".$fieldValues."', CURRENT_TIMESTAMP(), 'Pending' )";
+    $sql = "INSERT INTO expense_reports( submitter_id, approver_id,approver_level, expense_types, expense_fields, submission_date, expensereport_status) 
+            VALUES ('".$sid."', '" . $firstApprover. "','".$approverLevel."',  '" .$expenseTypes. "','".$fieldValues."', CURRENT_TIMESTAMP(), 'Pending' )";
     $insert = mysqli_query($conn, $sql) 
         or die(mysqli_error($insert));
     

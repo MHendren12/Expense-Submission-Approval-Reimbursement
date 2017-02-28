@@ -24,14 +24,14 @@
                             getAdminTable($conn);
                         }
                         else if(isSubmitter($_SESSION['userid'], $conn)){
-                            getSubmitterTable($_SESSION['userid'], $conn);
+                            getSubmitterTable($_SESSION['userid'], $conn, "Approved");
                         }
                         else if(isApprover($_SESSION['userid'], $conn)){
-                            getApproverTable($_SESSION['userid'], $conn);
+                            getApproverTable($_SESSION['userid'], $conn,"Approved");
                         }
                         else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
-                            getSubmitterTable($_SESSION['userid'], $conn);
-                            getApproverTable($_SESSION['userid'], $conn);
+                            getSubmitterTable($_SESSION['userid'], $conn,"Approved");
+                            getApproverTable($_SESSION['userid'], $conn,"Approved");
                         }
                         else{
                             echo "<td colspan='7' align='center'>No Results or History.</td>";

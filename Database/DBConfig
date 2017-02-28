@@ -35,6 +35,7 @@ use expense_reimbursement;
   expense_reports_id  int(6) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   submitter_id int(6) UNSIGNED NOT NULL,
   approver_id int(6) UNSIGNED NOT NULL,
+  approver_level int(6) UNSIGNED NOT NULL,
   expense_types varchar(255) NOT NULL,
   expense_fields text NOT NULL,
   submission_date datetime,

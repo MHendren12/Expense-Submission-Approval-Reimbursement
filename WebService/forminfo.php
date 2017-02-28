@@ -161,9 +161,9 @@
             
     }
     
-    function getApproverTable($user_id, $conn){
+    function getApproverTable($user_id, $conn, $status = "null"){
                     
-    $sql = getExpenseTableQueryApprover();
+    $sql = getExpenseTableQueryApprover($status);
             
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);            
@@ -202,9 +202,9 @@
                 }
         }
     
-    function getSubmitterTable($user_id, $conn){
+    function getSubmitterTable($user_id, $conn, $status = "null"){
 
-    $sql = getExpenseTableQuerySubmitter();
+    $sql = getExpenseTableQuerySubmitter($status);
             
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);           
@@ -243,9 +243,9 @@
                     echo "<td colspan='7' align='center'>No Results or History.</td>";
                 }
     }
-function getAdminTable($conn){
+function getAdminTable($conn, $status = "null"){
                     
-    $sql = getExpenseTableQuerySubmitter();
+    $sql = getExpenseTableQuerySubmitter($status = "null");
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);            
             while($row = mysqli_fetch_assoc($result))
@@ -285,7 +285,7 @@ function getAdminTable($conn){
     
     function isMyPending($user_id, $conn){
                     
-    $sql = getExpenseTableQuerySubmitter("pending");
+    $sql = getExpenseTableQuerySubmitter("Pending");
             
             $result = mysqli_query($conn, $sql);
                         
@@ -299,7 +299,7 @@ function getAdminTable($conn){
         }
     function isMySaved($user_id, $conn){
                     
-    $sql = getExpenseTableQuerySubmitter("saved");
+    $sql = getExpenseTableQuerySubmitter("Saved");
             
             $result = mysqli_query($conn, $sql);
                         
@@ -313,7 +313,7 @@ function getAdminTable($conn){
         }
     function isMyProcessed($user_id, $conn){
                     
-    $sql = getExpenseTableQuerySubmitter("processed");
+    $sql = getExpenseTableQuerySubmitter("Approved");
             
             $result = mysqli_query($conn, $sql);
                         
