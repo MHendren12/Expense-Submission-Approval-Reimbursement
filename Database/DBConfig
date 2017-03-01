@@ -93,7 +93,7 @@ insert into permissions (permission_name, permission_desc) values ("Routing Cond
 insert into permissions (permission_name, permission_desc) values ("User list" , "Allow a user to access the user list page." );
 insert into permissions (permission_name, permission_desc) values ("User roles" , "Allow a user to access the user roles page." );
 
-DROP TABLE role_permissions
+DROP TABLE role_permissions;
 CREATE TABLE role_permissions(
   role_permissions_id int(6) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   permission_id int(6) UNSIGNED NOT NULL,
