@@ -3,6 +3,10 @@
     include("../Database/config.php");		 
     $conn = getConnection();
     $sid = $_SESSION['userid'];
+    $action = $_GET['action'];
+    $form = $_POST['formId'];
+    //echo $action;
+    echo $form;
 
     $getApprover = "select routing.routingUser_id, routingColumn_id from routing
     left join routingCondition on routingCondition.routingCondition_id = routing.routingRow_id
@@ -64,7 +68,7 @@
 
     $food_explain_expense = mysqli_real_escape_string($conn, $_POST['food_explain_expense']);
     $food_amount = mysqli_real_escape_string($conn, $_POST['food_amount']);
-    $date = mysqli_real_escape_string($db, $_POST['food_date']);
+    $date = $_POST['food_date'];
     $food_date = date('Y-m-d', strtotime($date));
     
     $other_explain_expense = mysqli_real_escape_string($conn, $_POST['other_explain_expense']);
@@ -93,28 +97,54 @@
     $fieldValues .= '{"fieldId":"other_explain_expense", "fieldValue":"' . $other_explain_expense. '"},';
     $fieldValues .= '{"fieldId":"other_amount", "fieldValue":"' . $other_amount. '"},';
     $fieldValues .= '{"fieldId":"other_date", "fieldValue":"' . $other_date. '"}]';
+    echo $fieldValues;
     
-    
-    $sql = "INSERT INTO expense_reports( submitter_id, approver_id,approver_level, expense_types, expense_fields, submission_date, expensereport_status) 
-            VALUES ('".$sid."', '" . $firstApprover. "','".$approverLevel."',  '" .$expenseTypes. "','".$fieldValues."', CURRENT_TIMESTAMP(), 'Pending' )";
-    $insert = mysqli_query($conn, $sql) 
-        or die(mysqli_error($insert));
-    
-    $expenseReportId = mysqli_insert_id($conn);
-    echo $expenseReportId;
-    
-    $sql = "INSERT INTO expensereport_history( expense_reports_id, revieweddate, reviewer_id) 
-            VALUES ('".$expenseReportId."', CURRENT_TIMESTAMP() ,'" .$sid. "' )";
-    $insert = mysqli_query($conn, $sql) 
-        or die(mysqli_error($insert));
+    $expenseReportId = $form;
+    $status = "Pending";
+    if ($form != -1)
+    {
+        if ($action == "save")
+        {
+            $status = "Saved";
+            $firstApprover = -1;
+            $approverLevel = -1;
+        }
         
-    $sql = "INSERT INTO expensereport_history( expense_reports_id, reviewer_id) 
-            VALUES ('".$expenseReportId."','" .$firstApprover. "' )";
-    $insert = mysqli_query($conn, $sql) 
-        or die(mysqli_error($insert));
+        $sql = "update expense_reports set submitter_id = '".$sid."',
+        approver_id = '".$firstApprover."',
+        approver_level = '".$approverLevel."',
+        expense_types = '".$expenseTypes."',
+        expense_fields = '".$fieldValues."',
+        submission_date = CURRENT_TIMESTAMP(),
+        expensereport_status = '".$status."'
+        where expense_reports_id = '".$form."'";
+        $update = mysqli_query($conn, $sql) 
+            or die(mysqli_error($update));
+    }
+    else
+    {
+        $sql = "INSERT INTO expense_reports( submitter_id, approver_id,approver_level, expense_types, expense_fields, submission_date, expensereport_status) 
+            VALUES ('".$sid."', '" . $firstApprover. "','".$approverLevel."',  '" .$expenseTypes. "','".$fieldValues."', CURRENT_TIMESTAMP(), '".$status."' )";
+        $insert = mysqli_query($conn, $sql) 
+            or die(mysqli_error($insert));
     
-        
-        
+        $expenseReportId = mysqli_insert_id($conn);
+    }
+
+    if ($action != "save")
+    {
+        $sql = "INSERT INTO expensereport_history( expense_reports_id, revieweddate, reviewer_id) 
+                VALUES ('".$expenseReportId."', CURRENT_TIMESTAMP() ,'" .$sid. "' )";
+        $insert = mysqli_query($conn, $sql) 
+            or die(mysqli_error($insert));
+            
+        $sql = "INSERT INTO expensereport_history( expense_reports_id, reviewer_id) 
+                VALUES ('".$expenseReportId."','" .$firstApprover. "' )";
+            $insert = mysqli_query($conn, $sql) 
+                or die(mysqli_error($insert));
+    }
+    
+    
     header("Location: ../home.php");
     
 ?>

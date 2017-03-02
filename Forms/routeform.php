@@ -59,10 +59,19 @@
     }
     else if ($action == "deny")
     {
+        $updateFormApprover = "Update expense_reports set approver_id = -1, approver_level = -1, expensereport_status='Denied' where expense_reports_id = '".$formId."'";
+            $res = mysqli_query($conn, $updateFormApprover)
+                or die(mysql_error());
+        $updateHistory = "Update expensereport_history set revieweddate = CURRENT_TIMESTAMP() where expense_reports_id = '".$formId."' and revieweddate is NULL";
+        $res = mysqli_query($conn, $updateHistory)
+            or die(mysql_error());
+        header("Location: ../home.php");
         
     }
-    else
+    else if ($action == "save")
     {
+       
+       
        
     }
     /*

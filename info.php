@@ -51,8 +51,7 @@
                         getAdminTable($conn);
                     }
                     else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
-                        //getSubmitterTable($_SESSION['userid'], $conn);
-                        getApproverTable($_SESSION['userid'], $conn);
+                        getSandATable($_SESSION['userid'], $conn);
                     }
                     else if(isApprover($_SESSION['userid'], $conn)){
                         getApproverTable($_SESSION['userid'], $conn);

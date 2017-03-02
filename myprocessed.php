@@ -21,18 +21,19 @@
                     // then assigns that current user a table based on thier session user id.                    
                     if(isMyProcessed($_SESSION['userid'], $conn)){
                         if(isadmin($_SESSION['userid'], $conn)){
-                            getAdminTable($conn);
+                            getSandATable($_SESSION['userid'], $conn, "Processed");
+                        }
+                        else if(isSubmitterAndApprover($_SESSION['userid'], $conn, "Processed"))
+                        {
+                            getSandATable($_SESSION['userid'], $conn, "Processed");
                         }
                         else if(isSubmitter($_SESSION['userid'], $conn)){
-                            getSubmitterTable($_SESSION['userid'], $conn, "Approved");
+                            getSubmitterTable($_SESSION['userid'], $conn, "Processed");
                         }
                         else if(isApprover($_SESSION['userid'], $conn)){
-                            getApproverTable($_SESSION['userid'], $conn,"Approved");
+                            getApproverTable($_SESSION['userid'], $conn,"Processed");
                         }
-                        else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
-                            getSubmitterTable($_SESSION['userid'], $conn,"Approved");
-                            getApproverTable($_SESSION['userid'], $conn,"Approved");
-                        }
+                        
                         else{
                             echo "<td colspan='7' align='center'>No Results or History.</td>";
                         }

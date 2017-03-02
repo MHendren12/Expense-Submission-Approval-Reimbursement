@@ -18,18 +18,24 @@
   $id = intval($_REQUEST['id']);
   $userId = $_SESSION['userid'];
   $inSubmission = false;
-  
+  $formId = -1;
   if ($id != 0)
   {
-    $thisForm = "select submitter_id, approver_id from expense_reports where expense_reports_id = '".$id."'";
+    $thisForm = "select expense_reports_id, submitter_id, approver_id, expensereport_status from expense_reports where expense_reports_id = '".$id."'";
     $res = mysqli_query($conn, $thisForm);
     $row = mysqli_fetch_assoc($res);
     
+    $formId = $row['expense_reports_id'];
     $submitterId = $row['submitter_id'];
     $approverId = $row['approver_id'];
+    $status = $row['expensereport_status'];
     
     $isSubmitter = false;
     $isApprover = false;
+    if ($status == "Saved")
+    {
+      $inSubmission = true;
+    }
     if ($userId == $approverId )
     {
       $isApprover = true;
@@ -38,11 +44,12 @@
     {
       $isSubmitter = true;
     }
+    
   }
-  else
-  {
-    $inSubmission = true;
+  else {
+      $inSubmission = true;
   }
+
   
 
   
@@ -54,7 +61,7 @@
 function DoCheckUncheckDisplay(element, sectionId)
 {
     var section = document.getElementById(sectionId);
-    if( element.checked == true )
+    if  (element.checked == true)
     {
       
         $(section).css("display", "block");
@@ -71,10 +78,10 @@ function DoCheckUncheckDisplay(element, sectionId)
 <html>
 
 <body>
-  <form action="Forms/submitform.php" method="POST" enctype="multipart/form-data" > 
-  
+  <form id="expenseForm" action="Forms/submitform.php?action=submit" method="POST" enctype="multipart/form-data" > 
+    <input id="formId" name="formId" value="<?php echo $formId; ?>" style="display:none;">
     <div id="General">
-     <?php include("general_information_form.php")?>
+     <?php include("general_information_form.php");?>
     </div>
       What type of expense?<br>
   
@@ -115,7 +122,11 @@ function DoCheckUncheckDisplay(element, sectionId)
         echo '<a href="Forms/routeform.php?action=deny&fid='.$id.'" class="btn btn-default" id="deny">Deny</a>';
       }
       else if ($inSubmission) 
-        echo '<input class="btn btn-default" type= "submit" id="submit" value="submit" name="submit" value="">';
+      {
+        $onClick = 'document.getElementById("expenseForm").submit()';
+        echo '<input class="btn btn-default" type= "submit"  value="Submit" id="submit" name="submit" value="">';
+        echo '<a onclick="saveForm()" class="btn btn-default" id="save">Save</a>';
+      }
       
     ?>
     
@@ -130,54 +141,59 @@ function DoCheckUncheckDisplay(element, sectionId)
     
     
         $.ajax({
-			url: 'WebService/forminfo.php',
-			type: 'POST',
-			data: { "val": "getExpenseTypes","formid":form_id },
-
-		})
-		.done(function(data){
-		  debugger;
-		    var expenseTypes = JSON.parse(data);
-            for (var i = 0; i<= expenseTypes.length-1; i++)
-            {
-                var fieldId = expenseTypes[i].fieldId;
-                var fieldValue = expenseTypes[i].fieldValue;
-                var checked = fieldValue == "checked" ? true : false;
-                var expenseTypeField = document.getElementById(fieldId);
-                $(expenseTypeField).attr("checked",checked);
-                $(expenseTypeField).trigger("change");
-            }
-           
-		})
-		.fail(function(){
-			
-		});
-		
-		$.ajax({
-			url: 'WebService/forminfo.php',
-			type: 'POST',
-			data: { "val": "getExpenseFields","formid":form_id },
-
-		})
-		.done(function(data){
-		    var expenseFields = JSON.parse(data);
-            for (var i = 0; i<= expenseFields.length-1; i++)
-            {
-                var fieldId = expenseFields[i].fieldId;
-                var fieldValue = expenseFields[i].fieldValue;
-                var expenseTypeField = document.getElementById(fieldId);
-                if (fieldId.indexOf("date")> -1)
+    			url: 'WebService/forminfo.php',
+    			type: 'POST',
+    			data: { "val": "getExpenseTypes","formid":form_id },
+    
+    		})
+    		.done(function(data){
+    		    var expenseTypes = JSON.parse(data);
+                for (var i = 0; i<= expenseTypes.length-1; i++)
                 {
-
+                    var fieldId = expenseTypes[i].fieldId;
+                    var fieldValue = expenseTypes[i].fieldValue;
+                    var checked = fieldValue == "checked" ? true : false;
+                    var expenseTypeField = document.getElementById(fieldId);
+                    $(expenseTypeField).attr("checked",checked);
+                    $(expenseTypeField).trigger("change");
                 }
-                $(expenseTypeField).val(fieldValue);
-            }
-           
-		})
-		.fail(function(){
-			
-		});
-});
+               
+    		})
+    		.fail(function(){
+    			
+    		});
+		
+    		$.ajax({
+    			url: 'WebService/forminfo.php',
+    			type: 'POST',
+    			data: { "val": "getExpenseFields","formid":form_id },
+    
+    		})
+    		.done(function(data){
+    		    var expenseFields = JSON.parse(data);
+                for (var i = 0; i<= expenseFields.length-1; i++)
+                {
+                    var fieldId = expenseFields[i].fieldId;
+                    var fieldValue = expenseFields[i].fieldValue;
+                    var expenseTypeField = document.getElementById(fieldId);
+                    if (fieldId.indexOf("date")> -1)
+                    {
+    
+                    }
+                    $(expenseTypeField).val(fieldValue);
+                }
+               
+    		})
+    		.fail(function(){
+    			
+    		});
+    });
+    
+    function saveForm()
+    {
+      $("#expenseForm").attr("action","Forms/submitform.php?action=save");
+      $("#submit").click();
+    }
 
      
 </script>

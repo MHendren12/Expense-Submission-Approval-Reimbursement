@@ -58,23 +58,90 @@
         		else
         		    echo '[]';
     }
+    function getExpenseTableQueryAdmin($status = "null"){
+        $expenseTableQuery = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
+                                expense_reports.expense_reports_id, expense_reports.expensereport_status
+                                from expense_reports
+                                left join user on user.user_id = expense_reports.submitter_id";
+        if ($status != "null")
+        {
+            if ($status == "Processed")
+            {
+                $expenseTableQuery .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+                
+            }
+            else
+            {
+                $expenseTableQuery .= "and expense_reports.expensereport_status='".$status."'";
+            }
+            
+        }
+        $expenseTableQuery .= " order by submission_date DESC";
+        
+        return $expenseTableQuery;
+    }
     
+    
+    function getExpenseTableQuerySandA($status = "null"){
+        $expenseTableQuerySubmitter = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
+                                expense_reports.expense_reports_id, expense_reports.expensereport_status
+                                from expense_reports
+                                left join user on user.user_id = expense_reports.submitter_id
+                                where submitter_id = '".$_SESSION['userid']."'";
+         $expenseTableQueryApprover = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
+                                expense_reports.expense_reports_id, expense_reports.expensereport_status
+                                from expense_reports
+                                left join user on user.user_id = expense_reports.approver_id
+                                where approver_id = '".$_SESSION['userid']."'";
+                                
+        if ($status != "null")
+        {
+            if ($status == "Processed")
+            {
+                $expenseTableQuerySubmitter .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+                $expenseTableQueryApprover .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+            }
+            else
+            {
+                $expenseTableQuerySubmitter .= "and expense_reports.expensereport_status='".$status."'";
+                $expenseTableQueryApprover .= "and expense_reports.expensereport_status='".$status."'";
+            }
+            
+        }
+        
+        $expenseTableQuery = $expenseTableQuerySubmitter . 'union ' . $expenseTableQueryApprover;
+        $expenseTableQuery .= " order by submission_date DESC";
+        
+        return $expenseTableQuery;
+    }
+        
         
     function getExpenseTableQuerySubmitter($status = "null"){
-        $expenseTableQuerry = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
+        $expenseTableQuery = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
                                 expense_reports.expense_reports_id, expense_reports.expensereport_status
                                 from expense_reports
                                 left join user on user.user_id = expense_reports.submitter_id
                                 where submitter_id = '".$_SESSION['userid']."'";
         if ($status != "null")
-            $expenseTableQuerry .= "and expense_reports.expensereport_status='".$status."'";
-        $expenseTableQuerry .= "order by expense_reports.submission_date DESC";
+        {
+            if ($status == "Processed")
+            {
+                $expenseTableQuery .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+            }
+            else
+            {
+                $expenseTableQuery .= "and expense_reports.expensereport_status='".$status."'";
+            }
+        }
+            
+            
+        $expenseTableQuery .= "order by expense_reports.submission_date DESC";
                                 
 
-        return $expenseTableQuerry;
+        return $expenseTableQuery;
     }
     function getExpenseTableQueryApprover($status = "null"){
-        $expenseTableQuerry = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
+        $expenseTableQuery = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
                                 expense_reports.expense_reports_id, expense_reports.expensereport_status
                                 from expense_reports
                                 left join user on user.user_id = expense_reports.submitter_id
@@ -82,10 +149,19 @@
                                 
                                 
         if ($status != "null")
-            $expenseTableQuerry .= "and expense_reports.expensereport_status='".$status."'";
-        $expenseTableQuerry .= "order by expense_reports.submission_date DESC"; 
+        {
+            if ($status == "Processed")
+            {
+                $expenseTableQuery .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+            }
+            else
+            {
+                $expenseTableQuery .= "and expense_reports.expensereport_status='".$status."'";
+            }
+        }
+        $expenseTableQuery .= "order by expense_reports.submission_date DESC"; 
 
-        return $expenseTableQuerry;
+        return $expenseTableQuery;
     }
     function isSubmitter($user_id, $conn)
     {
@@ -114,12 +190,15 @@
         }
         
     }
-    
     function isSubmitterAndApprover($user_id, $conn){
-        $sql = "SELECT * FROM user left join userAssignment on user.user_id=userAssignment.user_id WHERE user.user_id=" .$user_id. " and userAssignment.userRole_id=1";
+        $sql = "SELECT userRole_id FROM user left join userAssignment on user.user_id=userAssignment.user_id WHERE user.user_id='" .$user_id. "'";
         $result = mysqli_query($conn, $sql);
-        $num_rows = mysqli_num_rows($result);
-        if($num_rows == 1){
+        $ids = [];
+        while($row = mysqli_fetch_assoc($result))
+        {
+            array_push($ids, $row['userRole_id']);
+        }
+        if(in_array (2, $ids)  && in_array (3,$ids) ){
             return true;
         }
         else{
@@ -169,7 +248,7 @@
             $num_rows = mysqli_num_rows($result);            
             while($row = mysqli_fetch_assoc($result))
             {   
-                $user_id = $row['user_id'];
+                $submitter_id = $row['submitter_id'];
                 $expense_reports_id= $row['expense_reports_id'];
                 $submission_date = $row ['submission_date'];
                 //$revieweddate = $row ['revieweddate'];
@@ -178,7 +257,7 @@
 ?>
                 <tr>
                 <td><?php echo $expense_reports_id;?></td>
-                <td><?php echo userName($user_id , $conn); ?></td>  
+                <td><?php echo userName($submitter_id , $conn); ?></td>  
                 <td><?php echo userName($approver_id, $conn); ?></td>
                 <td><?php echo $submission_date;?></td>
                 <td><?php 
@@ -210,7 +289,7 @@
             $num_rows = mysqli_num_rows($result);           
             while($row = mysqli_fetch_assoc($result))
             {   
-                $user_id = $row['user_id'];
+                $submitter_id = $row['submitter_id'];
                 $expense_reports_id= $row['expense_reports_id'];
                 $submission_date = $row ['submission_date'];
                 //$revieweddate = $row ['revieweddate'];
@@ -219,7 +298,48 @@
 ?>
                 <tr>
                 <td><?php echo $expense_reports_id;?></td>
-                <td><?php echo userName($user_id , $conn); ?></td>  
+                <td><?php echo userName($submitter_id , $conn); ?></td>  
+                <td><?php echo userName($approver_id, $conn); ?></td>
+                <td><?php echo $submission_date;?></td>
+                <td><?php 
+                        if ($expensereport_status == "Approved" || $expensereport_status == "denied")
+                        {
+                            echo $revieweddate;
+                        }
+                        else
+                        echo "N/A";
+                    ?>
+                </td>
+                <td><?php echo $expensereport_status;?></td>
+                <td align="center">
+                <button data-toggle="modal" data-target="#view-modal" data-id="<?php echo $expense_reports_id; ?>" id="getexpenseform" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i> View</button>
+                </td>                                
+                </tr>
+<?php
+            }
+                if($num_rows==0){
+                    echo $user_id;
+                    echo "<td colspan='7' align='center'>No Results or History.</td>";
+                }
+    }
+    function getSandATable($user_id, $conn, $status = "null"){
+
+    $sql = getExpenseTableQuerySandA($status);
+            
+            $result = mysqli_query($conn, $sql);
+            $num_rows = mysqli_num_rows($result);           
+            while($row = mysqli_fetch_assoc($result))
+            {   
+                $submitter_id = $row['submitter_id'];
+                $expense_reports_id= $row['expense_reports_id'];
+                $submission_date = $row ['submission_date'];
+                //$revieweddate = $row ['revieweddate'];
+                $expensereport_status = $row ['expensereport_status'];
+                $approver_id = $row['approver_id'];
+?>
+                <tr>
+                <td><?php echo $expense_reports_id;?></td>
+                <td><?php echo userName($submitter_id , $conn); ?></td>  
                 <td><?php echo userName($approver_id, $conn); ?></td>
                 <td><?php echo $submission_date;?></td>
                 <td><?php 
@@ -245,12 +365,12 @@
     }
 function getAdminTable($conn, $status = "null"){
                     
-    $sql = getExpenseTableQuerySubmitter($status = "null");
+    $sql = getExpenseTableQueryAdmin($status = "null");
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);            
             while($row = mysqli_fetch_assoc($result))
             {   
-                $user_id = $row['user_id'];
+                $submitter_id = $row['submitter_id'];
                 $expense_reports_id= $row['expense_reports_id'];
                 $submission_date = $row ['submission_date'];
                 //$revieweddate = $row ['revieweddate'];
@@ -259,7 +379,7 @@ function getAdminTable($conn, $status = "null"){
 ?>
                 <tr>
                 <td><?php echo $expense_reports_id;?></td>
-                <td><?php echo userName($user_id , $conn); ?></td>  
+                <td><?php echo userName($submitter_id , $conn); ?></td>  
                 <td><?php echo userName($approver_id, $conn); ?></td>
                 <td><?php echo $submission_date;?></td>
                 <td><?php 
