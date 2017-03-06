@@ -68,12 +68,6 @@
         header("Location: ../home.php");
         
     }
-    else if ($action == "save")
-    {
-       
-       
-       
-    }
     /*
     $getApprover = "select routing.routingUser_id from routing
     left join routingCondition on routingCondition.routingCondition_id = routing.routingRow_id

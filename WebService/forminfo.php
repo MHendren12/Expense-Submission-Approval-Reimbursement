@@ -261,12 +261,19 @@
                 <td><?php echo userName($approver_id, $conn); ?></td>
                 <td><?php echo $submission_date;?></td>
                 <td><?php 
-                        if ($expensereport_status == "Approved" || $expensereport_status == "denied")
+                        $getApprovedDate = "select max(revieweddate) as revieweddate, expensereport_status from expense_reports 
+                        left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
+                        where expense_reports.expense_reports_id ='".$expense_reports_id."' and  (expensereport_status = 'Approved' or  expensereport_status = 'Denied') ";
+                        $ApprovedDate = mysqli_query($conn, $getApprovedDate);
+                        $row = mysqli_fetch_assoc($ApprovedDate);
+                        $status = $row['expensereport_status'];
+                        $revieweddate = $row['revieweddate'];
+                        if ($status == "Approved" || $status == "Denied")
                         {
                             echo $revieweddate;
                         }
                         else
-                        echo "N/A";
+                            echo "N/A";
                     ?>
                 </td>
                 <td><?php echo $expensereport_status;?></td>
@@ -302,12 +309,19 @@
                 <td><?php echo userName($approver_id, $conn); ?></td>
                 <td><?php echo $submission_date;?></td>
                 <td><?php 
-                        if ($expensereport_status == "Approved" || $expensereport_status == "denied")
+                        $getApprovedDate = "select max(revieweddate) as revieweddate, expensereport_status from expense_reports 
+                        left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
+                        where expense_reports.expense_reports_id ='".$expense_reports_id."' and  (expensereport_status = 'Approved' or  expensereport_status = 'Denied') ";
+                        $ApprovedDate = mysqli_query($conn, $getApprovedDate);
+                        $row = mysqli_fetch_assoc($ApprovedDate);
+                        $status = $row['expensereport_status'];
+                        $revieweddate = $row['revieweddate'];
+                        if ($status == "Approved" || $status == "Denied")
                         {
                             echo $revieweddate;
                         }
                         else
-                        echo "N/A";
+                            echo "N/A";
                     ?>
                 </td>
                 <td><?php echo $expensereport_status;?></td>
@@ -343,12 +357,19 @@
                 <td><?php echo userName($approver_id, $conn); ?></td>
                 <td><?php echo $submission_date;?></td>
                 <td><?php 
-                        if ($expensereport_status == "Approved" || $expensereport_status == "denied")
+                        $getApprovedDate = "select max(revieweddate) as revieweddate, expensereport_status from expense_reports 
+                        left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
+                        where expense_reports.expense_reports_id ='".$expense_reports_id."' and  (expensereport_status = 'Approved' or  expensereport_status = 'Denied') ";
+                        $ApprovedDate = mysqli_query($conn, $getApprovedDate);
+                        $row = mysqli_fetch_assoc($ApprovedDate);
+                        $status = $row['expensereport_status'];
+                        $revieweddate = $row['revieweddate'];
+                        if ($status == "Approved" || $status == "Denied")
                         {
                             echo $revieweddate;
                         }
                         else
-                        echo "N/A";
+                            echo "N/A";
                     ?>
                 </td>
                 <td><?php echo $expensereport_status;?></td>
@@ -383,12 +404,19 @@ function getAdminTable($conn, $status = "null"){
                 <td><?php echo userName($approver_id, $conn); ?></td>
                 <td><?php echo $submission_date;?></td>
                 <td><?php 
-                        if ($expensereport_status == "Approved" || $expensereport_status == "denied")
+                        $getApprovedDate = "select max(revieweddate) as revieweddate, expensereport_status from expense_reports 
+                        left join expensereport_history on expensereport_history.expense_reports_id = expense_reports.expense_reports_id
+                        where expense_reports.expense_reports_id ='".$expense_reports_id."' and  (expensereport_status = 'Approved' or  expensereport_status = 'Denied') ";
+                        $ApprovedDate = mysqli_query($conn, $getApprovedDate);
+                        $row = mysqli_fetch_assoc($ApprovedDate);
+                        $status = $row['expensereport_status'];
+                        $revieweddate = $row['revieweddate'];
+                        if ($status == "Approved" || $status == "Denied")
                         {
                             echo $revieweddate;
                         }
                         else
-                        echo "N/A";
+                            echo "N/A";
                     ?>
                 </td>
                 <td><?php echo $expensereport_status;?></td>

@@ -5,8 +5,6 @@
     $sid = $_SESSION['userid'];
     $action = $_GET['action'];
     $form = $_POST['formId'];
-    //echo $action;
-    echo $form;
 
     $getApprover = "select routing.routingUser_id, routingColumn_id from routing
     left join routingCondition on routingCondition.routingCondition_id = routing.routingRow_id
@@ -101,14 +99,15 @@
     
     $expenseReportId = $form;
     $status = "Pending";
+    
+    if ($action == "save")
+    {
+        $status = "Saved";
+        $firstApprover = -1;
+        $approverLevel = -1;
+    }
     if ($form != -1)
     {
-        if ($action == "save")
-        {
-            $status = "Saved";
-            $firstApprover = -1;
-            $approverLevel = -1;
-        }
         
         $sql = "update expense_reports set submitter_id = '".$sid."',
         approver_id = '".$firstApprover."',
@@ -130,7 +129,6 @@
     
         $expenseReportId = mysqli_insert_id($conn);
     }
-
     if ($action != "save")
     {
         $sql = "INSERT INTO expensereport_history( expense_reports_id, revieweddate, reviewer_id) 
