@@ -67,10 +67,16 @@
                </tbody>
             </table>
         </div>
-    </div>	
+    </div>
+    
 </body>
 <?php 
 getSubmittedDate($user_id, $conn);
 getApprovalDate($user_id, $conn);
 ?>
+<script>
+    $(".submitted").append('<span class="glyphicon glyphicon-share"></span>');
+    $(".approved").append('<span class="glyphicon glyphicon-check"></span>');
+    
+</script>
 </html>
