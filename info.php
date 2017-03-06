@@ -71,5 +71,6 @@
 </body>
 <?php 
 getSubmittedDate($user_id, $conn);
+getApprovalDate($user_id, $conn);
 ?>
 </html>

@@ -216,8 +216,8 @@
                 $revieweddate=$row['revieweddate'];
                 $dataDate = strtotime($revieweddate);
                 $dataDate =  date("Y-m-d", $dataDate);
-                echo '<script>$("#'.$dataDate.'").addClass("approved glyphicon glyphicon-check");
-                                $(".glyphicon-share").css("width","100%");
+                echo '<script>$("#'.$dataDate.'").addClass("glyphicon glyphicon-check");
+                                $(".glyphicon-check").css("width","100%");
                       </script>';                
             }
             
@@ -232,7 +232,7 @@
                 $submission_date=$row['submission_date'];
                 $dataDate = strtotime($submission_date);
                 $dataDate =  date("Y-m-d", $dataDate);
-                echo '<script>$("#'.$dataDate.'").addClass("sumbitted glyphicon glyphicon-share");
+                echo '<script>$("#'.$dataDate.'").addClass("glyphicon glyphicon-share");
                              $(".glyphicon-share").css("width","100%");   
                       </script>';
             }
