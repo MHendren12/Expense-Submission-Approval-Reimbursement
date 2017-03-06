@@ -208,7 +208,7 @@
 
     
     function getApprovalDate($user_id, $conn){
-    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id=expensereport_history.expense_reports_id where expensereport_history.approver_id = ". $user_id; 
+    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id=expensereport_history.expense_reports_id where expensereport_history.reviewer_id = ". $user_id; 
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
             while($row = mysqli_fetch_assoc($result))
@@ -216,25 +216,36 @@
                 $revieweddate=$row['revieweddate'];
                 $dataDate = strtotime($revieweddate);
                 $dataDate =  date("Y-m-d", $dataDate);
+                echo '<script>$("#'.$dataDate.'").after("<span class=\'glyphicon glyphicon-share\' ><span>")';
+                /*
                 echo '<script>$("#'.$dataDate.'").addClass("glyphicon glyphicon-check");
                                 $(".glyphicon-check").css("width","100%");
-                      </script>';                
+                      </script>';     
+                      */
             }
             
     }
     
     function getSubmittedDate($user_id, $conn){
     $sql = "select * from expense_reports where submitter_id = ". $user_id;
-             $result = mysqli_query($conn, $sql);
-             $num_rows = mysqli_num_rows($result);           
+            $result = mysqli_query($conn, $sql);
+            $num_rows = mysqli_num_rows($result);           
             while($row = mysqli_fetch_assoc($result))
             {
                 $submission_date=$row['submission_date'];
                 $dataDate = strtotime($submission_date);
                 $dataDate =  date("Y-m-d", $dataDate);
-                echo '<script>$("#'.$dataDate.'").addClass("glyphicon glyphicon-share");
+               
+               echo '<script>$("#'.$dataDate.'").after("<span class=\'glyphicon glyphicon-share\' ><span>")';
+               /*
+              addClass("glyphicon glyphicon-share");
+                             $(".glyphicon-share").css("width","100%");   
+                      </script>'
+                      */
+               /* echo '<script>$("#'.$dataDate.'").addClass("glyphicon glyphicon-share");
                              $(".glyphicon-share").css("width","100%");   
                       </script>';
+                      */
             }
             
     }

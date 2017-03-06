@@ -21,7 +21,7 @@
                                     We have recieved a password change request from <?php echo $user['user_email'] ?>.
                                     To proceed type a new password in both fields then click the Submit button.
                                 </p>
-                                <form action="Account/editinfo.php?id=<?php echo $id ?> " onsubmit="return validateForm()" method="post">
+                                <form action="Account/setnewpassword.php?id=<?php echo $id ?> " onsubmit="return validateForm()" method="post">
                                     <div id = "changePasswordNewPassword">
 										<input id="newPassword" class="form-control" name="newPassword" placeholder="Password" required style="width: 70%" type="password">
 										<br>
