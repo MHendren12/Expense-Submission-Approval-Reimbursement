@@ -75,7 +75,7 @@ class Calendar {
             $this->currentDate =null;
             $cellContent=null;
         }
-        return '<td id="li-'.$this->currentDate.'" class="'.($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')).
+        return '<td id="'.$this->currentDate.'" class="'.($cellNumber%7==0?' start ':($cellNumber%7==6?' end ':' ')).
                 ($cellContent==null?'mask':'').($cellContent==date('j')&&$this->currentMonth==date('m')&&$this->currentYear==date('Y')?'today':'').'">'.$cellContent.'</td>';
     }
      
@@ -133,4 +133,3 @@ class Calendar {
     }
      
 }
-?>

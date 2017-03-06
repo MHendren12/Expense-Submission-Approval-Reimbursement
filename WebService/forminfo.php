@@ -207,37 +207,40 @@
     }
 
     
-    function isApprovalDate($user_id, $conn){
-    $sql = getExpenseTableQuery()." order by expense_reports.submission_date desc";
+    function getApprovalDate($user_id, $conn){
+    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id=expensereport_history.expense_reports_id where expensereport_history.approver_id = ". $user_id; 
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
             while($row = mysqli_fetch_assoc($result))
             {
                 $revieweddate=$row['revieweddate'];
+                $dataDate = strtotime($revieweddate);
+                $dataDate =  date("Y-m-d", $dataDate);
+                echo '<script>$("#'.$dataDate.'").addClass("approved glyphicon glyphicon-check");
+                                $(".glyphicon-share").css("width","100%");
+                      </script>';                
             }
             
     }
     
-    function isSubmittedDate($user_id, $conn){
-    $sql = getExpenseTableQuery()." order by expense_reports.submission_date desc";
+    function getSubmittedDate($user_id, $conn){
+    $sql = "select * from expense_reports where submitter_id = ". $user_id;
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
             while($row = mysqli_fetch_assoc($result))
             {
                 $submission_date=$row['submission_date'];
+                $dataDate = strtotime($submission_date);
+                $dataDate =  date("Y-m-d", $dataDate);
+                echo '<script>$("#'.$dataDate.'").addClass("sumbitted glyphicon glyphicon-share");
+                             $(".glyphicon-share").css("width","100%");   
+                      </script>';
             }
             
     }
     
     function isFinalApprovalDate($user_id, $conn){
-    $sql = getExpenseTableQuery()." order by expense_reports.submission_date desc";
-             $result = mysqli_query($conn, $sql);
-             $num_rows = mysqli_num_rows($result);           
-            while($row = mysqli_fetch_assoc($result))
-            {
-                $expensereport_status=$row['status'];
-            }
-            
+        
     }
     
     function getApproverTable($user_id, $conn, $status = "null"){

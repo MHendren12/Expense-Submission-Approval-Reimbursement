@@ -1,7 +1,7 @@
 <?php
 function getUserInformation($user_id, $conn){
     $domain = $_SERVER['HTTP_HOST'];
-    $expenseTableQuerry = "select user.user_id, user.user_fname, user_lname, routingColumn_id, routingCondition.routingConditionType_id, expense_reports.approver_id, expense_reports.submitter_id,
+    $expenseTableQuerry = "select user.user_id, user.user_fname, user_lname, user.email, routingColumn_id, routingCondition.routingConditionType_id, expense_reports.approver_id, expense_reports.submitter_id,
     expense_reports.submission_date, expensereport_history.revieweddate, expense_reports.expense_reports_id, expense_activity.expense_activity_id, expense_reports.expensereport_status
     from routing
     left join user on routing.routingUser_id = user.user_id 
@@ -18,6 +18,7 @@ function getUserInformation($user_id, $conn){
     while($row = mysqli_fetch_assoc($result))
     {   
         $userid = $row['user_id'];
+        $sent_to_email = $row['email'];
         $name = userName($userid, $conn);
         $expense_id= $row['expense_reports_id'];
         $routingConditionType_id = $row['routingConditionType_id'];
@@ -50,7 +51,6 @@ function getSubmissionEmail(){
         \"RASE_link\": \"".$domain."\",
         \"expense_id\": \"".$expense_id."\",
         \"submission_date\": \"".$submission_date."\",
-        \"travel_type\": \"".$travel_type."\",
         \"first_approver\": \"".$first_approver."\"
         }
       }'
@@ -81,7 +81,6 @@ function getApprovedEmail(){
         \"RASE_link\": \"".$domain."\",
         \"expense_id\": \"".$expense_id."\",
         \"submission_date\": \"".$submission_date."\",
-        \"travel_type\": \"".$travel_type."\",
         \"last_approver\": \"".$last_approver."\"
         }
       }'
@@ -111,7 +110,6 @@ function getDeclinedEmail(){
         \"RASE_link\": \"".$domain."\",
         \"expense_id\": \"".$expense_id."\",
         \"submission_date\": \"".$submission_date."\",
-        \"travel_type\": \"".$travel_type."\",
         \"declined_approver\": \"".$declined_approver."\"
         }
       }'
@@ -142,7 +140,6 @@ function getApprovalRequest(){
         \"expense_id\": \"".$expense_id."\",
         \"submitter\": \"".$submitter."\",
         \"submission_date\": \"".$submission_date."\",
-        \"travel_type\": \"".$travel_type."\",
         \"current_approver\": \"".$current_approver."\"
         }
       }'

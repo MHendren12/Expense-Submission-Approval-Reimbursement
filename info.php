@@ -2,7 +2,7 @@
     <head>
         <style type="text/css">
             .table-style .today {background: #2A3F54; color: #ffffff;}
-            .table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}        
+            .table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
         </style>
     </head>
 <body>
@@ -69,7 +69,7 @@
         </div>
     </div>	
 </body>
-    <script>
-
-    </script>
+<?php 
+getSubmittedDate($user_id, $conn);
+?>
 </html>
