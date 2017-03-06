@@ -4,7 +4,7 @@
 	
     include("../Database/config.php");		 
     $conn = getConnection();
-	$id = $_GET['editUser'] != "" ? $_GET['editUser'] :  $_SESSION['userid'];
+	$id = $_GET['id'];
 	$redirectUrl =  "../index.php";
     
     $pass  = $_POST['newPassword'];
