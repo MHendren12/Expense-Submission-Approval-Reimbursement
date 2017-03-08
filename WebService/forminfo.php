@@ -492,7 +492,7 @@ function getAdminTable($conn, $status = "null"){
         }
     function isMyProcessed($user_id, $conn){
                     
-    $sql = getExpenseTableQuerySubmitter("Approved");
+    $sql = getExpenseTableQuerySubmitter("Processed");
             
             $result = mysqli_query($conn, $sql);
                         

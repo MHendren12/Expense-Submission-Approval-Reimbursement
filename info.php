@@ -1,9 +1,8 @@
 <html>
     <head>
         <style type="text/css">
-            .table-style .today {background: #2A3F54; color: #ffffff;}
+            .table-style .today {background: #0083C6;}
             .table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
-            #containerElem .popover{width:1000px;}
         </style>
     </head>
 <body>
