@@ -21,10 +21,10 @@
                     // then assigns that current user a table based on thier session user id.
                     if(isMySaved($_SESSION['userid'], $conn)){
                         if(isadmin($_SESSION['userid'], $conn)){
-                            getSandATable($_SESSION['userid'], $conn);
+                            getSandATable($_SESSION['userid'], $conn, "Saved");
                         }
                         else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
-                            getSandATable($_SESSION['userid'], $conn);
+                            getSandATable($_SESSION['userid'], $conn, "Saved");
                         }
                         else if(isSubmitter($_SESSION['userid'], $conn)){
                             getSubmitterTable($_SESSION['userid'], $conn, "Saved");

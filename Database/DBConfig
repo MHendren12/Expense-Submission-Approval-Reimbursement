@@ -14,12 +14,14 @@ use expense_reimbursement;
   user_activated int(1) NOT NULL
   );
  
+ DROP TABLE userAssignment;
  CREATE TABLE userAssignment (
   userAssign_id int(6) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   userRole_id int(6) UNSIGNED NOT NULL,
   user_id int(6) UNSIGNED NOT NULL
   );
   
+ DROP TABLE userRole;
  CREATE TABLE userRole (
   userRole_id int(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   userRole_Name  varchar(20) NOT NULL,
@@ -54,7 +56,8 @@ use expense_reimbursement;
   history_id int(6) UNSIGNED AUTO_INCREMENT not null primary key,
   expense_reports_id  int(6) UNSIGNED NOT NULL,
   reviewer_id int(6) UNSIGNED NOT NULL,
-  revieweddate datetime
+  revieweddate datetime,
+  action varchar(20)
   );
 
 
@@ -72,7 +75,7 @@ create table routing (
   routingColumn_id int(10) UNSIGNED NOT NULL,
   routingUser_id int(10) UNSIGNED NOT NULL
 );
-
+DROP TABLE expense_activity;
 CREATE TABLE expense_activity(
   expense_activity_id int (8) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   expense_reports_id int(8) NOT NULL,

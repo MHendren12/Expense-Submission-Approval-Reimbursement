@@ -139,54 +139,57 @@ function DoCheckUncheckDisplay(element, sectionId)
         var form_id = "<?php echo $id ?>";
     
     
-    
-        $.ajax({
+        if (form_id != "0")
+        {
+          $.ajax({
     			url: 'WebService/forminfo.php',
     			type: 'POST',
     			data: { "val": "getExpenseTypes","formid":form_id },
     
-    		})
-    		.done(function(data){
-    		    var expenseTypes = JSON.parse(data);
-                for (var i = 0; i<= expenseTypes.length-1; i++)
-                {
-                    var fieldId = expenseTypes[i].fieldId;
-                    var fieldValue = expenseTypes[i].fieldValue;
-                    var checked = fieldValue == "checked" ? true : false;
-                    var expenseTypeField = document.getElementById(fieldId);
-                    $(expenseTypeField).attr("checked",checked);
-                    $(expenseTypeField).trigger("change");
-                }
-               
-    		})
-    		.fail(function(){
-    			
-    		});
-		
-    		$.ajax({
+      		})
+      		.done(function(data){
+      		    var expenseTypes = JSON.parse(data);
+                  for (var i = 0; i<= expenseTypes.length-1; i++)
+                  {
+                      var fieldId = expenseTypes[i].fieldId;
+                      var fieldValue = expenseTypes[i].fieldValue;
+                      var checked = fieldValue == "checked" ? true : false;
+                      var expenseTypeField = document.getElementById(fieldId);
+                      $(expenseTypeField).attr("checked",checked);
+                      $(expenseTypeField).trigger("change");
+                  }
+                 
+      		})
+      		.fail(function(){
+      			
+      		});
+      		$.ajax({
     			url: 'WebService/forminfo.php',
     			type: 'POST',
     			data: { "val": "getExpenseFields","formid":form_id },
     
-    		})
-    		.done(function(data){
-    		    var expenseFields = JSON.parse(data);
-                for (var i = 0; i<= expenseFields.length-1; i++)
-                {
-                    var fieldId = expenseFields[i].fieldId;
-                    var fieldValue = expenseFields[i].fieldValue;
-                    var expenseTypeField = document.getElementById(fieldId);
-                    if (fieldId.indexOf("date")> -1)
-                    {
-    
-                    }
-                    $(expenseTypeField).val(fieldValue);
-                }
-               
-    		})
-    		.fail(function(){
-    			
-    		});
+      		})
+      		.done(function(data){
+      		    var expenseFields = JSON.parse(data);
+                  for (var i = 0; i<= expenseFields.length-1; i++)
+                  {
+                      var fieldId = expenseFields[i].fieldId;
+                      var fieldValue = expenseFields[i].fieldValue;
+                      var expenseTypeField = document.getElementById(fieldId);
+                      if (fieldId.indexOf("date")> -1)
+                      {
+      
+                      }
+                      $(expenseTypeField).val(fieldValue);
+                  }
+                 
+      		})
+      		.fail(function(){
+      			
+      		});
+        }
+        
+    		
     });
     
     function saveForm()

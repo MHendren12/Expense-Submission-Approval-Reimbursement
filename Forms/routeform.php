@@ -6,10 +6,18 @@
     $action = $_GET['action'];
     $formId = $_GET['fid'];
     
+    $getMaxHistoryId = "select max(history_id) as history_id from expensereport_history where expense_reports_id = '".$formId."'";
+    $maxHistoryResult = mysqli_query($conn, $getMaxHistoryId);
+    $maxHistoryId = mysqli_fetch_assoc($maxHistoryResult);
+    $maxHistoryId = $maxHistoryId['history_id'];
+    
     if ($action == "approve")
     {
         $getSubmitterId = "select submitter_id, approver_id, approver_level from expense_reports where expense_reports_id = '".$formId."'";
         $res = mysqli_query($conn,$getSubmitterId);
+        
+        
+        
         $row = mysqli_fetch_assoc($res);
         $submitterId = $row['submitter_id'];
         $currentApproverId = $row['approver_id'];
@@ -36,6 +44,8 @@
             $updateFormApprover = "Update expense_reports set approver_id = -1, approver_level = -1, expensereport_status='Approved' where expense_reports_id = '".$formId."'";
             $res = mysqli_query($conn, $updateFormApprover)
                 or die(mysql_error());
+            
+            
         }
         else
         {
@@ -44,12 +54,12 @@
                 or die(mysql_error());
             
              $insert = "INSERT INTO expensereport_history( expense_reports_id, reviewer_id) 
-                VALUES ('".$formId."', '" .$nextApprover. "' )";
+                VALUES ('".$formId."', '" .$nextApprover. "')";
             $res = mysqli_query($conn, $insert)
                 or die(mysql_error());
         }
 
-        $updateHistory = "Update expensereport_history set revieweddate = CURRENT_TIMESTAMP() where expense_reports_id = '".$formId."' and revieweddate is NULL";
+        $updateHistory = "Update expensereport_history set revieweddate = CURRENT_TIMESTAMP(), action = 'Approved'  where expense_reports_id = '".$formId."' and history_id = '".$maxHistoryId."' ";
         $res = mysqli_query($conn, $updateHistory)
             or die(mysql_error());;
             
@@ -62,7 +72,7 @@
         $updateFormApprover = "Update expense_reports set approver_id = -1, approver_level = -1, expensereport_status='Denied' where expense_reports_id = '".$formId."'";
             $res = mysqli_query($conn, $updateFormApprover)
                 or die(mysql_error());
-        $updateHistory = "Update expensereport_history set revieweddate = CURRENT_TIMESTAMP() where expense_reports_id = '".$formId."' and revieweddate is NULL";
+        $updateHistory = "Update expensereport_history set revieweddate = CURRENT_TIMESTAMP(), action='Denied' where expense_reports_id = '".$formId."'and history_id = '".$maxHistoryId."' ";
         $res = mysqli_query($conn, $updateHistory)
             or die(mysql_error());
         header("Location: ../home.php");

@@ -131,8 +131,8 @@
     }
     if ($action != "save")
     {
-        $sql = "INSERT INTO expensereport_history( expense_reports_id, revieweddate, reviewer_id) 
-                VALUES ('".$expenseReportId."', CURRENT_TIMESTAMP() ,'" .$sid. "' )";
+        $sql = "INSERT INTO expensereport_history( expense_reports_id, revieweddate, reviewer_id, action) 
+                VALUES ('".$expenseReportId."', CURRENT_TIMESTAMP() ,'" .$sid. "', 'Submit' )";
         $insert = mysqli_query($conn, $sql) 
             or die(mysqli_error($insert));
             
