@@ -241,6 +241,36 @@
         
     }
     
+    function getCalendarSubmitterInfo($user_id, $conn){
+        $sql = "select * from expense_reports where submitter_id = ". $user_id;
+        $result = mysqli_query($conn, $sql);
+             while($row = mysqli_fetch_assoc($result))
+            {
+                $expense_reports_id=$row['expense_reports_id'];
+                $submission_date=$row['submission_date'];
+                $dataDate = strtotime($submission_date);
+                $dataDate =  date("r", $dataDate);
+                $submitInfo = "Expense-ID: ". $expense_reports_id . " - Time: 00:00:00 ";;
+                echo $submitInfo;
+            }
+    }
+    
+    function getCalendarApprovedInfo($user_id, $conn){
+        $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
+        where reviewer_id = ". $user_id;
+        $result = mysqli_query($conn, $sql);
+             while($row = mysqli_fetch_assoc($result))
+            {
+                $expense_reports_id=$row['expense_reports_id'];
+                $submission_date=$row['submission_date'];
+                $reviewer_id = $row['reviewer_id'];
+                $dataDate = strtotime($submission_date);
+                $dataDate =  date("r", $dataDate);
+                $submitInfo = "Expense-ID: ". $expense_reports_id . " - Approved By: " . userName($reviewer_id, $conn);
+                echo $submitInfo;
+            }
+    }    
+    
     function getApproverTable($user_id, $conn, $status = "null"){
                     
     $sql = getExpenseTableQueryApprover($status);

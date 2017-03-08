@@ -3,6 +3,7 @@
         <style type="text/css">
             .table-style .today {background: #2A3F54; color: #ffffff;}
             .table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
+            #containerElem .popover{width:1000px;}
         </style>
     </head>
 <body>
@@ -68,15 +69,21 @@
             </table>
         </div>
     </div>
-    
 </body>
-<?php 
+<?php
 getSubmittedDate($user_id, $conn);
 getApprovalDate($user_id, $conn);
 ?>
 <script>
-    $(".submitted").append('<span class="glyphicon glyphicon-share"></span>');
-    $(".approved").append('<span class="glyphicon glyphicon-check"></span>');
+    var submitter = "<?php getCalendarSubmitterInfo($user_id, $conn); ?>";
+    var approver = "<?php getCalendarApprovedInfo($user_id, $conn); ?>";
+    $('.submitted').wrapInner('<div style="float:left;" />');
+    $(".approved").wrapInner('<div style="float:left;" />');    
+    $('.submitted').append('<span class="glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="'+submitter+'" style="float:right;"></span>');
+    $(".approved").append('<span class="glyphicon glyphicon-check" href="#" title="Approved Date" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="'+approver+'" style="float:right;"></span>');
     
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover(); 
+    });   
 </script>
 </html>

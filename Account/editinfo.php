@@ -44,9 +44,9 @@ session_start();
                 or die(mysqli_error($conn));
         }
         if($_GET['id'] != null){
-            header("Location: ../index.php");
+            //header("Location: ../index.php");
         } else{
-            header("Location: ".$redirectUrl);
+            //header("Location: ".$redirectUrl);
         }   
         
     }
