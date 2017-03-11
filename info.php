@@ -3,6 +3,7 @@
         <style type="text/css">
             .table-style .today {background: #0083C6;}
             .table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
+            .popover{width:1000px;}
         </style>
     </head>
 <body>
@@ -69,20 +70,50 @@
         </div>
     </div>
 </body>
+<div id="specialS" style="display:none;">
+    
+    <?php getCalendarSubmitterInfo($user_id, $conn); ?>  
+</div>
+<div id="specialA" style="display:none;">
+    
+    <?php  getCalendarApprovedInfo($user_id, $conn); ?> 
+</div>
+ <div id="specialFA" style="display:none;">
+    
+    <?php  getCalendarFinalApprovedInfo($user_id, $conn); ?> 
+</div>    
 <?php
 getSubmittedDate($user_id, $conn);
 getApprovalDate($user_id, $conn);
+getFinalApprovalDate($user_id, $conn);
 ?>
 <script>
-    var submitter = "<?php getCalendarSubmitterInfo($user_id, $conn); ?>";
-    var approver = "<?php getCalendarApprovedInfo($user_id, $conn); ?>";
     $('.submitted').wrapInner('<div style="float:left;" />');
-    $(".approved").wrapInner('<div style="float:left;" />');    
-    $('.submitted').append('<span class="glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="'+submitter+'" style="float:right;"></span>');
-    $(".approved").append('<span class="glyphicon glyphicon-check" href="#" title="Approved Date" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="'+approver+'" style="float:right;"></span>');
+    $(".approved").wrapInner('<div style="float:left;" />');  
+    $(".finalapproved").wrapInner('<div style="float:left;" />');
+    $('.submitted').append('<span id="submitter" class="submitter glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="click" style="float:right;"></span>');
+    $(".approved").append('<span id="approver" class="approver glyphicon glyphicon-check" href="#" title="Approved" data-placement="bottom" data-toggle="popover" data-trigger="click" style="float:right;"></span>');
+    $(".finalapproved").append('<span id="finalapprover" class="finalapprover glyphicon glyphicon-thumbs-up" href="#" title="Final Approved" data-placement="bottom" data-toggle="popover" data-trigger="click" style="float:right;"></span>');
     
-    $(document).ready(function(){
-        $('[data-toggle="popover"]').popover(); 
+    $(function(){
+        $('.submitter').popover({
+            content: $('#specialS').html(),
+            html: true
+        }).click(function() {
+            $(this).popover('show');
+        });
+        $('.approver').popover({
+            content: $('#specialA').html(),
+            html: true
+        }).click(function() {
+            $(this).popover('show');
+        });
+        $('.finalapprover').popover({
+            content: $('#specialFA').html(),
+            html: true
+        }).click(function() {
+            $(this).popover('show');
+        });
     });   
 </script>
 </html>

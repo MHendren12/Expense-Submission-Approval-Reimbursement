@@ -205,10 +205,27 @@
             return false;
         }
     }
-
+    
+    function setSubmittedDate($date, $conn){
+    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id
+        where revieweddate = '".$date."'";
+            $result = mysqli_query($conn, $sql);
+            $num_rows = mysqli_num_rows($result);           
+            $row = mysqli_fetch_assoc($result);
+            $submission_date=$row['submission_date'];
+            $revieweddate=$row['revieweddate'];
+            $expense_reports_id=$row['expense_reports_id'];
+            $dataDate = strtotime($submission_date);
+            $dataDate =  date("Y-m-d", $dataDate);
+                echo '<script>
+                $(".'.$dataDate.'").css("display", "");
+                      </script>';
+            
+    }
     
     function getApprovalDate($user_id, $conn){
-    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id=expensereport_history.expense_reports_id where expensereport_history.reviewer_id = ". $user_id; 
+    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id=expensereport_history.expense_reports_id 
+    where expensereport_history.action != 'Submit' and expensereport_history.reviewer_id = ". $user_id; 
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
             while($row = mysqli_fetch_assoc($result))
@@ -217,13 +234,34 @@
                 $dataDate = strtotime($revieweddate);
                 $dataDate =  date("Y-m-d", $dataDate);
                 echo '<script>$("#'.$dataDate.'").addClass("approved");
-                      </script>';                
+                      </script>';
             }
             
     }
     
     function getSubmittedDate($user_id, $conn){
-    $sql = "select * from expense_reports where submitter_id = ". $user_id;
+    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id
+        where expensereport_status != 'Saved' and submitter_id = ". $user_id;
+             $result = mysqli_query($conn, $sql);
+             $num_rows = mysqli_num_rows($result);           
+            while($row = mysqli_fetch_assoc($result))
+            {
+                $submission_date=$row['submission_date'];
+                $revieweddate=$row['revieweddate'];
+                $expense_reports_id=$row['expense_reports_id'];
+                $dataDate = strtotime($submission_date);
+                $dataDate =  date("Y-m-d", $dataDate);
+                $dataTime = strtotime($revieweddate);
+                $dataTime=  date("H:i:s", $dataTime);
+                echo '<script>$("#'.$dataDate.'").addClass("submitted");
+                      </script>';
+            }
+            
+    }
+    
+    function getFinalApprovalDate($user_id, $conn){
+    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
+        where expense_reports.expensereport_status = 'Approved' and expensereport_history.reviewer_id = ". $user_id;
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
             while($row = mysqli_fetch_assoc($result))
@@ -231,45 +269,63 @@
                 $submission_date=$row['submission_date'];
                 $dataDate = strtotime($submission_date);
                 $dataDate =  date("Y-m-d", $dataDate);
-                echo '<script>$("#'.$dataDate.'").addClass("submitted");
+                echo '<script>$("#'.$dataDate.'").addClass("finalapproved");
                       </script>';
-            }
-            
-    }
-    
-    function isFinalApprovalDate($user_id, $conn){
-        
+            }        
     }
     
     function getCalendarSubmitterInfo($user_id, $conn){
-        $sql = "select * from expense_reports where submitter_id = ". $user_id;
+        $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
+        where expensereport_history.action = 'Submit' and expensereport_history.reviewer_id = ". $user_id;
         $result = mysqli_query($conn, $sql);
+        $submitInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th >Expense-ID:</th> <th>Time:</th></tr>";
              while($row = mysqli_fetch_assoc($result))
             {
                 $expense_reports_id=$row['expense_reports_id'];
                 $submission_date=$row['submission_date'];
                 $dataDate = strtotime($submission_date);
-                $dataDate =  date("r", $dataDate);
-                $submitInfo = "Expense-ID: ". $expense_reports_id . " - Time: 00:00:00 ";;
-                echo $submitInfo;
+                $dataDate =  date("H:i:s", $dataDate);
+                $submitInfo .= " <tr class='".$submission_date."'> <td>". $expense_reports_id . "</td> <td>".$dataDate."</td> </tr>";
             }
+        $submitInfo .= "</table>";
+        echo $submitInfo;
     }
     
     function getCalendarApprovedInfo($user_id, $conn){
         $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
-        where reviewer_id = ". $user_id;
+        where expensereport_history.action != 'Submit' and expensereport_history.reviewer_id = ". $user_id;
         $result = mysqli_query($conn, $sql);
+        $approveInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th>Expense-ID:</th><th>Time:</th></tr>";
              while($row = mysqli_fetch_assoc($result))
             {
                 $expense_reports_id=$row['expense_reports_id'];
-                $submission_date=$row['submission_date'];
+                $revieweddate=$row['revieweddate'];
                 $reviewer_id = $row['reviewer_id'];
-                $dataDate = strtotime($submission_date);
-                $dataDate =  date("r", $dataDate);
-                $submitInfo = "Expense-ID: ". $expense_reports_id . " - Approved By: " . userName($reviewer_id, $conn);
-                echo $submitInfo;
+                $dataDate = strtotime($revieweddate);
+                $dataDate =  date("H:i:s", $dataDate);
+                $approveInfo .= "<tr class='".$revieweddate."'> <td>". $expense_reports_id . "</td> <td>".$dataDate."</td></tr>";
             }
+        $approveInfo .= "</table>";
+        echo $approveInfo;
     }    
+
+    function getCalendarFinalApprovedInfo($user_id, $conn){
+        $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
+        where expense_reports.expensereport_status = 'Approved' and expensereport_history.reviewer_id = ". $user_id;
+        $result = mysqli_query($conn, $sql);
+        $finalapproveInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th>Expense-ID:</th> <th>Status:</th></tr>";
+             while($row = mysqli_fetch_assoc($result))
+            {
+                $expense_reports_id=$row['expense_reports_id'];
+                $revieweddate=$row['revieweddate'];
+                $reviewer_id = $row['reviewer_id'];
+                $dataDate = strtotime($revieweddate);
+                $dataDate =  date("H:i:s", $dataDate);
+                $finalapproveInfo .= "<tr class='".$revieweddate."'> <td>". $expense_reports_id . "</td><td>Approved</td>";
+            }
+            $finalapproveInfo .= "</table>";
+            echo $finalapproveInfo;
+    } 
     
     function getApproverTable($user_id, $conn, $status = "null"){
                     
