@@ -206,20 +206,17 @@
         }
     }
     
-    function setSubmittedDate($date, $conn){
-    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id
-        where revieweddate = '".$date."'";
-            $result = mysqli_query($conn, $sql);
-            $num_rows = mysqli_num_rows($result);           
-            $row = mysqli_fetch_assoc($result);
-            $submission_date=$row['submission_date'];
-            $revieweddate=$row['revieweddate'];
-            $expense_reports_id=$row['expense_reports_id'];
-            $dataDate = strtotime($submission_date);
-            $dataDate =  date("Y-m-d", $dataDate);
-                echo '<script>
-                $(".'.$dataDate.'").css("display", "");
-                      </script>';
+    function setSubmittedDate($user_id, $conn){
+        $sql = "select * from expensereport_history where reviewer_id = ". $user_id;
+        $result = mysqli_query($conn, $sql);
+        $num_rows = mysqli_num_rows($result);           
+            while($row = mysqli_fetch_assoc($result))
+            {
+                $submission_date=$row['submission_date'];
+                $revieweddate=$row['revieweddate'];
+                $expense_reports_id=$row['expense_reports_id'];
+                getCalendarSubmitterInfo($revieweddate, $conn);
+            }
             
     }
     
@@ -239,23 +236,19 @@
             
     }
     
-    function getSubmittedDate($user_id, $conn){
+    function getSubmittedDate($date, $conn){
     $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id
-        where expensereport_status != 'Saved' and submitter_id = ". $user_id;
-             $result = mysqli_query($conn, $sql);
-             $num_rows = mysqli_num_rows($result);           
-            while($row = mysqli_fetch_assoc($result))
-            {
-                $submission_date=$row['submission_date'];
-                $revieweddate=$row['revieweddate'];
-                $expense_reports_id=$row['expense_reports_id'];
-                $dataDate = strtotime($submission_date);
-                $dataDate =  date("Y-m-d", $dataDate);
-                $dataTime = strtotime($revieweddate);
-                $dataTime=  date("H:i:s", $dataTime);
-                echo '<script>$("#'.$dataDate.'").addClass("submitted");
-                      </script>';
-            }
+        where expensereport_status != 'Saved' and revieweddate = '".$date."'";
+            $result = mysqli_query($conn, $sql);
+            $num_rows = mysqli_num_rows($result);           
+            $row = mysqli_fetch_assoc($result);
+            $submission_date=$row['submission_date'];
+            $revieweddate=$row['revieweddate'];
+            $expense_reports_id=$row['expense_reports_id'];
+            $dataDate = strtotime($submission_date);
+            $dataDate =  date("Y-m-d", $dataDate);
+            echo '<script>$("#'.$dataDate.'").addClass("submitted");
+                  </script>';
             
     }
     
@@ -274,19 +267,18 @@
             }        
     }
     
-    function getCalendarSubmitterInfo($user_id, $conn){
+    function getCalendarSubmitterInfo($date, $conn){
+        getSubmittedDate($date, $conn);
         $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
-        where expensereport_history.action = 'Submit' and expensereport_history.reviewer_id = ". $user_id;
+        where expensereport_history.action = 'Submit' and revieweddate = '".$date."'";
         $result = mysqli_query($conn, $sql);
         $submitInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th >Expense-ID:</th> <th>Time:</th></tr>";
-             while($row = mysqli_fetch_assoc($result))
-            {
-                $expense_reports_id=$row['expense_reports_id'];
-                $submission_date=$row['submission_date'];
-                $dataDate = strtotime($submission_date);
-                $dataDate =  date("H:i:s", $dataDate);
-                $submitInfo .= " <tr class='".$submission_date."'> <td>". $expense_reports_id . "</td> <td>".$dataDate."</td> </tr>";
-            }
+        $row = mysqli_fetch_assoc($result);
+        $expense_reports_id=$row['expense_reports_id'];
+        $submission_date=$row['submission_date'];
+        $dataDate = strtotime($submission_date);
+        $dataDate =  date("H:i:s", $dataDate);
+        $submitInfo .= " <tr class='".$submission_date."'> <td>". $expense_reports_id . "</td> <td>".$dataDate."</td> </tr>";
         $submitInfo .= "</table>";
         echo $submitInfo;
     }

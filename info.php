@@ -72,7 +72,7 @@
 </body>
 <div id="specialS" style="display:none;">
     
-    <?php getCalendarSubmitterInfo($user_id, $conn); ?>  
+    <?php setSubmittedDate($user_id, $conn); ?>  
 </div>
 <div id="specialA" style="display:none;">
     
@@ -83,7 +83,7 @@
     <?php  getCalendarFinalApprovedInfo($user_id, $conn); ?> 
 </div>    
 <?php
-getSubmittedDate($user_id, $conn);
+//getSubmittedDate($user_id, $conn);
 getApprovalDate($user_id, $conn);
 getFinalApprovalDate($user_id, $conn);
 ?>
@@ -91,9 +91,9 @@ getFinalApprovalDate($user_id, $conn);
     $('.submitted').wrapInner('<div style="float:left;" />');
     $(".approved").wrapInner('<div style="float:left;" />');  
     $(".finalapproved").wrapInner('<div style="float:left;" />');
-    $('.submitted').append('<span id="submitter" class="submitter glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="click" style="float:right;"></span>');
-    $(".approved").append('<span id="approver" class="approver glyphicon glyphicon-check" href="#" title="Approved" data-placement="bottom" data-toggle="popover" data-trigger="click" style="float:right;"></span>');
-    $(".finalapproved").append('<span id="finalapprover" class="finalapprover glyphicon glyphicon-thumbs-up" href="#" title="Final Approved" data-placement="bottom" data-toggle="popover" data-trigger="click" style="float:right;"></span>');
+    $('.submitted').append('<span id="submitter" class="submitter glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
+    $(".approved").append('<span id="approver" class="approver glyphicon glyphicon-check" href="#" title="Approved" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
+    $(".finalapproved").append('<span id="finalapprover" class="finalapprover glyphicon glyphicon-thumbs-up" href="#" title="Final Approved" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
     
     $(function(){
         $('.submitter').popover({
