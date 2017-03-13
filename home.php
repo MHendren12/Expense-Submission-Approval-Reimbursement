@@ -61,15 +61,22 @@
                             <ul class="nav nav-tabs nav-justified" id="homeTabs">
                               <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
                               <!-- Subpannel for My Form -->
-                              <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#myform"><h4>My Form</h4>
-                                <ul class="dropdown-menu" style="min-width: 100%;";>
-                                  <li><a data-toggle="tab" href="#expenseform">Expense Form</a></li>
-                                  <li><a data-toggle="tab" href="#mysaved">My Saved</a></li>
-                                  <li><a data-toggle="tab" href="#mypending">My Pending</a></li>
-                                  <li><a data-toggle="tab" href="#myprocessed">My Processed</a></li>
-                                </ul>
-                              </li>
+                             <?php
+                                    if ($hasRoleAuthority || array_search( 'Submit Form' , $permissions) || array_search( 'Approve Form' , $permissions))
+                                    {
+                                ?>
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#myform"><h4>My Form</h4>
+                                        <ul class="dropdown-menu" style="min-width: 100%;";>
+                                          <li><a data-toggle="tab" href="#expenseform">Expense Form</a></li>
+                                          <li><a data-toggle="tab" href="#mysaved">My Saved</a></li>
+                                          <li><a data-toggle="tab" href="#mypending">My Pending</a></li>
+                                          <li><a data-toggle="tab" href="#myprocessed">My Processed</a></li>
+                                        </ul>
+                                    </li>
+                                <?php
+                                    }
+                                ?>
                               <!--
                               <li><a data-toggle="tab" href="#myactivity"><h4>My activity</h4></a></li>
                                 

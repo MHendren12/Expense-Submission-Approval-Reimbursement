@@ -543,11 +543,14 @@ function getAdminTable($conn, $status = "null"){
             }
         }
     function isMyProcessed($user_id, $conn){
-        $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id
-        where (expense_reports.expensereport_status='Approved' or expensereport_history.action='Approved') and expensereport_history.reviewer_id = ".$user_id;
+        $sql = "select * from expense_reports 
+        left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id
+        where (expense_reports.expensereport_status='Approved' or expense_reports.expensereport_status='Denied' or expensereport_history.action='Approved') and expensereport_history.reviewer_id = ".$user_id;
         $result = mysqli_query($conn, $sql);
         $num_rows = mysqli_num_rows($result);
+        return $num_rows != 0;
         
+        /*
         while($row = mysqli_fetch_assoc($result))
         {
             $expensereport_status=$row['expensereport_status'];
@@ -580,8 +583,9 @@ function getAdminTable($conn, $status = "null"){
                         return true;
                     }
             }
+            
         }
-
+*/
     }
     
     
