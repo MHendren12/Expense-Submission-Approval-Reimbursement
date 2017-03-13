@@ -43,10 +43,13 @@ session_start();
             $res = mysqli_query($conn, $sql)
                 or die(mysqli_error($conn));
         }
+        $_SESSION['name'] = $fname . " " . $lname;
+        
+        
         if($_GET['id'] != null){
-            //header("Location: ../index.php");
+            header("Location: ../index.php");
         } else{
-            //header("Location: ".$redirectUrl);
+            header("Location: ".$redirectUrl);
         }   
         
     }

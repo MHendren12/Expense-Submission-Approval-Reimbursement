@@ -1,4 +1,7 @@
 <?php
+    include("WebService/accountinfo.php");
+    include("WebService/forminfo.php");
+    include("Account/expenseEmail.php");
     if (!$conn)
     {
         include("Database/config.php");		 
@@ -21,8 +24,7 @@
         $num_rows = mysqli_num_rows($result);
         
         $hasRoleAuthority = ( $num_rows == 1 || $is_admin ) == true ? true : false;
-        
-        
+        $permissions = getPermissions($user_id, $conn);
        
         
     }
@@ -117,10 +119,15 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="account.php">My Account</a></li>
                                             <?php
-                                                if ($hasRoleAuthority)
+                                                if ($hasRoleAuthority || array_search( 'User roles' , $permissions))
                                                 {
                                             ?>
                                             <li><a href="userroles.php">User Roles</a></li>
+                                            <?php
+                                                }
+                                                if ($hasRoleAuthority || array_search( 'User list' , $permissions))
+                                                {
+                                            ?>
                                             <li><a href="userlist.php">User List</a></li>
                                             <?php
                                                 }

@@ -1,7 +1,7 @@
 <?php
     session_start();
     $user_id = $_SESSION['userid'];
-    include("WebService/accountinfo.php");
+    //include("WebService/accountinfo.php");
     $editUser = $_GET['editUser'];
 ?>
 <!DOCTYPE html>

@@ -1,7 +1,7 @@
 <?php
     session_start();
+    //include("WebService/accountinfo.php");
 	$id = $_SESSION['userid'];
-    
 ?>
 <!DOCTYPE html>
 <html>

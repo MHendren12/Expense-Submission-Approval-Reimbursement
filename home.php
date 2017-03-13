@@ -1,20 +1,15 @@
 <?php
     session_start();
+    if($_SESSION['userid'] == null){
+        header("Location: index.php");
+    }
+    include("Navbar/header.php");
     $user_id = $_SESSION['userid'];
-    include("WebService/accountinfo.php");
-    include("WebService/forminfo.php");
-    include("Account/expenseEmail.php");
+    $permissions = getPermissions($user_id, $conn);
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-
-        <?php
-            include("Navbar/header.php");
-            if($_SESSION['userid'] == null){
-                header("Location: index.php");
-            }
-        ?>
     </head>
     <body>
         <div class="container">
@@ -82,7 +77,7 @@
                                 <?php
                                     
                                     $isadmin = isadmin($user_id, $conn);
-                                    if ($isadmin)
+                                    if ($isadmin ||  array_search( 'Routing Conditions' , $permissions))
                                     {
                                 ?>
                                 <li><a data-toggle="tab" href="#routing"><h4>Routing</h4></a></li>
