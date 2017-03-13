@@ -141,11 +141,11 @@
         return $expenseTableQuery;
     }
     function getExpenseTableQueryApprover($status = "null"){
-        $expenseTableQuery = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
-                                expense_reports.expense_reports_id, expense_reports.expensereport_status
+        $expenseTableQuery = "select expense_reports.expense_reports_id, expensereport_history.reviewer_id, expense_reports.approver_id, expense_reports.submitter_id,
+                                expense_reports.submission_date, expense_reports.expensereport_status
                                 from expense_reports
-                                left join user on user.user_id = expense_reports.submitter_id
-                                where approver_id = '".$_SESSION['userid']."'";
+                                left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id
+                                where reviewer_id = '".$_SESSION['userid']."'";
                                 
                                 
         if ($status != "null")
@@ -206,7 +206,7 @@
         }
     }
     
-    function setSubmittedDate($user_id, $conn){
+    /*function setSubmittedDate($user_id, $conn){
         $sql = "select * from expensereport_history where reviewer_id = ". $user_id;
         $result = mysqli_query($conn, $sql);
         $num_rows = mysqli_num_rows($result);           
@@ -218,7 +218,7 @@
                 getCalendarSubmitterInfo($revieweddate, $conn);
             }
             
-    }
+    }*/
     
     function getApprovalDate($user_id, $conn){
     $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id=expensereport_history.expense_reports_id 
@@ -236,20 +236,20 @@
             
     }
     
-    function getSubmittedDate($date, $conn){
+    function getSubmittedDate($user_id, $conn){
     $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id
-        where expensereport_status != 'Saved' and revieweddate = '".$date."'";
+        where expensereport_history.action = 'Submit' and reviewer_id = '".$user_id."'";
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result); 
             while($row = mysqli_fetch_assoc($result))
             {
-            $submission_date=$row['submission_date'];
-            $revieweddate=$row['revieweddate'];
-            $expense_reports_id=$row['expense_reports_id'];
-            $dataDate = strtotime($submission_date);
-            $dataDate =  date("Y-m-d", $dataDate);
-            echo '<script>$("#'.$dataDate.'").addClass("submitted");
-                  </script>';
+                $submission_date=$row['submission_date'];
+                $revieweddate=$row['revieweddate'];
+                $expense_reports_id=$row['expense_reports_id'];
+                $dataDate = strtotime($submission_date);
+                $dataDate =  date("Y-m-d", $dataDate);
+                echo '<script>$("#'.$dataDate.'").addClass("submitted");
+                      </script>';
             }
             
     }
@@ -269,10 +269,10 @@
             }        
     }
     
-    function getCalendarSubmitterInfo($date, $conn){
-        getSubmittedDate($date, $conn);
+    function getCalendarSubmitterInfo($user_id, $conn){
+        getSubmittedDate($user_id, $conn);
         $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
-        where expensereport_history.action = 'Submit' and revieweddate = '".$date."'";
+        where expensereport_history.action = 'Submit' and reviewer_id = '".$user_id."'";
         $result = mysqli_query($conn, $sql);
         $submitInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th >Expense-ID:</th> <th>Time:</th></tr>";
             while($row = mysqli_fetch_assoc($result))
@@ -543,19 +543,46 @@ function getAdminTable($conn, $status = "null"){
             }
         }
     function isMyProcessed($user_id, $conn){
-                    
-    $sql = getExpenseTableQuerySubmitter("Processed");
+        $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id
+        where (expense_reports.expensereport_status='Approved' or expensereport_history.action='Approved') and expensereport_history.reviewer_id = ".$user_id;
+        $result = mysqli_query($conn, $sql);
+        $num_rows = mysqli_num_rows($result);
+        
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $expensereport_status=$row['expensereport_status'];
             
-            $result = mysqli_query($conn, $sql);
-                        
-            $num_rows = mysqli_num_rows($result);
-              if($num_rows == 0){
-                return false;
+            if($expensereport_status=="Submit"){
+        
+                $sql = getExpenseTableQuerySubmitter("Processed");
+                    
+                    $result = mysqli_query($conn, $sql);
+                                
+                    $num_rows = mysqli_num_rows($result);
+                      if($num_rows == 0){
+                        return false;
+                    }
+                    else{
+                        return true;
+                    }
             }
-            else{
-                return true;
+                
+            else if($expensereport_status=="Approved"){ 
+                $sql = getExpenseTableQueryApprover("Processed");
+                    
+                    $result = mysqli_query($conn, $sql);
+                                
+                    $num_rows = mysqli_num_rows($result);
+                      if($num_rows == 0){
+                        return false;
+                    }
+                    else{
+                        return true;
+                    }
             }
         }
+
+    }
     
     
 ?>
