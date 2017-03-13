@@ -72,7 +72,7 @@
 </body>
 <div id="specialS" style="display:none;">
     
-    <?php setSubmittedDate($user_id, $conn); ?>  
+    <?php  getCalendarSubmitterInfo($user_id, $conn); ?>  
 </div>
 <div id="specialA" style="display:none;">
     
@@ -83,7 +83,7 @@
     <?php  getCalendarFinalApprovedInfo($user_id, $conn); ?> 
 </div>    
 <?php
-//getSubmittedDate($user_id, $conn);
+getSubmittedDate($user_id, $conn);
 getApprovalDate($user_id, $conn);
 getFinalApprovalDate($user_id, $conn);
 ?>
