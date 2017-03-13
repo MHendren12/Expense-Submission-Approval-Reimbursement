@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="/Scripts/printPreview.js"></script>
     </head>
     <body>
         <div class="container">
@@ -19,12 +20,13 @@
                       
                            <div class="modal-header"> 
                                 <button align="left" type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                <button data-toggle="modal" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
+                                    <button data-toggle="modal" id="btnPrint" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Preview</button>
+                                    <button data-toggle="modal" onclick="getprint()" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
                                 <h4 class="modal-title">
                                 	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
                                 </h4> 
                            </div> 
-                           <div class="modal-body"> 
+                           <div class="modal-body" id="masterContent"> 
                            
                            	   <div id="modal-loader" style="display: none; text-align: center;">
                            	   	<img src="images/ajax-loader.gif">
@@ -179,6 +181,12 @@
         	});
         	
         });       
-        
+function getprint() {
+    window.print();
+}
+$("#btnPrint").printPreview({
+   obj2print:'#masterContent',
+   width:'1080'
+});        
     </script>
 </html>
