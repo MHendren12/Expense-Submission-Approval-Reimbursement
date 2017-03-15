@@ -75,8 +75,9 @@ class Calendar {
             $this->currentDate =null;
             $cellContent=null;
         }
-        return '<td id="'.$this->currentDate.'" class="'.($cellNumber%7==0?' start ':($cellNumber%7==6?' end ':' ')).
+        $dateContent = '<td id="'.$this->currentDate.'" class="'.($cellNumber%7==0?' start ':($cellNumber%7==6?' end ':' ')).
                 ($cellContent==null?'mask':'').($cellContent==date('j')&&$this->currentMonth==date('m')&&$this->currentYear==date('Y')?'today':'').'">'.$cellContent.'</td>';
+        return $dateContent;
     }
      
     private function createNavi(){

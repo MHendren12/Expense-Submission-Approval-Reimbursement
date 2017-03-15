@@ -21,6 +21,7 @@
                     $calendar = new Calendar();
                      
                     echo $calendar->show();
+
                     ?>
                 </div>
               </div>           
@@ -81,39 +82,77 @@
  <div id="specialFA" style="display:none;">
     
     <?php  getCalendarFinalApprovedInfo($user_id, $conn); ?> 
-</div>    
+</div>
+ <div id="specialD" style="display:none;">
+    
+    <?php  getCalendarDeniedInfo($user_id, $conn); ?> 
+</div>  
 <?php
 getSubmittedDate($user_id, $conn);
 getApprovalDate($user_id, $conn);
 getFinalApprovalDate($user_id, $conn);
+getDeniedDate($user_id, $conn);
 ?>
 <script>
     $('.submitted').wrapInner('<div style="float:left;" />');
     $(".approved").wrapInner('<div style="float:left;" />');  
     $(".finalapproved").wrapInner('<div style="float:left;" />');
-    $('.submitted').append('<span id="submitter" class="submitter glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
+    $(".denied").wrapInner('<div style="float:left;" />');
+    $('.submitted').append('<span id="submitter" class="submitter glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="click hover" style="float:right;"></span>');
     $(".approved").append('<span id="approver" class="approver glyphicon glyphicon-check" href="#" title="Approved" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
     $(".finalapproved").append('<span id="finalapprover" class="finalapprover glyphicon glyphicon-thumbs-up" href="#" title="Final Approved" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
+    $(".denied").append('<span id="denier" class="denier glyphicon glyphicon-thumbs-down" href="#" title="Denied" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
+
+    var originalLeave = $.fn.popover.Constructor.prototype.leave;
+    $.fn.popover.Constructor.prototype.leave = function(obj){
+      var self = obj instanceof this.constructor ?
+        obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+      var container, timeout;
+    
+      originalLeave.call(this, obj);
+    
+      if(obj.currentTarget) {
+        container = $(obj.currentTarget).siblings('.popover')
+        timeout = self.timeout;
+        container.one('mouseenter', function(){
+          clearTimeout(timeout);
+          container.one('mouseleave', function(){
+            $.fn.popover.Constructor.prototype.leave.call(self, self);
+          });
+        })
+      }
+    };
     
     $(function(){
         $('.submitter').popover({
             content: $('#specialS').html(),
-            html: true
+            html: true,
+            delay: {show : 0, hide : 1}
         }).click(function() {
             $(this).popover('show');
         });
         $('.approver').popover({
             content: $('#specialA').html(),
-            html: true
+            html: true,
+            delay: {show : 0, hide : 1}            
         }).click(function() {
             $(this).popover('show');
         });
         $('.finalapprover').popover({
             content: $('#specialFA').html(),
-            html: true
+            html: true,
+            delay: {show : 0, hide : 1}            
         }).click(function() {
             $(this).popover('show');
         });
-    });   
+        $('.denier').popover({
+            content: $('#specialD').html(),
+            html: true,
+            delay: {show : 0, hide : 1}            
+        }).click(function() {
+            $(this).popover('show');
+        });        
+    });
+        
 </script>
 </html>
