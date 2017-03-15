@@ -292,7 +292,7 @@
     }
     
     function getCalendarApprovedInfo($user_id, $conn){
-        getFinalApprovalDate($user_id, $conn);
+        getApprovalDate($user_id, $conn);
         $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
         where expensereport_history.action != 'Submit' and expensereport_history.action != 'Denied' and expensereport_history.reviewer_id = ". $user_id;
         $result = mysqli_query($conn, $sql);
