@@ -257,7 +257,7 @@
     }
     function getDeniedDate($user_id, $conn){
     $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
-        where expense_reports.expensereport_status = 'Denied' and expensereport_history.reviewer_id = ". $user_id;
+        where expensereport_history.action = 'Denied' and expensereport_history.reviewer_id = ". $user_id;
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
             while($row = mysqli_fetch_assoc($result))
@@ -335,7 +335,7 @@
     function getCalendarDeniedInfo($user_id, $conn){
         getDeniedDate($user_id, $conn);
         $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
-        where expense_reports.expensereport_status = 'Denied' and expensereport_history.reviewer_id = ". $user_id;
+        where expensereport_history.action = 'Denied' and expensereport_history.reviewer_id = ". $user_id;
         $result = mysqli_query($conn, $sql);
         $finalapproveInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th>Expense-ID:</th> <th>Status:</th> <th>View</th></tr>";
              while($row = mysqli_fetch_assoc($result))
