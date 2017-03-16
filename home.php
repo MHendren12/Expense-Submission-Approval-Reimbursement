@@ -59,24 +59,31 @@
                         <div class="row" ><br><br>
                         <!-- Menu tabs are generated from bootstrap, the bootstap is included from the header.php file. -->
                             <ul class="nav nav-tabs nav-justified" id="homeTabs">
-                              <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
+                                <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
                               <!-- Subpannel for My Form -->
-                             <?php
-                                    if ($hasRoleAuthority || array_search( 'Submit Form' , $permissions) || array_search( 'Approve Form' , $permissions))
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#myform"><h4>Expense Form</h4>
+                                    <ul class="dropdown-menu" style="min-width: 100%;";>
+                                <?php
+                                    if ($hasRoleAuthority || array_search( 'Submit Form' , $permissions))
                                     {
                                 ?>
-                                    <li class="dropdown">
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#myform"><h4>My Form</h4>
-                                        <ul class="dropdown-menu" style="min-width: 100%;";>
-                                          <li><a data-toggle="tab" href="#expenseform">Expense Form</a></li>
-                                          <li><a data-toggle="tab" href="#mysaved">My Saved</a></li>
-                                          <li><a data-toggle="tab" href="#mypending">My Pending</a></li>
-                                          <li><a data-toggle="tab" href="#myprocessed">My Processed</a></li>
-                                        </ul>
-                                    </li>
+                                      <li><a data-toggle="tab" href="#expenseform">Submit Expense Form</a></li>
+                                      <li><a data-toggle="tab" href="#mysaved">My Saved</a></li>
+                                      <li><a data-toggle="tab" href="#mypending">My Pending</a></li>
+                                      
+                                <?php
+                                    }
+                                    if ($hasRoleAuthority || array_search( 'Approve Form' , $permissions) || array_search( 'Submit Form' , $permissions))
+                                    {
+                                ?>
+                                      <li><a data-toggle="tab" href="#myprocessed">My Processed</a></li>
                                 <?php
                                     }
                                 ?>
+                                    </ul>
+                                </li>
+                            
                               <!--
                               <li><a data-toggle="tab" href="#myactivity"><h4>My activity</h4></a></li>
                                 

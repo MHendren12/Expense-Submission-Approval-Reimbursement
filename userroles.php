@@ -1,9 +1,15 @@
 <?php
     session_start();
+    include("Navbar/header.php");
+    $permissions = getPermissions($user_id, $conn);
+    if ( !$hasRoleAuthority && !array_search( 'User list' , $permissions) )
+    {
+        header("Location: home.php");
+    }
 	$id = $_SESSION['userid'];
 
-    
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,9 +22,6 @@
         </style>
     </head>
     <body>
-        <?php
-		    include("Navbar/header.php");	
-	    ?>
         <div class="container loggedInContainer" id="listAllRoles" align="center" >
             <div class="row">
                 <div class="well panel panel-default" >

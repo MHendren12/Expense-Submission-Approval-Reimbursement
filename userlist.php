@@ -1,8 +1,18 @@
 <?php
     session_start();
+    include("Navbar/header.php");
+    $permissions = getPermissions($user_id, $conn);
+    if ( !$hasRoleAuthority && !array_search( 'User list' , $permissions) )
+    {
+        header("Location: home.php");
+    }
+    
     $user_id = $_SESSION['userid'];
     //include("WebService/accountinfo.php");
     $editUser = $_GET['editUser'];
+    
+    
+    
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +32,7 @@
     </head>
     <body>
         <?php
-            include("Navbar/header.php");
+            
             if($_SESSION['userid'] == null){
                 header("Location: index.php");
             }
