@@ -98,12 +98,21 @@
     function userName($user_id, $conn){
         $sql = "SELECT user_id, user_fname, user_lname FROM user WHERE user_id= '".$user_id."'";
         $result = mysqli_query($conn, $sql);
-        while($row = mysqli_fetch_assoc($result)){
-            $user_fname = $row['user_fname'];
-            $user_lname = $row['user_lname'];
+        $numRows = mysqli_num_rows($result);
+        if ($numRows > 0)
+        {
+            while($row = mysqli_fetch_assoc($result)){
+                $user_fname = $row['user_fname'];
+                $user_lname = $row['user_lname'];
+            }
+        
+    
+            $fullname= $user_fname . " " . $user_lname;
+            return $fullname;
         }
-        $fullname= $user_fname . " " . $user_lname;
-        return $fullname;
+        else {
+            return "N/A";
+        }
     }
     
     function getPermissions($user_id, $conn)

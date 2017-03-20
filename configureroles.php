@@ -35,39 +35,79 @@
                     <div class="panel-body">
                         <div class="row" align ="left">
                             <div>
-                                <div class="container" align="left">
-                                    <?php
-                                        $sql = "SELECT userRole_Name, userRole_Desc
-                                        FROM userRole 
-                                        WHERE userRole.userRole_id = '".$roleId."'  ";
+                                <form action=<?php echo 'Roles/editrole.php?roleId='.$roleId; ?> method="post">
+                                    <div class="container" align="left">
+                                        <?php
+                                            $sql = "SELECT userRole_Name, userRole_Desc
+                                            FROM userRole 
+                                            WHERE userRole.userRole_id = '".$roleId."'  ";
+                                            
+                                            $result = mysqli_query($conn, $sql);
+                                            $row = mysqli_fetch_assoc($result);
+                                            $userRole_Name = $row['userRole_Name'];
+                                            $userRole_Desc = $row['userRole_Desc'];
+                                            
+                                        ?>
+                                        <table>
+                                            <tr>
+                                                <b>Role</b>
+                                            </tr>
+                                            <tr style="width:100%">
+                                                <td style="width:35%">
+                                                    Role Name
+                                                </td>
+                                                <td>
+                                                    <?php echo'<input class="form-control" name="userRole_Name" style="min-width:275px;" value = '.$userRole_Name.' >';?>
+                                                </td>
+                                            <tr>
+                                                <td style="width:35%"> 
+                                                    Role Description
+                                                </td>
+                                                <td>
+                                                    <?php echo'<br><textarea class="form-control" name="userRole_Desc" style="height40px; width:100%;min-width:275px;max-width:500px;max-height:80px"  >'.$userRole_Desc.'</textarea>';?>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <hr>
+                                        <b>Permissions</b>
+                                        <table style="width:100%; margin-top:10px">
+                                            <thead>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                <?php
+                                                    $sql = "select permission_name, permission_id from permissions";
+                                                    
+                                                    //where role_permissions.userRole_id = '".$roleId."'";
+                                                    $res = mysqli_query($conn, $sql);
+                                                    echo '<div id="permissions">';
+                                                    while($row = mysqli_fetch_assoc($res))
+                                                    {    
+                                                        echo '<input type="checkbox" id="'.$row['permission_name'].'" name="permissions[]" value="'.$row['permission_id'].'" margin-left="5px">'.$row['permission_name']. '&nbsp' ;
+                                                    }
+                                                    echo '</div>';
+                                                ?>
+                                            </tr>
+                                            </tbody>
+                                            
+                                        </table>
                                         
-                                        $result = mysqli_query($conn, $sql);
-                                        $row = mysqli_fetch_assoc($result);
-                                        $userRole_Name = $row['userRole_Name'];
-                                        $userRole_Desc = $row['userRole_Desc'];
+                                        <br>
+                                        <input id="submit" input type="submit" class="btn btn-success" value="Submit" name="submit" />
+                                        <a href="" class="btn btn-default">Cancel</a>
+                                    </div>
+                                </form>
+                                <hr>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="width:80%; " >
+                                            <b>Users</b>
+                                        </td>
                                         
-                                    ?>
-                                    <table>
-                                        <tr>
-                                            <b>Role</b>
-                                        </tr>
-                                        <tr style="width:100%">
-                                            <td>
-                                                Role Name
-                                            </td>
-                                            <td>
-                                                <?php echo'<input class="form-control" style="min-width:275px;" value = '.$userRole_Name.' >';?>
-                                            </td>
-                                        <tr>
-                                            <td > 
-                                                Role Description
-                                            </td>
-                                            <td>
-                                                <?php echo'<br><textarea class="form-control" style="height40px; width:100%;min-width:275px;max-width:500px;max-height:80px"  >'.$userRole_Desc.'</textarea>';?>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    
+                                        <td style="width:20%">
+                                            <b>Action</b>
+                                        </td>
+                                    </tr>
                                     <?php
                                         $sql = "SELECT user_fname, user_lname, userAssignment.userRole_id, userAssignment.user_id 
                                         FROM userRole 
@@ -78,79 +118,28 @@
                                         $result = mysqli_query($conn, $sql);
                                         if (mysqli_num_rows($result) > 0)
                                         {
-                                            echo '
-                                            <hr>
-                                            <table style="width:100%">
-                                                <tr>
-                                                    <td style="width:80%; " >
-                                                        <b>Users</b>
-                                                    </td>
-                                                    
-                                                    <td style="width:20%">
-                                                        <b>Action</b>
-                                                    </td>
-                                                </tr>
-                                                ';
                                             while($row = mysqli_fetch_assoc($result))
                                             {    
                                                 $userFullName = $row['user_fname']. '&nbsp;'.$row['user_lname'];
                                                 $role_id = $row['userRole_id'];
                                                 $user_id = $row['user_id'];
-                                                    
+                                                        
                                     ?>
-                                            <tr>
-                                                <td>
-                                                    <?php echo'<span>'.$userFullName.'</span>';?>
-                                                </td>
-                                                <td>
-                                                    <?php echo '<a href="Roles/removeuserfromrole.php?user='.$user_id.'&role='.$role_id.'" ><span class="glyphicon glyphicon-remove"></span></a>'; ?>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>
+                                                <?php echo'<span>'.$userFullName.'</span>';?>
+                                            </td>
+                                            <td>
+                                                <?php echo '<a href="Roles/removeuserfromrole.php?user='.$user_id.'&role='.$role_id.'" ><span class="glyphicon glyphicon-remove"></span></a>'; ?>
+                                            </td>
+                                        </tr>
                                     <?php
                                             }
                                         }
-                                        
+                                            
                                     ?>
-                                    </table>
-                                    <br><br>
-                                    <?php
-                                        
-                                        
-                                        //"select userRole_Name from userRole where userRole_id = '".$roleId."'
-                                        //join role_permissions on role_permissions.userRole_id = userRole.userRole_id";
-                                        
-                                        
-                                        
-                                    ?>
-                                    <b>Permissions</b>
-                                    <br>
-                                    <table style="width:100%">
-                                        <thead>
-                                            <td style="width:80%;">
-                                                
-                                            </td>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                            <?php
-                                                $sql = "select permission_name from permissions";
-                                                
-                                                //where role_permissions.userRole_id = '".$roleId."'";
-                                                $res = mysqli_query($conn, $sql);
-                                                echo '<div id="permissions">';
-                                                while($row = mysqli_fetch_assoc($res))
-                                                {    
-                                                    echo '<input type="checkbox" id="'.$row['permission_name'].'" name="permissions" value="'.$row['permission_name'].'" margin-left="5px">'.$row['permission_name']. '&nbsp' ;
-                                                }
-                                                echo '</div>';
-                                            ?>
-                                        </tr>
-                                        </tbody>
-                                        
-                                    </table>
-                                    <hr>
-                                    <a  onclick="addUserToRole()" id="addUserToRole">Add a user to this role</a>
-                                </div>
+                                </table>
+                                <a  onclick="addUserToRole()" id="addUserToRole">Add a user to this role</a>
                             </div>
                         </div>
                     </div>
@@ -163,7 +152,6 @@
                 <div class="well panel panel-default" >
                     <div class="panel-body">
                         <div class="row" align ="left">
-
                             <form action="Roles/adduserrole.php" onsubmit="return validateUser()" method="post" >
                                 <input value="<?php echo $roleId; ?>" id="roleId" name="roleId" style="display:none;"/>
                                 <div class="container" align="left">

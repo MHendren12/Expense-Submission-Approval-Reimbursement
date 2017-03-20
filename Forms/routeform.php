@@ -15,7 +15,7 @@
     {
         $getSubmitterId = "select submitter_id, approver_id, approver_level from expense_reports where expense_reports_id = '".$formId."'";
         $res = mysqli_query($conn,$getSubmitterId);
-        
+        $approvalLevel = "Approved";
         
         
         $row = mysqli_fetch_assoc($res);
@@ -44,6 +44,7 @@
             $updateFormApprover = "Update expense_reports set approver_id = -1, approver_level = -1, expensereport_status='Approved' where expense_reports_id = '".$formId."'";
             $res = mysqli_query($conn, $updateFormApprover)
                 or die(mysql_error());
+            $approvalLevel = "Final Approved";
             
             
         }
@@ -59,7 +60,7 @@
                 or die(mysql_error());
         }
 
-        $updateHistory = "Update expensereport_history set revieweddate = CURRENT_TIMESTAMP(), action = 'Approved'  where expense_reports_id = '".$formId."' and history_id = '".$maxHistoryId."' ";
+        $updateHistory = "Update expensereport_history set revieweddate = CURRENT_TIMESTAMP(), action = '".$approvalLevel."'  where expense_reports_id = '".$formId."' and history_id = '".$maxHistoryId."' ";
         $res = mysqli_query($conn, $updateHistory)
             or die(mysql_error());;
             
