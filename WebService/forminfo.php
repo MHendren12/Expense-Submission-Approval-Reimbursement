@@ -232,16 +232,18 @@
                 $submission_date=$row['submission_date'];
                 $revieweddate=$row['revieweddate'];
                 $expense_reports_id=$row['expense_reports_id'];
+                $expensereport_status = $row['expensereport_status'];
                 $dataDate = strtotime($submission_date);
                 $dataDate =  date("Y-m-d", $dataDate);
+                
                 echo '<script>$("#'.$dataDate.'").addClass("submitted").find(".submit-'.$dataDate.'").removeClass("hidden");
-                      </script>';
+                  </script>';
             }
             
     }
     
     function getFinalApprovalDate($user_id, $conn){
-    $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
+        $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
         where expense_reports.expensereport_status = 'Approved' and expensereport_history.reviewer_id = ". $user_id;
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
@@ -249,15 +251,19 @@
             {
                 $submission_date=$row['submission_date'];
                 $revieweddate = $row['revieweddate'];
+                $action = $row['action'];
                 $dataDate = strtotime($revieweddate);
                 $dataDate =  date("Y-m-d", $dataDate);
-                echo '<script>$("#'.$dataDate.'").addClass("finalapproved").find(".finalapprove-'.$dataDate.'").removeClass("hidden");
-                      </script>';
+                if($action=="Final Approved"){
+                    echo '<script>$("#'.$dataDate.'").addClass("finalapproved").find(".finalapprove-'.$dataDate.'").removeClass("hidden");
+                        $(".submitted.finalapproved").find(".S-Time").removeClass("hidden");
+                     </script>';
+                }
             }        
     }
     function getDeniedDate($user_id, $conn){
     $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
-        where expensereport_history.action = 'Denied' and expensereport_history.reviewer_id = ". $user_id;
+        where (expensereport_history.action = 'Denied' or (expensereport_history.action = 'Submit' and expense_reports.expensereport_status = 'Denied')) and expensereport_history.reviewer_id = ". $user_id;
              $result = mysqli_query($conn, $sql);
              $num_rows = mysqli_num_rows($result);           
             while($row = mysqli_fetch_assoc($result))
@@ -267,6 +273,7 @@
                 $dataDate = strtotime($revieweddate);
                 $dataDate =  date("Y-m-d", $dataDate);
                 echo '<script>$("#'.$dataDate.'").addClass("denied").find(".denied-'.$dataDate.'").removeClass("hidden");
+                        $(".submitted.denied").find(".D-Time").removeClass("hidden");
                       </script>';
             }        
     }
@@ -285,7 +292,7 @@
                 $dataDate = strtotime($revieweddate);
                 $dataDate =  date("H:i:s", $dataDate);
                 $submitInfo .= " <tr class='submit-".$revieweddate." hidden'> <td>". $expense_reports_id . "</td> <td>".$dataDate."</td>
-                <td><button data-toggle='modal' data-target='#view-modal' data-id='".$expense_reports_id."' id='getexpenseform' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button></td></tr>";
+                <td><button data-toggle='modal' onclick='$(&quot;.submitter&quot;).popover(&quot;hide&quot;);' data-target='#view-modal' data-id='".$expense_reports_id."' id='getexpenseform' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button></td></tr>";
             }
             $submitInfo .= "</table>";
             echo $submitInfo;
@@ -305,7 +312,7 @@
                 $dataDate = strtotime($revieweddate);
                 $dataDate =  date("H:i:s", $dataDate);
                 $approveInfo .= "<tr class='approve-".$revieweddate." hidden'> <td>". $expense_reports_id . "</td> <td>".$dataDate."</td>
-                <td><button data-toggle='modal' data-target='#view-modal' data-id='".$expense_reports_id."' id='getexpenseform' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button></td></tr>";
+                <td><button data-toggle='modal' data-target='#view-modal' onclick='$(&quot;.approver&quot;).popover(&quot;hide&quot;);' data-id='".$expense_reports_id."' id='getexpenseform' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button></td></tr>";
             }
         $approveInfo .= "</table>";
         echo $approveInfo;
@@ -316,17 +323,21 @@
         $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
         where expense_reports.expensereport_status = 'Approved' and expensereport_history.reviewer_id = ". $user_id;
         $result = mysqli_query($conn, $sql);
-        $finalapproveInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th>Expense-ID:</th> <th>Status:</th> <th>View</th></tr>";
+        $finalapproveInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th>Expense-ID:</th> <th class='S-Time hidden'>Submit Time:</th> <th>Status:</th> <th>Time:</th> <th>View</th></tr>";
              while($row = mysqli_fetch_assoc($result))
             {
                 $expense_reports_id=$row['expense_reports_id'];
                 $revieweddate=$row['revieweddate'];
                 $reviewer_id = $row['reviewer_id'];
                 $submission_date = $row['submission_date'];
+                $action = $row['action'];
                 $dataDate = strtotime($revieweddate);
                 $dataDate =  date("H:i:s", $dataDate);
-                $finalapproveInfo .= "<tr class='finalapprove-".$revieweddate." hidden'> <td>". $expense_reports_id . "</td><td>Approved</td>
-                <td><button data-toggle='modal' data-target='#view-modal' data-id='".$expense_reports_id."' id='getexpenseform' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button></td></tr>";
+                if($action=="Submit"){
+                    $dataTime=$dataDate;
+                }
+                $finalapproveInfo .= "<tr class='finalapprove-".$revieweddate." hidden'> <td>". $expense_reports_id . "</td><td class='S-Time hidden'>".$dataTime."</td><td>Approved</td><td>".$dataDate."</td>
+                <td><button data-toggle='modal' onclick='$(&quot;.finalapprover&quot;).popover(&quot;hide&quot;);' data-target='#view-modal' data-id='".$expense_reports_id."' id='getexpenseform' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button></td></tr>";
             }
             $finalapproveInfo .= "</table>";
             echo $finalapproveInfo;
@@ -335,19 +346,23 @@
     function getCalendarDeniedInfo($user_id, $conn){
         getDeniedDate($user_id, $conn);
         $sql = "select * from expense_reports left join expensereport_history on expense_reports.expense_reports_id = expensereport_history.expense_reports_id 
-        where expensereport_history.action = 'Denied' and expensereport_history.reviewer_id = ". $user_id;
+        where (expensereport_history.action = 'Denied' or (expensereport_history.action = 'Submit' and expense_reports.expensereport_status = 'Denied')) and expensereport_history.reviewer_id = ". $user_id;
         $result = mysqli_query($conn, $sql);
-        $finalapproveInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th>Expense-ID:</th> <th>Status:</th> <th>View</th></tr>";
+        $finalapproveInfo = "<table class='table table-striped table-bordered' style='text-align:center'> <tr><th>Expense-ID:</th> <th class='D-Time hidden'>Submit Time:</th> <th>Status:</th><th>Time:</th><th>View</th></tr>";
              while($row = mysqli_fetch_assoc($result))
             {
                 $expense_reports_id=$row['expense_reports_id'];
                 $revieweddate=$row['revieweddate'];
                 $reviewer_id = $row['reviewer_id'];
                 $submission_date = $row['submission_date'];
+                $action = $row['action'];                
                 $dataDate = strtotime($revieweddate);
                 $dataDate =  date("H:i:s", $dataDate);
-                $finalapproveInfo .= "<tr class='denied-".$revieweddate." hidden'> <td>". $expense_reports_id . "</td><td>Denied</td>
-                <td><button data-toggle='modal' data-target='#view-modal' data-id='".$expense_reports_id."' id='getexpenseform' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button></td></tr>";
+                if($action=="Submit"){
+                    $dataTime=$dataDate;
+                }                
+                $finalapproveInfo .= "<tr class='denied-".$revieweddate." hidden'> <td>". $expense_reports_id . "</td><td class='D-Time hidden'>".$dataTime."</td><td>Denied</td><td>".$dataDate."</td>
+                <td><button data-toggle='modal' data-target='#view-modal' onclick='$(&quot;.denier&quot;).popover(&quot;hide&quot;);' data-id='".$expense_reports_id."' id='getexpenseform' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button></td></tr>";
             }
             $finalapproveInfo .= "</table>";
             echo $finalapproveInfo;

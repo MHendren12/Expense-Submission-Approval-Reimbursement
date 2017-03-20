@@ -3,7 +3,7 @@
         <style type="text/css">
             .table-style .today {background: #0083C6;}
             .table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
-            .popover{width:1000px;}
+            .popover{min-width:450px;}
         </style>
     </head>
 <body>
@@ -71,7 +71,8 @@
         </div>
     </div>
 </body>
-<div id="specialS" style="display:none;">
+
+<div id="specialS" style="display:none;" >
     
     <?php  getCalendarSubmitterInfo($user_id, $conn); ?>  
 </div>
@@ -79,8 +80,8 @@
     
     <?php  getCalendarApprovedInfo($user_id, $conn); ?> 
 </div>
- <div id="specialFA" style="display:none;">
-    
+<div id="specialFA" style="display:none;">
+
     <?php  getCalendarFinalApprovedInfo($user_id, $conn); ?> 
 </div>
  <div id="specialD" style="display:none;">
@@ -88,20 +89,29 @@
     <?php  getCalendarDeniedInfo($user_id, $conn); ?> 
 </div>  
 <?php
-getSubmittedDate($user_id, $conn);
-getApprovalDate($user_id, $conn);
-getFinalApprovalDate($user_id, $conn);
-getDeniedDate($user_id, $conn);
+//getSubmittedDate($user_id, $conn);
+//getApprovalDate($user_id, $conn);
+//getFinalApprovalDate($user_id, $conn);
+//getDeniedDate($user_id, $conn);
 ?>
 <script>
+    //Assign Month Number to left of each cell
     $('.submitted').wrapInner('<div style="float:left;" />');
     $(".approved").wrapInner('<div style="float:left;" />');  
     $(".finalapproved").wrapInner('<div style="float:left;" />');
     $(".denied").wrapInner('<div style="float:left;" />');
-    $('.submitted').append('<span id="submitter" class="submitter glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="click hover" style="float:right;"></span>');
+    
+    //Append Glyphicon to date and assign to right of the cell
+    $('.submitted').append('<span id="submitter" class="submitter glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
     $(".approved").append('<span id="approver" class="approver glyphicon glyphicon-check" href="#" title="Approved" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
     $(".finalapproved").append('<span id="finalapprover" class="finalapprover glyphicon glyphicon-thumbs-up" href="#" title="Final Approved" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
     $(".denied").append('<span id="denier" class="denier glyphicon glyphicon-thumbs-down" href="#" title="Denied" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
+
+    //Remove expense form action on same day, ex. Expense form is submitted and final approved.
+    $(".submitted.finalapproved").find(".submitter").remove();
+    $(".submitted.denied").find(".submitter").remove();
+    $(".approved.finalapproved").find(".approver").remove();
+    $(".approved.denied").find(".approver").remove();
 
     var originalLeave = $.fn.popover.Constructor.prototype.leave;
     $.fn.popover.Constructor.prototype.leave = function(obj){
@@ -128,31 +138,22 @@ getDeniedDate($user_id, $conn);
             content: $('#specialS').html(),
             html: true,
             delay: {show : 0, hide : 1}
-        }).click(function() {
-            $(this).popover('show');
         });
         $('.approver').popover({
             content: $('#specialA').html(),
             html: true,
             delay: {show : 0, hide : 1}            
-        }).click(function() {
-            $(this).popover('show');
         });
         $('.finalapprover').popover({
             content: $('#specialFA').html(),
             html: true,
             delay: {show : 0, hide : 1}            
-        }).click(function() {
-            $(this).popover('show');
         });
         $('.denier').popover({
             content: $('#specialD').html(),
             html: true,
             delay: {show : 0, hide : 1}            
-        }).click(function() {
-            $(this).popover('show');
         });        
     });
-        
 </script>
 </html>
