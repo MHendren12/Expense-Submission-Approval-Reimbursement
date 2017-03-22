@@ -108,10 +108,10 @@
     $(".denied").append('<span id="denier" class="denier glyphicon glyphicon-thumbs-down" href="#" title="Denied" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
 
     //Remove expense form action on same day, ex. Expense form is submitted and final approved.
-    $(".submitted.finalapproved").find(".submitter").remove();
-    $(".submitted.denied").find(".submitter").remove();
-    $(".approved.finalapproved").find(".approver").remove();
-    $(".approved.denied").find(".approver").remove();
+    //$(".submitted.finalapproved").find(".submitter").remove();
+    //$(".submitted.denied").find(".submitter").remove();
+    //$(".approved.finalapproved").find(".approver").remove();
+    //$(".approved.denied").find(".approver").remove();
 
     var originalLeave = $.fn.popover.Constructor.prototype.leave;
     $.fn.popover.Constructor.prototype.leave = function(obj){

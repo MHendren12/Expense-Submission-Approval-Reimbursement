@@ -20,8 +20,7 @@
                       
                            <div class="modal-header"> 
                                 <button align="left" type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                    <button data-toggle="modal" id="btnPrint" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Preview</button>
-                                    <button data-toggle="modal" onclick="getprint()" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
+                                    <button data-toggle="modal" id="btnPrint" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
                                 <h4 class="modal-title">
                                 	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
                                 </h4> 
@@ -42,7 +41,8 @@
                                             <div class="col-lg-1"></div>
                                         </div>
                                     </div>
-                               </div> 
+                               </div>
+                                <button id="printbutton" data-toggle="modal" style="margin-left: 50%; visibility:hidden" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
                             </div> 
                             <div class="modal-footer"> 
                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
@@ -195,12 +195,16 @@
         	});
         	
         });       
-function getprint() {
+$("#printbutton").click(function () {
     window.print();
-}
+});
+
+$("#btnPrint").click(function () {
+    $('#printbutton').css("visibility", "visible");
+});
 $("#btnPrint").printPreview({
    obj2print:'#masterContent',
    width:'1080'
-});        
+});
     </script>
 </html>
