@@ -2,7 +2,7 @@
     session_start();
     include("Navbar/header.php");
     $permissions = getPermissions($user_id, $conn);
-    if ( !$hasRoleAuthority && !array_search( 'User list' , $permissions) )
+    if ( !$hasRoleAuthority && !in_array( 'User list' , $permissions) )
     {
         header("Location: home.php");
     }

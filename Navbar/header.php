@@ -119,13 +119,13 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="account.php">My Account</a></li>
                                             <?php
-                                                if ($hasRoleAuthority || array_search( 'User roles' , $permissions))
+                                                if ($hasRoleAuthority || in_array( 'User roles' , $permissions))
                                                 {
                                             ?>
                                             <li><a href="userroles.php">User Roles</a></li>
                                             <?php
                                                 }
-                                                if ($hasRoleAuthority || array_search( 'User list' , $permissions))
+                                                if ($hasRoleAuthority || in_array( 'User list' , $permissions))
                                                 {
                                             ?>
                                             <li><a href="userlist.php">User List</a></li>

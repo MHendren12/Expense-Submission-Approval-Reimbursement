@@ -6,6 +6,8 @@
     include("Navbar/header.php");
     $user_id = $_SESSION['userid'];
     $permissions = getPermissions($user_id, $conn);
+    echo sizeof($permissions);
+    echo 'gegeg';
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,41 +17,38 @@
     <body>
         <div class="container">
             <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                 <div class="modal-dialog" style="width:70%"> 
-                      <div class="modal-content"> 
-                      
-                           <div class="modal-header"> 
-                                <button align="left" type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                    <button data-toggle="modal" id="btnPrint" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
-                                <h4 class="modal-title">
-                                	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
-                                </h4> 
-                           </div> 
-                           <div class="modal-body" id="masterContent"> 
-                           
-                           	   <div id="modal-loader" style="display: none; text-align: center;">
-                           	   	<img src="images/ajax-loader.gif">
-                           	   </div>
-                               <div class="row">
-                                    <div class="col-lg-1"></div>
-                                    <div class="col-lg-10">
-                                        <div class="well panel panel-default" >
-                                            <div class="panel-body">                                       
-                                                <!-- content will be load here -->                          
-                                                <div id="dynamic-content"></div>   
-                                            </div>
-                                            <div class="col-lg-1"></div>
+                <div class="modal-dialog" style="width:70%"> 
+                    <div class="modal-content"> 
+                        <div class="modal-header"> 
+                            <button align="left" type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                <button data-toggle="modal" id="btnPrint" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Preview</button>
+                                <button data-toggle="modal" onclick="getprint()" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
+                            <h4 class="modal-title">
+                            	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
+                            </h4> 
+                       </div> 
+                       <div class="modal-body" id="masterContent"> 
+                       	   <div id="modal-loader" style="display: none; text-align: center;">
+                       	   <img src="images/ajax-loader.gif">
+                       	   </div>
+                           <div class="row">
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-10">
+                                    <div class="well panel panel-default" >
+                                        <div class="panel-body">                                       
+                                            <!-- content will be load here -->                          
+                                            <div id="dynamic-content"></div>   
                                         </div>
+                                        <div class="col-lg-1"></div>
                                     </div>
-                               </div>
-                                <button id="printbutton" data-toggle="modal" style="margin-left: 50%; visibility:hidden" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
-                            </div> 
-                            <div class="modal-footer"> 
-                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
-                            </div> 
-                            
-                     </div> 
-                  </div>
+                                </div>
+                           </div> 
+                        </div> 
+                        <div class="modal-footer"> 
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+                        </div> 
+                    </div> 
+              </div>
            </div>
         </div>         
         <div class="container loggedInContainer" align = "center">
@@ -60,21 +59,19 @@
                         <!-- Menu tabs are generated from bootstrap, the bootstap is included from the header.php file. -->
                             <ul class="nav nav-tabs nav-justified" id="homeTabs">
                                 <li class="active"><a data-toggle="tab" href="#home"><h4>Home</h4></a></li>
-                              <!-- Subpannel for My Form -->
                                 <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#myform"><h4>Expense Form</h4>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#myform"><h4>Expense Form</h4></a>
                                     <ul class="dropdown-menu" style="min-width: 100%;";>
                                 <?php
-                                    if ($hasRoleAuthority || array_search( 'Submit Form' , $permissions))
+                                    if ($hasRoleAuthority || in_array( 'Submit Form' , $permissions) )
                                     {
-                                ?>
+                                ?>   
                                       <li><a data-toggle="tab" href="#expenseform">Submit Expense Form</a></li>
                                       <li><a data-toggle="tab" href="#mysaved">My Saved</a></li>
                                       <li><a data-toggle="tab" href="#mypending">My Pending</a></li>
-                                      
                                 <?php
                                     }
-                                    if ($hasRoleAuthority || array_search( 'Approve Form' , $permissions) || array_search( 'Submit Form' , $permissions))
+                                    if ($hasRoleAuthority || in_array( 'Approve Form' , $permissions)|| in_array( 'Submit Form' , $permissions) )
                                     {
                                 ?>
                                       <li><a data-toggle="tab" href="#myprocessed">My Processed</a></li>
@@ -91,15 +88,13 @@
                                 <li><a data-toggle="tab" href="#contactus"><h4>Contact us</h4></a></li>     
                                 -->
                                 <?php
-                                    
                                     $isadmin = isadmin($user_id, $conn);
-                                    if ($isadmin ||  array_search( 'Routing Conditions' , $permissions))
+                                    if ($hasRoleAuthority ||  in_array( 'Routing Conditions' , $permissions))
                                     {
                                 ?>
                                 <li><a data-toggle="tab" href="#routing"><h4>Routing</h4></a></li>
                                 <?php
                                     }
-                                    
                                 ?>                              
                             </ul>
                             <br><br>
@@ -135,7 +130,6 @@
                                     </div>     
                                 </div>
                                 <div class="col-lg-1">
-                                    
                                 </div>                                    
                             </div>
                         </div>
@@ -195,16 +189,12 @@
         	});
         	
         });       
-$("#printbutton").click(function () {
+function getprint() {
     window.print();
-});
-
-$("#btnPrint").click(function () {
-    $('#printbutton').css("visibility", "visible");
-});
+}
 $("#btnPrint").printPreview({
    obj2print:'#masterContent',
    width:'1080'
-});
+});        
     </script>
 </html>
