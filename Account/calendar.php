@@ -45,10 +45,11 @@ class Calendar {
                                 $weeksInMonth = $this->weeksInMonth($month,$year);
                                 
                                 for( $i=0; $i<$weeksInMonth; $i++ ){
-                                    $content.='<tr>'.'</tr>';
+                                    $content.='<tr>';
                                     for($j=0;$j<=6;$j++){
                                         $content.=$this->showDay($i*7+$j);
                                     }
+                                    $content.='</tr>';
                                 }
                                  
                                 $content.='</ul>';
@@ -75,7 +76,7 @@ class Calendar {
             $this->currentDate =null;
             $cellContent=null;
         }
-        $dateContent = '<td id="'.$this->currentDate.'" class="'.($cellNumber%7==0?' start ':($cellNumber%7==6?' end ':' ')).
+        $dateContent = '<td style ="width:10%;" id="'.$this->currentDate.'" class="'.($cellNumber%7==0?' start ':($cellNumber%7==6?' end ':' ')).
                 ($cellContent==null?'mask':'').($cellContent==date('j')&&$this->currentMonth==date('m')&&$this->currentYear==date('Y')?'today':'').'">'.$cellContent.'</td>';
         return $dateContent;
     }

@@ -96,10 +96,10 @@
 ?>
 <script>
     //Assign Month Number to left of each cell
-    $('.submitted').wrapInner('<div style="float:left;" />');
-    $(".approved").wrapInner('<div style="float:left;" />');  
-    $(".finalapproved").wrapInner('<div style="float:left;" />');
-    $(".denied").wrapInner('<div style="float:left;" />');
+    $('.submitted').wrapInner('<div class="SS" style="float:left;" />');
+    $(".approved").wrapInner('<div class="AA" style="float:left;" />');  
+    $(".finalapproved").wrapInner('<div class"FFAA" style="float:left;" />');
+    $(".denied").wrapInner('<div class="DD" style="float:left;" />');
     
     //Append Glyphicon to date and assign to right of the cell
     $('.submitted').append('<span id="submitter" class="submitter glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');

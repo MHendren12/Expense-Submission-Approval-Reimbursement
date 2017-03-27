@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="/Scripts/printPreview.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
     </head>
     <body>
         <div class="container">
@@ -21,11 +21,10 @@
                     <div class="modal-content"> 
                         <div class="modal-header"> 
                             <button align="left" type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                <button data-toggle="modal" id="btnPrint" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Preview</button>
-                                <button data-toggle="modal" onclick="getprint()" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
                             <h4 class="modal-title">
                             	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
-                            </h4> 
+                            </h4>
+                            <button data-toggle="modal" id="btnPrint" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> PDF</button> 
                        </div> 
                        <div class="modal-body" id="masterContent"> 
                        	   <div id="modal-loader" style="display: none; text-align: center;">
@@ -42,8 +41,9 @@
                                         <div class="col-lg-1"></div>
                                     </div>
                                 </div>
-                           </div> 
-                        </div> 
+                           </div>
+                        </div>
+                        <div id="editor"></div>
                         <div class="modal-footer"> 
                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
                         </div> 
@@ -171,7 +171,7 @@
         		$('#modal-loader').show();      // load ajax loader
         		
         		$.ajax({
-        			url: 'expenseform.php',
+        			url: 'printexpenseform.php',
         			type: 'POST',
         			data: 'id='+user_id,
         			dataType: 'html'
@@ -192,9 +192,22 @@
 function getprint() {
     window.print();
 }
-$("#btnPrint").printPreview({
-   obj2print:'#masterContent',
-   width:'1080'
-});        
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
+  $('#btnPrint').click(function () {
+    doc.fromHTML($('#printexpenseForm').html(), 15, 15, {
+        'width': 1080,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.fromHTML($('#printexpenseForm').html(), 15, 15, {
+        'width': 1080,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('expenseform.pdf');
+}); 
     </script>
 </html>

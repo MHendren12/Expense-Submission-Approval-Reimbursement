@@ -90,7 +90,7 @@ function DoCheckUncheckDisplay(element, sectionId)
     <input type="checkbox" name="Hotel" id="Hotel" onchange="DoCheckUncheckDisplay(this,'hotel_expense')"  value="Hotel">Hotel<br>
     <input type="checkbox" name="Food" id="Food" onchange="DoCheckUncheckDisplay(this,'food_expense')" value="Food">Food<br>
     <input type="checkbox" name="Other" id="Other" onchange="DoCheckUncheckDisplay(this,'other_expense')" value="Other">Other
-    <div>
+    <div id="expense">
     <div id="air_expense", style="display:none">
      <?php include("air_expense_form.php")?>
     </div>
@@ -198,6 +198,11 @@ function DoCheckUncheckDisplay(element, sectionId)
       $("#submit").click();
     }
 
-     
+  $("input").prop("disabled", false);
+  $("input").css("background-color", "");
+  $("input").css("border", "");
+  $("textarea").prop("disabled", false);
+  $("textarea").css("background-color", "");
+  $("textarea").css("border", "");    
 </script>
 </html>
