@@ -12,7 +12,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
     </head>
     <body>
         <div class="container">
@@ -24,7 +25,7 @@
                             <h4 class="modal-title">
                             	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
                             </h4>
-                            <button data-toggle="modal" id="btnPrint" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> PDF</button> 
+                            <a style="margin-left: 87%;" href="javascript: genPDF()" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> PDF</a>
                        </div> 
                        <div class="modal-body" id="masterContent"> 
                        	   <div id="modal-loader" style="display: none; text-align: center;">
@@ -171,7 +172,7 @@
         		$('#modal-loader').show();      // load ajax loader
         		
         		$.ajax({
-        			url: 'printexpenseform.php',
+        			url: 'expenseform.php',
         			type: 'POST',
         			data: 'id='+user_id,
         			dataType: 'html'
@@ -189,25 +190,16 @@
         	});
         	
         });       
-function getprint() {
-    window.print();
+function genPDF(){
+    html2canvas(document.getElementById("dynamic-content"), {
+        onrendered : function (canvas) {
+            
+            var img = canvas.toDataURL('image/png');
+            var doc = new jsPDF();
+            doc.addImage(img, "JPEG", 20, 20);
+            doc.save('expenseform.pdf');
+        }
+    });
 }
-var doc = new jsPDF();
-var specialElementHandlers = {
-    '#editor': function (element, renderer) {
-        return true;
-    }
-};
-  $('#btnPrint').click(function () {
-    doc.fromHTML($('#printexpenseForm').html(), 15, 15, {
-        'width': 1080,
-            'elementHandlers': specialElementHandlers
-    });
-    doc.fromHTML($('#printexpenseForm').html(), 15, 15, {
-        'width': 1080,
-            'elementHandlers': specialElementHandlers
-    });
-    doc.save('expenseform.pdf');
-}); 
     </script>
 </html>
