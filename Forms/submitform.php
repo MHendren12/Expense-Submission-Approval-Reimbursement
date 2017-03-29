@@ -5,6 +5,13 @@
     $sid = $_SESSION['userid'];
     $action = $_GET['action'];
     $form = $_POST['formId'];
+    
+    
+    
+    
+    
+    
+    
 
     $getApprover = "select routing.routingUser_id, routingColumn_id from routing
     left join routingCondition on routingCondition.routingCondition_id = routing.routingRow_id
@@ -95,7 +102,6 @@
     $fieldValues .= '{"fieldId":"other_explain_expense", "fieldValue":"' . $other_explain_expense. '"},';
     $fieldValues .= '{"fieldId":"other_amount", "fieldValue":"' . $other_amount. '"},';
     $fieldValues .= '{"fieldId":"other_date", "fieldValue":"' . $other_date. '"}]';
-    echo $fieldValues;
     
     $expenseReportId = $form;
     $status = "Pending";
@@ -142,7 +148,20 @@
                 or die(mysqli_error($insert));
     }
     
+    foreach ($_FILES['attachments']['name'] as $f => $filename) 
+    {  
+        $tmpName  = $_FILES['attachments']['tmp_name'][$f];
+        $tmpPath = "/home/ubuntu/workspace/FormAttachments/".$tmpName;
+        $webPath = "../FormAttachments".$tmpName;
+        move_uploaded_file($tmpName, $tmpPath);
+        $insertAttachment = "insert into attachments (expenseform_id, uploadpath) values ('".$expenseReportId."', '".$webPath."' ) ";
+        $insert = mysqli_query($conn, $insertAttachment) 
+                or die(mysqli_error($insertAttachment));
+    }
     
-    header("Location: ../home.php");
+    
+    
+    
+    //header("Location: ../home.php");
     
 ?>

@@ -48,7 +48,7 @@ use expense_reimbursement;
   create table attachments(
   attachment_id int(6) AUTO_INCREMENT not null primary key,
   expenseform_id int(6) not null,
-  uploadfile blob
+  uploadpath text
   );
   
   drop table expensereport_history;
