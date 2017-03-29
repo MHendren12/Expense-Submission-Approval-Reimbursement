@@ -275,6 +275,22 @@ function DoCheckUncheckDisplay(element, sectionId)
   </form>
 </body>
 <script>
+/*$("#expenseform input").prop("disabled", true);
+$("#expenseform input").css("background-color", "#f5f5f5");
+$("#expenseform input").css("border", "#f5f5f5");
+$("#expenseform textarea").prop("disabled", true);
+$("#expenseform textarea").css("background-color", "#f5f5f5");
+$("#expenseform textarea").css("border", "#f5f5f5");
+$('#homeTabs').on("click", "li", function (event) {         
+   var activeTab = $(this).find('a').attr('href');
+    if(activeTab == "#expenseform"){
+          $("input").prop("disabled", false);
+          $("input").css("background-color", "");
+          $("input").css("border", "");
+          $("textarea").prop("disabled", false);
+          $("textarea").css("background-color", "");
+    }
+});*/
     $(document).ready(function()
     {
         var form_id = "<?php echo $id ?>";

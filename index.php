@@ -10,6 +10,9 @@
 		if($_GET['redirect'] == 1){
 			header("Location: Account/logout.php");
 		}
+		if($_SESSION['userid'] != null){
+			header("Location: home.php");
+		}
 	?>
 	<div class="container contentContainer" >
 		<div class="row">

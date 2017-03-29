@@ -65,10 +65,48 @@
                     else{
                         echo "<td colspan='7' align='center'>No Results or History.</td>";
                     }
+                    if($_GET['page'] == ""){
+                        $prev = 1;
+                        $next = 1;
+                    }
+                    else{
+                        $prev = $_GET['page'];
+                        $next = $_GET['page'];
+                    }
                     ?>
                </tbody>
             </table>
         </div>
+    </div>
+    <div align="center">
+    <ul class='pagination text-center' id="pagination">
+        <?php 
+                    if(isadmin($_SESSION['userid'], $conn)){
+        ?>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
+                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRows($conn)==0){ echo $next; } else{echo ++$next;} ?>'>Next</a></li>        
+        <?php
+                    }
+                    else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
+        ?>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
+                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsSandA($conn)==0){ echo $next; } else{echo ++$next;} ?>'>Next</a></li>           
+        <?php 
+                    }
+                    else if(isApprover($_SESSION['userid'], $conn)){
+        ?>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
+                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsA($conn)==0){ echo $next; } else{echo ++$next;} ?>'>Next</a></li>           
+        <?php
+                    }
+                    else if(isSubmitter($_SESSION['userid'], $conn)){
+        ?>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
+                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsS($conn)==0){ echo $next; } else{echo ++$next;} ?>'>Next</a></li>           
+        <?php
+                    }
+        ?>
+    </ul>
     </div>
 </body>
 
@@ -96,10 +134,10 @@
 ?>
 <script>
     //Assign Month Number to left of each cell
-    $('.submitted').wrapInner('<div style="float:left;" />');
-    $(".approved").wrapInner('<div style="float:left;" />');  
-    $(".finalapproved").wrapInner('<div style="float:left;" />');
-    $(".denied").wrapInner('<div style="float:left;" />');
+    $('.submitted').wrapInner('<div class="SS" style="float:left;" />');
+    $(".approved").wrapInner('<div class="AA" style="float:left;" />');  
+    $(".finalapproved").wrapInner('<div class"FFAA" style="float:left;" />');
+    $(".denied").wrapInner('<div class="DD" style="float:left;" />');
     
     //Append Glyphicon to date and assign to right of the cell
     $('.submitted').append('<span id="submitter" class="submitter glyphicon glyphicon-share" href="#" title="Submitted" data-placement="bottom" data-toggle="popover" data-trigger="hover" style="float:right;"></span>');
@@ -155,5 +193,14 @@
             delay: {show : 0, hide : 1}            
         });        
     });
+
+$(function() {
+    $("#pagination li").live('click',function(e){
+    e.preventDefault();
+    });
+});
+
+window.scrollTo(0,document.body.scrollHeight);
+
 </script>
 </html>

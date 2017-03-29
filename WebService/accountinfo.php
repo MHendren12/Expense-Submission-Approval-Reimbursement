@@ -122,7 +122,7 @@
                 join role_permissions on role_permissions.permission_id = permissions.permission_id
                 join userRole on userRole.userRole_id = role_permissions.userRole_id
                 join userAssignment on userAssignment.userRole_id = role_permissions.userRole_id
-                where userAssignment.user_id = '".$user_id."' ";
+                where userAssignment.user_id = ".$user_id;
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)){
             
