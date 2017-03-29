@@ -40,10 +40,48 @@
                     else{
                        echo "<td colspan='7' align='center'>No Results or History.</td>"; 
                     }
+                    if($_GET['page'] == ""){
+                        $prev = 1;
+                        $next = 1;
+                    }
+                    else{
+                        $prev = $_GET['page'];
+                        $next = $_GET['page'];
+                    }
                     ?>
                </tbody>
             </table>            
         </div>
     </div>	
+    <div align="center">
+    <ul class='pagination text-center' id="pagination">
+        <?php 
+                    if(isadmin($_SESSION['userid'], $conn)){
+        ?>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>#mypending'>Prev</a></li>
+                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRows($conn, "Pending")==0){ echo $next; } else if(getNumRows($conn, "Pending")<5){echo $next;} else{echo ++$next;} ?>#mypending'>Next</a></li>        
+        <?php
+                    }
+                    else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
+        ?>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>#mypending'>Prev</a></li>
+                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsSandA($conn, "Pending")==0){ echo $next; } else if(getNumRowsSandA($conn, "Pending")<5){echo $next;} else{echo ++$next;} ?>#mypending'>Next</a></li>           
+        <?php 
+                    }
+                    else if(isApprover($_SESSION['userid'], $conn)){
+        ?>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>#mypending'>Prev</a></li>
+                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsA($conn, "Pending")==0){ echo $next; } else if(getNumRowsA($conn, "Pending")<5){echo $next;} else{echo ++$next;} ?>#mypending'>Next</a></li>           
+        <?php
+                    }
+                    else if(isSubmitter($_SESSION['userid'], $conn)){
+        ?>
+                         <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>#mypending'>Prev</a></li>
+                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsS($conn, "Pending")==0){ echo $next; } else if(getNumRowsS($conn, "Pending")<5){echo $next;} else{echo ++$next;} ?>#mypending'>Next</a></li>          
+        <?php
+                    }
+        ?>
+    </ul>
+    </div>
 </body>
 </html>
