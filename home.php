@@ -200,6 +200,13 @@ function genPDF(){
             doc.save('expenseform.pdf');
         }
     });
+    
+}
+
+$(".num-<?php if(!$_GET['page']){echo 1;} else{echo $_GET['page'];} ?>").css('background-color', '#d4d4d4');
+
+if (window.location.href.indexOf("?page") > -1) {
+    window.scrollTo(0,document.body.scrollHeight);
 }
     </script>
 </html>
