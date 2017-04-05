@@ -49,11 +49,11 @@
     $expenseTypes .= '{"fieldId":"Food", "fieldValue" :"' . $FoodChecked. '"},';
     $expenseTypes .= '{"fieldId":"Other","fieldValue":"' . $OtherChecked. '"}]';
 
-    $general_name = mysqli_real_escape_string($conn, $_POST['general_name']);
-    $general_address = mysqli_real_escape_string($conn, $_POST['general_address']);
-    $general_city = mysqli_real_escape_string($conn, $_POST['general_city']);
-    $general_postal_code = mysqli_real_escape_string($conn, $_POST['general_postal_code']);
-    $general_department = mysqli_real_escape_string($conn, $_POST['general_department']);
+    $general_name = mysqli_real_escape_string($conn, $_POST['name']);
+    $general_address = mysqli_real_escape_string($conn, $_POST['address']);
+    $general_city = mysqli_real_escape_string($conn, $_POST['city']);
+    $general_postal_code = mysqli_real_escape_string($conn, $_POST['postal']);
+    $general_department = mysqli_real_escape_string($conn, $_POST['department']);
 
     $air_explain_expense = mysqli_real_escape_string($conn, $_POST['air_explain_expense']);
     $air_amount = mysqli_real_escape_string($conn, $_POST['air_amount']);
@@ -96,6 +96,7 @@
     $fieldValues .= '{"fieldId":"distance_traveled", "fieldValue":"' . $distance_traveled. '"},';
     $fieldValues .= '{"fieldId":"hotel_explain_expense", "fieldValue":"' . $hotel_explain_expense. '"},';
     $fieldValues .= '{"fieldId":"hotel_amount", "fieldValue":"' . $hotel_amount. '"},';
+    $fieldValues .= '{"fieldId":"hotel_date", "fieldValue":"' . $hotel_date. '"},';
     $fieldValues .= '{"fieldId":"food_explain_expense", "fieldValue":"' . $food_explain_expense. '"},';
     $fieldValues .= '{"fieldId":"food_amount", "fieldValue":"' . $food_amount. '"},';
     $fieldValues .= '{"fieldId":"food_date", "fieldValue":"' . $food_date. '"},';

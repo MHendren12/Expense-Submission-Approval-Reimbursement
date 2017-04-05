@@ -1,29 +1,45 @@
-
+<?php
+  session_start();
+  $uid = $_SESSION['userid'];
+?>
 <!DOCTYPE html>
 <html>
 
 <body>
+<?php
+  $sql = "SELECT * FROM user WHERE user_id = '".$uid."'";
+  $result = mysqli_query($conn, $sql);
   
+  while($row = mysqli_fetch_assoc($result))
+  {
+    $userid = $row['user_id'];
+    $fname = $row['user_fname'];
+    $lname = $row['user_lname'];
+    $address = $row['user_address'];
+    $city = $row['user_city'];
+    $postal = $row['user_postal'];
+    $department = $row['user_department'];
+?>
 <!--<form action="insert.php" method="post" enctype="multipart/form-data">-->
 <pre>General Information</pre>
 <div id="container">
   <div class="row">
     <div class="col-lg-3">
       <p>
-        <label for="general_name" class="form_input">Full Name:</label><br>
-        <input type="text" name="general_name" id="general_name" style="width:80%">
+        <label for="general_name">Full Name</label><br>
+        <?php echo'<input type="name" placeholder="Name" value="'.$fname ." ". $lname.'" name="name" id=name style="width:80%">';?>
       </p>
     </div>
     <div class="col-lg-3">
         <p>
-        <label for="general_address">Address Line:</label><br>
-        <input type="text" name="general_address" id="general_address" style="width:80%">
+        <label for="general_address">Address</label><br>
+        <?php echo'<input type="text" placeholder="Address" value="'.$address.'" name="address" id=address style="width:80%">';?>
       </p>
     </div>
     <div class="col-lg-3">
         <p>
-        <label for="general_city">City:</label><br>
-        <input type="text" name="general_city" id="general_city" style="width:80%">
+        <label for="general_city">City</label><br>
+        <?php echo'<input type="text" placeholder="City" value="'.$city.'" name="city" id=city style="width:80%">';?>
         </p>
     </div>    
     <div class="col-lg-3">
@@ -33,14 +49,14 @@
   <div class="row">
     <div class="col-lg-3">
         <p>
-        <label for="general_postal_code">Postal Code:</label><br>
-        <input type="text" name="general_postal_code" id="general_postal_code" style="width:80%">
+        <label for="general_postal">Postal Code</label><br>
+        <?php echo'<input type="text" placeholder="Postal Code" value="'.$postal.'" name="postal" id=postal style="width:80%">';?>
         </p>
     </div>
     <div class="col-lg-3">
       <p>
-      <label for="general_department">Department:</label><br>
-      <input type="text" name="general_department" id="general_department" style="width:80%">
+        <label for="general_department">Department</label><br>
+        <?php echo'<input type="text" placeholder="Department" value="'.$department.'" name="department" id=department style="width:80%">';?>
       </p>
     </div>
     <div class="col-lg-6">
@@ -60,8 +76,9 @@
     </div>
   </div>
 </div>
-
-
+<?php
+}
+?>
 <!--<input class="btn btn-default" type= "submit" id="submit" value="submit" name="submit" value="">
 </form>-->
 </body>

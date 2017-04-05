@@ -14,6 +14,10 @@ session_start();
         $lname = explode(" ",$_POST['name'])[1];
         $email  = $_POST['email'];
         $dob  = $_POST['dob'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $postal = $_POST['postal'];
+        $department = $_POST['department'];
         $pass  = $_POST['newPassword'];
         if($_GET['id'] != null){
     	    $id = $_GET['id'];
@@ -33,13 +37,13 @@ session_start();
              $saltedPW =  $pass . $salt;
              $hashedPW = hash('sha256', $saltedPW);
              
-            $sql = "update user set user_fname='".$fname."',  user_lname='".$lname."', user_email='".$email."', user_pass='".$hashedPW."', salt='".$salt."', user_dob='".$dob."' where user_id='".$id."'";
+            $sql = "update user set user_fname='".$fname."',  user_lname='".$lname."', user_email='".$email."', user_address='".$address."', user_city='".$city."', user_postal='".$postal."', user_department='".$department."', user_pass='".$hashedPW."', salt='".$salt."', user_dob='".$dob."' where user_id='".$id."'";
             $res = mysqli_query($conn, $sql)
                 or die(err);
         }
         else
         {
-            $sql = "update user set user_fname='".$fname."',  user_lname='".$lname."',user_email='".$email."', user_dob='".$dob."' where user_id='".$id."'";
+            $sql = "update user set user_fname='".$fname."',  user_lname='".$lname."',user_email='".$email."', user_address='".$address."', user_city='".$city."', user_postal='".$postal."', user_department='".$department."', user_dob='".$dob."' where user_id='".$id."'";
             $res = mysqli_query($conn, $sql)
                 or die(mysqli_error($conn));
         }

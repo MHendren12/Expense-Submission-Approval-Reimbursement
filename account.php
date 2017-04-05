@@ -28,6 +28,10 @@
                                             $lname= $row['user_lname'];
                                             $email = $row['user_email'];
                                             $dob = $row['user_dob'];
+                                            $address = $row['user_address'];
+                                            $city = $row['user_city'];
+                                            $postal = $row['user_postal'];
+                                            $department = $row['user_department'];
                                         
                                     ?>
                                     <div class="container" align="left">
@@ -38,6 +42,14 @@
                                             <?php echo '<input type="text" placeholder="Email" class="form-control" value="'.$email.'" name="email" style="width:65%">';?>
                                             <h2>Date Of Birth</h2>
                                             <?php echo '<input type="date" placeholder="Date Of Birth" class="form-control" value="'.$dob.'" name="dob" style="width:65%">';?>
+                                            <h2>Address</h2>
+                                            <?php echo '<input type="text" placeholder="Address" class="form-control" value="'.$address.'" name="address" style="width:65%">';?>
+                                            <h2>City</h2>
+                                            <?php echo '<input type="text" placeholder="City" class="form-control" value="'.$city.'" name="city" style="width:65%">';?>
+                                            <h2>Postal Code</h2>
+                                            <?php echo '<input type="text" placeholder="Postal Code" class="form-control" value="'.$postal.'" name="postal" style="width:65%">';?>
+                                            <h2>Department</h2>
+                                            <?php echo '<input type="text" placeholder="Department" class="form-control" value="'.$department.'" name="department" style="width:65%">';?>
                                             <h2>User Role</h2>
                                             <?php $sql = "SELECT * FROM user WHERE user_id= '".$id."'";
                                                     $result = mysqli_query($conn, $sql); 
