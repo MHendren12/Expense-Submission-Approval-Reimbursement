@@ -106,27 +106,27 @@
                                     <div class="tab-content" align="left">
                                         <div id="home" class="tab-pane fade in active">
                                             <h2>Your RASE Home</h2>
-                                            <?php include_once('info.php'); ?>
+                                            <?php include('info.php'); ?>
                                         </div>
                                         <div id="expenseform" class="tab-pane fade">
                                             <h2>Create a New Expense Form</h2>
-                                            <?php include_once('expenseform.php'); ?>
+                                            <?php include('expenseform.php'); ?>
                                         </div>                                        
                                         <div id="mysaved" class="tab-pane fade">
                                             <h2>My Saved</h2>
-                                            <?php include_once('mysaved.php'); ?>
+                                            <?php include('mysaved.php'); ?>
                                         </div>
                                         <div id="mypending" class="tab-pane fade">
                                             <h2>My Pending</h2>
-                                            <?php include_once('mypending.php'); ?>
+                                            <?php include('mypending.php'); ?>
                                         </div>  
                                         <div id="myprocessed" class="tab-pane fade">
                                             <h2>My Processed</h2>
-                                            <?php include_once('myprocessed.php'); ?>
+                                            <?php include('myprocessed.php'); ?>
                                         </div>                                        
                                         <div id="routing" class="tab-pane fade">
                                             <h2>Routing</h2>
-                                            <?php include_once('routing.php'); ?>
+                                            <?php include('routing.php'); ?>
                                         </div>
                                     </div>     
                                 </div>

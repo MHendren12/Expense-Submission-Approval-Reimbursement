@@ -59,9 +59,8 @@
         		    echo '[]';
     }
     
-    function getNumRows($conn, $status = "null"){
-                        
-            $sql = getExpenseTableQueryAdmin($status = "null", $_GET["page"]);
+    function getNumRows($conn, $status="null"){
+            $sql = getExpenseTableQueryAdmin($status);
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);
         return $num_rows;
@@ -69,7 +68,7 @@
     
     function getNumRowsSandA($conn, $status = "null"){
                         
-            $sql = getExpenseTableQuerySandA($status = "null", $_GET["page"]);
+            $sql = getExpenseTableQuerySandA($status, $_GET["page"]);
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);
         return $num_rows;
@@ -77,7 +76,7 @@
     
     function getNumRowsA($conn, $status = "null"){
                         
-            $sql = getExpenseTableQueryApprover($status = "null", $_GET["page"]);
+            $sql = getExpenseTableQueryApprover($status, $_GET["page"]);
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);
         return $num_rows;
@@ -85,29 +84,28 @@
     
     function getNumRowsS($conn, $status = "null"){
                         
-            $sql = getExpenseTableQuerySubmitter($status = "null", $_GET["page"]);
+            $sql = getExpenseTableQuerySubmitter($status, $_GET["page"]);
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);
         return $num_rows;
     }
 
     function getTotalNumRows($conn, $status="null"){
-                        
             $sql = getExpenseTableQueryAdmin($status);
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);
         return $num_rows;
     }
     
-    function getTotalNumRowsSandA($conn, $status = "null"){
+    function getTotalNumRowsSandA($conn, $status="null"){
                         
-            $sql = getExpenseTableQuerySandA($status, $pagenum="null");
+            $sql = getExpenseTableQuerySandA($status);
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);
         return $num_rows;
     }
     
-    function getTotalNumRowsA($conn, $status = "null"){
+    function getTotalNumRowsA($conn, $status="null"){
                         
             $sql = getExpenseTableQueryApprover($status);
             $result = mysqli_query($conn, $sql);
@@ -115,16 +113,16 @@
         return $num_rows;
     }
     
-    function getTotalNumRowsS($conn, $status = "null"){
+    function getTotalNumRowsS($conn, $status="null"){
                         
-            $sql = getExpenseTableQuerySubmitter($status = "null", $pagenum="null");
+            $sql = getExpenseTableQuerySubmitter($status);
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);
         return $num_rows;
     }
     
     
-    function getExpenseTableQueryAdmin($status = "null", $pagenum = "null"){
+    function getExpenseTableQueryAdmin($status, $pagenum = "null"){
         $limit = 5;  
         if (isset($pagenum)) { 
             $page  = $pagenum; 
@@ -132,7 +130,7 @@
         } else { 
             $page=1; 
             
-        };  
+        }; 
         $start_from = ($page-1) * $limit;     
         $expenseTableQuery = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
                                 expense_reports.expense_reports_id, expense_reports.expensereport_status
@@ -142,12 +140,12 @@
         {
             if ($status == "Processed")
             {
-                $expenseTableQuery .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+                $expenseTableQuery .= " where (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
                 
             }
             else
             {
-                $expenseTableQuery .= "and expense_reports.expensereport_status='".$status."'";
+                $expenseTableQuery .= " where expense_reports.expensereport_status='".$status."'";
             }
             
         }
@@ -161,7 +159,7 @@
     }
     
     
-    function getExpenseTableQuerySandA($status = "null", $pagenum="null"){
+    function getExpenseTableQuerySandA($status, $pagenum="null"){
         $limit = 5;  
         if (isset($pagenum)) { $page  = $pagenum; } else { $page=1; };  
         $start_from = ($page-1) * $limit;           
@@ -180,13 +178,13 @@
         {
             if ($status == "Processed")
             {
-                $expenseTableQuerySubmitter .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
-                $expenseTableQueryApprover .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+                $expenseTableQuerySubmitter .= " and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+                $expenseTableQueryApprover .= " and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
             }
             else
             {
-                $expenseTableQuerySubmitter .= "and expense_reports.expensereport_status='".$status."'";
-                $expenseTableQueryApprover .= "and expense_reports.expensereport_status='".$status."'";
+                $expenseTableQuerySubmitter .= " and expense_reports.expensereport_status='".$status."'";
+                $expenseTableQueryApprover .= " and expense_reports.expensereport_status='".$status."'";
             }
             
         }
@@ -201,7 +199,7 @@
     }
         
         
-    function getExpenseTableQuerySubmitter($status = "null", $pagenum="null"){
+    function getExpenseTableQuerySubmitter($status, $pagenum="null"){
         $limit = 5;  
         if (isset($pagenum)) { $page  = $pagenum; } else { $page=1; };  
         $start_from = ($page-1) * $limit;           
@@ -214,11 +212,11 @@
         {
             if ($status == "Processed")
             {
-                $expenseTableQuery .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+                $expenseTableQuery .= " and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
             }
             else
             {
-                $expenseTableQuery .= "and expense_reports.expensereport_status='".$status."'";
+                $expenseTableQuery .= " and expense_reports.expensereport_status='".$status."'";
             }
         }
             
@@ -231,7 +229,7 @@
 
         return $expenseTableQuery;
     }
-    function getExpenseTableQueryApprover($status = "null", $pagenum ="null"){
+    function getExpenseTableQueryApprover($status, $pagenum ="null"){
         $limit = 5;  
         if (isset($pagenum)) { $page  = $pagenum; } else { $page=1; };  
         $start_from = ($page-1) * $limit;           
@@ -246,11 +244,11 @@
         {
             if ($status == "Processed")
             {
-                $expenseTableQuery .= "and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+                $expenseTableQuery .= " and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
             }
             else
             {
-                $expenseTableQuery .= "and expense_reports.expensereport_status='".$status."'";
+                $expenseTableQuery .= " and expense_reports.expensereport_status='".$status."'";
             }
         }
         $expenseTableQuery .= " order by submission_date DESC";
@@ -621,7 +619,7 @@
     
 function getAdminTable($conn, $status = "null"){
                     
-    $sql = getExpenseTableQueryAdmin($status = "null", $_GET["page"]);
+    $sql = getExpenseTableQueryAdmin($status, $_GET["page"]);
             $result = mysqli_query($conn, $sql);
             $num_rows = mysqli_num_rows($result);
             while($row = mysqli_fetch_assoc($result))

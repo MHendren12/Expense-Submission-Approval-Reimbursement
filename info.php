@@ -83,46 +83,18 @@
         <?php 
                     if(isadmin($_SESSION['userid'], $conn)){
         ?>
-                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
+                        <li id='prev'><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
                         <?php 
                         $totalNumRows = getTotalNumRows($conn);
-                        $i = 0+$_GET['page'];
-                        if(!$_GET['page']){
-                            $totalNums = round($totalNumRows/5)-1+$_GET['page']-1;
-                        }
-                        else{
-                            $totalNums = round($totalNumRows/5)-2+$_GET['page']-1;
-                        }
-                        if($i==0){
-                            $i=1;
-                        }
-
-                        if(ceil($totalNumRows/25)<$_GET['page']){
-                            if($totalNumRows%25>=5){
-                                $totalNums = round($totalNumRows/5)+round(($totalNumRows%25)%5);
-                                $i = ceil($totalNumRows/25)+round(($totalNumRows%25)%5);
+                        $pages_total = ceil($totalNumRows/5);
+                        for($i=1; $i<=$pages_total; $i++){
+                
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                    
                             }
-                            else{
-                                $totalNums = ceil($totalNumRows/5);
-                            }
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "'>Next</a></li>";
+                        ?>
                             
-                        }
-                        else{
-                            $totalNums++;                            
-                        }
-                        $j = ceil($totalNumRows);
-                        if(ceil($totalNumRows/5)<5){
-                            $i=1;   
-                        }
-                        for($i; $i<=$j; $i++){
-                            if($i<=$totalNums){
-                        ?>
-                                <li><a class="num-<?php echo $i; ?>" href='home.php?page=<?php echo $i; ?>'><?php echo $i; ?></a></li> 
-                        <?php
-                            }
-                        }
-                        ?>
-                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRows($conn)<5 || $totalNumRows<=5 || $totalNums==$_GET['page']){ echo $next; } else{echo ++$next;} ?>'>Next</a></li>        
         <?php
                     }
                     else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
@@ -130,43 +102,14 @@
                         <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
                         <?php 
                         $totalNumRows = getTotalNumRowsSandA($conn);
-                        $i = 0+$_GET['page'];
-                        if(!$_GET['page']){
-                            $totalNums = 5+$_GET['page']-1;
-                        }
-                        else{
-                            $totalNums = 4+$_GET['page']-1;
-                        }
-                        if($i==0){
-                            $i=1;
-                        }
-
-                        if(ceil($totalNumRows/25)<$_GET['page']){
-                            if($totalNumRows%25>=5){
-                                $totalNums = round($totalNumRows/5)+round(($totalNumRows%25)%5);
-                                $i = ceil($totalNumRows/25)+round(($totalNumRows%25)%5);
+                        $pages_total = ceil($totalNumRows/5);
+                        for($i=1; $i<=$pages_total; $i++){
+                
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                    
                             }
-                            else{
-                                $totalNums = ceil($totalNumRows/5);
-                            }
-                            
-                        }
-                        else{
-                            $totalNums++;                            
-                        }
-                        $j = ceil($totalNumRows);
-                        if(ceil($totalNumRows/5)<5){
-                            $i=1;   
-                        }
-                        for($i; $i<=$j; $i++){
-                            if($i<=$totalNums){
-                        ?>
-                                <li><a class="num-<?php echo $i; ?>" href='home.php?page=<?php echo $i; ?>'><?php echo $i; ?></a></li> 
-                        <?php
-                            }
-                        }
-                        ?>                     
-                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsSandA($conn)<5 || $totalNumRows<=5 || $totalNums==$_GET['page']){ echo $next; } else{echo ++$next;} ?>'>Next</a></li>           
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "'>Next</a></li>";
+                        ?>                   
         <?php 
                     }
                     else if(isApprover($_SESSION['userid'], $conn)){
@@ -174,43 +117,14 @@
                         <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
                         <?php 
                         $totalNumRows = getTotalNumRowsA($conn);
-                        $i = 0+$_GET['page'];
-                        if(!$_GET['page']){
-                            $totalNums = round($totalNumRows/5)-1+$_GET['page']-1;
-                        }
-                        else{
-                            $totalNums = round($totalNumRows/5)-2+$_GET['page']-1;
-                        }
-                        if($i==0){
-                            $i=1;
-                        }
-
-                        if(ceil($totalNumRows/25)<$_GET['page']){
-                            if($totalNumRows%25>=5){
-                                $totalNums = round($totalNumRows/5)+round(($totalNumRows%25)%5);
-                                $i = ceil($totalNumRows/25)+round(($totalNumRows%25)%5);
+                        $pages_total = ceil($totalNumRows/5);
+                        for($i=1; $i<=$pages_total; $i++){
+                
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                    
                             }
-                            else{
-                                $totalNums = ceil($totalNumRows/5);
-                            }
-                            
-                        }
-                        else{
-                            $totalNums++;                            
-                        }
-                        $j = ceil($totalNumRows);
-                        if(ceil($totalNumRows/5)<5){
-                            $i=1;   
-                        }
-                        for($i; $i<=$j; $i++){
-                            if($i<=$totalNums){
-                        ?>
-                                <li><a class="num-<?php echo $i; ?>" href='home.php?page=<?php echo $i; ?>'><?php echo $i; ?></a></li> 
-                        <?php
-                            }
-                        }
-                        ?>                     
-                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsA($conn)<5 || $totalNumRows<=5 || $totalNums==$_GET['page']){ echo $next; } else{echo ++$next;} ?>'>Next</a></li>           
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "'>Next</a></li>";
+                        ?>                  
         <?php
                     }
                     else if(isSubmitter($_SESSION['userid'], $conn)){
@@ -218,43 +132,14 @@
                         <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
                         <?php 
                         $totalNumRows = getTotalNumRowsS($conn);
-                        $i = 0+$_GET['page'];
-                        if(!$_GET['page']){
-                            $totalNums = round($totalNumRows/5)-1+$_GET['page']-1;
-                        }
-                        else{
-                            $totalNums = round($totalNumRows/5)-2+$_GET['page']-1;
-                        }
-                        if($i==0){
-                            $i=1;
-                        }
-
-                        if(ceil($totalNumRows/25)<$_GET['page']){
-                            if($totalNumRows%25>=5){
-                                $totalNums = round($totalNumRows/5)+round(($totalNumRows%25)%5);
-                                $i = ceil($totalNumRows/25)+round(($totalNumRows%25)%5);
+                        $pages_total = ceil($totalNumRows/5);
+                        for($i=1; $i<=$pages_total; $i++){
+                
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                    
                             }
-                            else{
-                                $totalNums = ceil($totalNumRows/5);
-                            }
-                            
-                        }
-                        else{
-                            $totalNums++;                            
-                        }
-                        $j = ceil($totalNumRows);
-                        if(ceil($totalNumRows/5)<5){
-                            $i=1;   
-                        }
-                        for($i; $i<=$j; $i++){
-                            if($i<=$totalNums){
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "'>Next</a></li>";
                         ?>
-                                <li><a class="num-<?php echo $i; ?>" href='home.php?page=<?php echo $i; ?>'><?php echo $i; ?></a></li> 
-                        <?php
-                            }
-                        }
-                        ?>
-                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsS($conn)<5 || $totalNumRows<=5 || $totalNums==$_GET['page']){ echo $next; } else{echo ++$next;} ?>'>Next</a></li>           
         <?php
                     }
         ?>

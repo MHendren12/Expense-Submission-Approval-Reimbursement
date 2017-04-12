@@ -59,25 +59,62 @@
                     if(isadmin($_SESSION['userid'], $conn)){
         ?>
                         <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>#mysaved'>Prev</a></li>
-                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRows($conn, "Saved")==0){ echo $next; } else if(getNumRows($conn, "Saved")<5){echo $next;} else{echo ++$next;} ?>#mysaved'>Next</a></li>        
+                        <?php 
+                        $totalNumRows = getTotalNumRows($conn, "Saved");
+                    
+                        $pages_total = ceil($totalNumRows/5);
+                        for($i=1; $i<=$pages_total; $i++){
+                
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                    
+                            }
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#mysaved'>Next</a></li>";
+                        ?>      
         <?php
                     }
                     else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
         ?>
                         <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>#mysaved'>Prev</a></li>
-                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsSandA($conn, "Saved")==0){ echo $next; } else if(getNumRowsSandA($conn, "Saved")<5){echo $next;} else{echo ++$next;} ?>#mysaved'>Next</a></li>           
+                        <?php 
+                        $totalNumRows = getTotalNumRows($conn, "Saved");
+                        $pages_total = ceil($totalNumRows/5);
+                        for($i=1; $i<=$pages_total; $i++){
+                
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                    
+                            }
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#mysaved'>Next</a></li>";
+                        ?>          
         <?php 
                     }
                     else if(isApprover($_SESSION['userid'], $conn)){
         ?>
                         <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>#mysaved'>Prev</a></li>
-                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsA($conn, "Saved")==0){ echo $next; } else if(getNumRowsA($conn, "Saved")<5){echo $next;} else{echo ++$next;} ?>#mysaved'>Next</a></li>           
+                        <?php 
+                        $totalNumRows = getTotalNumRows($conn, "Saved");
+                        $pages_total = ceil($totalNumRows/5);
+                        for($i=1; $i<=$pages_total; $i++){
+                
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                    
+                            }
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#mysaved'>Next</a></li>";
+                        ?>           
         <?php
                     }
                     else if(isSubmitter($_SESSION['userid'], $conn)){
         ?>
                          <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || $_GET['page']=="") { echo $prev;} else{echo --$prev;} ?>#mysaved'>Prev</a></li>
-                        <li class='active' id="next"><a href='home.php?page=<?php if(getNumRowsS($conn, "Saved")==0){ echo $next; } else if(getNumRowsS($conn, "Saved")<5){echo $next;} else{echo ++$next;} ?>#mysaved'>Next</a></li>          
+                        <?php 
+                        $totalNumRows = getTotalNumRows($conn, "Saved");
+                        $pages_total = ceil($totalNumRows/5);
+                        for($i=1; $i<=$pages_total; $i++){
+                
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                    
+                            }
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#mysaved'>Next</a></li>";
+                        ?>        
         <?php
                     }
         ?>
