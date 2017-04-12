@@ -135,17 +135,18 @@
         $expenseTableQuery = "select user.user_id, expense_reports.approver_id, expense_reports.submitter_id,expense_reports.submission_date,
                                 expense_reports.expense_reports_id, expense_reports.expensereport_status
                                 from expense_reports
-                                left join user on user.user_id = expense_reports.submitter_id";
+                                left join user on user.user_id = expense_reports.submitter_id
+                                where submitter_id = '".$_SESSION['userid']."'";
         if ($status != "null")
         {
             if ($status == "Processed")
             {
-                $expenseTableQuery .= " where (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
+                $expenseTableQuery .= " and (expense_reports.expensereport_status = 'Approved' or expense_reports.expensereport_status = 'Denied') ";
                 
             }
             else
             {
-                $expenseTableQuery .= " where expense_reports.expensereport_status='".$status."'";
+                $expenseTableQuery .= " and expense_reports.expensereport_status='".$status."'";
             }
             
         }
