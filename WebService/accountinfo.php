@@ -115,6 +115,19 @@
         }
     }
     
+    function userEmail($user_id, $conn){
+        $sql = "SELECT user_id, user_fname, user_lname, user_email FROM user WHERE user_id= '".$user_id."'";
+        $result = mysqli_query($conn, $sql);
+        $numRows = mysqli_num_rows($result);
+        if ($numRows > 0)
+        {
+            while($row = mysqli_fetch_assoc($result)){
+                $user_email = $row['user_email'];
+            }
+            return $user_email;
+        }
+    }
+    
     function getPermissions($user_id, $conn)
     {
         $permissions = [];

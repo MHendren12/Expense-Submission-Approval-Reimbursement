@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include("../Database/config.php");		 
+    include("../Database/config.php");
     $conn = getConnection();
     
     $action = $_GET['action'];
@@ -46,7 +46,6 @@
                 or die(mysql_error());
             $approvalLevel = "Final Approved";
             
-            
         }
         else
         {
@@ -58,12 +57,20 @@
                 VALUES ('".$formId."', '" .$nextApprover. "')";
             $res = mysqli_query($conn, $insert)
                 or die(mysql_error());
+            
+            //trigger email for next approver when for gets approved 
+            include("../Account/expenseEmail.php");
+            getApprovalRequest($formId, $conn);
         }
-
+        
         $updateHistory = "Update expensereport_history set revieweddate = CURRENT_TIMESTAMP(), action = '".$approvalLevel."'  where expense_reports_id = '".$formId."' and history_id = '".$maxHistoryId."' ";
         $res = mysqli_query($conn, $updateHistory)
             or die(mysql_error());;
-            
+        
+        if ($approvalLevel == "Final Approved"){
+            include("../Account/expenseEmail.php");
+            getApprovedEmail($formId, $conn);
+        }    
 
        
         header("Location: ../home.php");
@@ -76,9 +83,15 @@
         $updateHistory = "Update expensereport_history set revieweddate = CURRENT_TIMESTAMP(), action='Denied' where expense_reports_id = '".$formId."'and history_id = '".$maxHistoryId."' ";
         $res = mysqli_query($conn, $updateHistory)
             or die(mysql_error());
+        
+        // trigger email when form gets denied (only seen by submitter)
+        include("../Account/expenseEmail.php");
+        getDeclinedEmail($formId, $conn);
+        
         header("Location: ../home.php");
         
     }
+    
     /*
     $getApprover = "select routing.routingUser_id from routing
     left join routingCondition on routingCondition.routingCondition_id = routing.routingRow_id

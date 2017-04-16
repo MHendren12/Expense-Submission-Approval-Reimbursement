@@ -1,18 +1,12 @@
 <?php
     session_start();
-    include("../Database/config.php");		 
+    include("../Database/config.php");
+
     $conn = getConnection();
     $sid = $_SESSION['userid'];
     $action = $_GET['action'];
     $form = $_POST['formId'];
     
-    
-    
-    
-    
-    
-    
-
     $getApprover = "select routing.routingUser_id, routingColumn_id from routing
     left join routingCondition on routingCondition.routingCondition_id = routing.routingRow_id
     where routingCondition.routingConditionType_id = '".$sid."'";
@@ -156,13 +150,25 @@
         $webPath = "../FormAttachments".$tmpName;
         move_uploaded_file($tmpName, $tmpPath);
         $insertAttachment = "insert into attachments (expenseform_id, uploadpath) values ('".$expenseReportId."', '".$webPath."' ) ";
-        $insert = mysqli_query($conn, $insertAttachment) 
-                or die(mysqli_error($insertAttachment));
+        $insert = mysqli_query($conn, $insertAttachment);
     }
     
+    // trigger email on submission
+    include("../Account/expenseEmail.php");
+    $sql = "select expense_reports_id from expense_reports order by expense_reports_id DESC limit 1";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $expense_reports_id = $row['expense_reports_id'];
+    getSubmissionEmail($expense_reports_id, $conn);
     
+    // trigger email for first approver
+    $sql = "select expense_reports_id from expense_reports order by expense_reports_id DESC limit 1";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $expense_reports_id = $row['expense_reports_id'];
+    getApprovalRequest($expense_reports_id, $conn);
     
-    
-    //header("Location: ../home.php");
+    header("Location: ../home.php");
+
     
 ?>

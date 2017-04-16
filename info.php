@@ -83,62 +83,62 @@
         <?php 
                     if(isadmin($_SESSION['userid'], $conn)){
         ?>
-                        <li id='prev'><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
+                        <li id='prev'><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>#home'>Prev</a></li>
                         <?php 
                         $totalNumRows = getTotalNumRows($conn);
                         $pages_total = ceil($totalNumRows/5);
                         for($i=1; $i<=$pages_total; $i++){
                 
-                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a class='page-".$i."' href='?page=".$i."#home'>".$i."</a></li>";
                     
                             }
-                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "'>Next</a></li>";
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#home'>Next</a></li>";
                         ?>
                             
         <?php
                     }
                     else if(isSubmitterAndApprover($_SESSION['userid'], $conn)){
         ?>
-                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>#home'>Prev</a></li>
                         <?php 
                         $totalNumRows = getTotalNumRowsSandA($conn);
                         $pages_total = ceil($totalNumRows/5);
                         for($i=1; $i<=$pages_total; $i++){
                 
-                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."#home'>".$i."</a></li>";
                     
                             }
-                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "'>Next</a></li>";
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#home'>Next</a></li>";
                         ?>                   
         <?php 
                     }
                     else if(isApprover($_SESSION['userid'], $conn)){
         ?>
-                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>#home'>Prev</a></li>
                         <?php 
                         $totalNumRows = getTotalNumRowsA($conn);
                         $pages_total = ceil($totalNumRows/5);
                         for($i=1; $i<=$pages_total; $i++){
                 
-                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."#home'>".$i."</a></li>";
                     
                             }
-                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "'>Next</a></li>";
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#home'>Next</a></li>";
                         ?>                  
         <?php
                     }
                     else if(isSubmitter($_SESSION['userid'], $conn)){
         ?>
-                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>'>Prev</a></li>
+                        <li id="prev"><a href='home.php?page=<?php if($_GET['page']==1 || !$_GET['page']) { echo $prev;} else{echo --$prev;} ?>#home'>Prev</a></li>
                         <?php 
                         $totalNumRows = getTotalNumRowsS($conn);
                         $pages_total = ceil($totalNumRows/5);
                         for($i=1; $i<=$pages_total; $i++){
                 
-                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."#home'>".$i."</a></li>";
                     
                             }
-                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "'>Next</a></li>";
+                        echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#home'>Next</a></li>";
                         ?>
         <?php
                     }
