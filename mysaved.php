@@ -65,7 +65,7 @@
                         $pages_total = ceil($totalNumRows/5);
                         for($i=1; $i<=$pages_total; $i++){
                 
-                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."#mysaved'>".$i."</a></li>";
                     
                             }
                         echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#mysaved'>Next</a></li>";
@@ -80,7 +80,7 @@
                         $pages_total = ceil($totalNumRows/5);
                         for($i=1; $i<=$pages_total; $i++){
                 
-                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."#mysaved'>".$i."</a></li>";
                     
                             }
                         echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#mysaved'>Next</a></li>";
@@ -95,7 +95,7 @@
                         $pages_total = ceil($totalNumRows/5);
                         for($i=1; $i<=$pages_total; $i++){
                 
-                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."#mysaved'>".$i."</a></li>";
                     
                             }
                         echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#mysaved'>Next</a></li>";
@@ -110,7 +110,7 @@
                         $pages_total = ceil($totalNumRows/5);
                         for($i=1; $i<=$pages_total; $i++){
                 
-                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."'>".$i."</a></li>";
+                        echo "<li class='"?><?php if(empty($_GET["page"])){ $_GET["page"] = 1;}  if($_GET["page"] == $i){ echo 'active';} ?><?php echo "'><a href='?page=".$i."#mysaved'>".$i."</a></li>";
                     
                             }
                         echo "<li class=''><a href='?page="?><?php  if($_GET['page'] >= $pages_total){echo $_GET['page'] == $pages_total;}else{ echo $_GET["page"]+1; } ?><?php echo "#mysaved'>Next</a></li>";
