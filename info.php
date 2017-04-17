@@ -3,7 +3,7 @@
         <style type="text/css">
             .table-style .today {background: #0083C6;}
             .table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
-            .popover{min-width:450px;}
+            .popover .popover-content{min-width:450px; height:200px; overflow-y:scroll;}
         </style>
     </head>
 <body>
@@ -210,21 +210,25 @@
     
     $(function(){
         $('.submitter').popover({
+            placement: 'bottom',
             content: $('#specialS').html(),
             html: true,
             delay: {show : 0, hide : 1}
         });
         $('.approver').popover({
+            placement: 'bottom',
             content: $('#specialA').html(),
             html: true,
             delay: {show : 0, hide : 1}            
         });
         $('.finalapprover').popover({
+            placement: 'bottom',
             content: $('#specialFA').html(),
             html: true,
             delay: {show : 0, hide : 1}            
         });
         $('.denier').popover({
+            placement: 'bottom',
             content: $('#specialD').html(),
             html: true,
             delay: {show : 0, hide : 1}            
