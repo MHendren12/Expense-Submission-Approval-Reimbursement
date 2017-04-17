@@ -21,7 +21,8 @@
     $department = $row['user_department'];
 ?>
 <!--<form action="insert.php" method="post" enctype="multipart/form-data">-->
-<pre>General Information</pre>
+<b>General Information:</b>
+<br><br>
 <div id="container">
   <div class="row">
     <div class="col-lg-3">
@@ -79,6 +80,7 @@
 <?php
 }
 ?>
+<hr>
 <!--<input class="btn btn-default" type= "submit" id="submit" value="submit" name="submit" value="">
 </form>-->
 </body>

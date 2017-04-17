@@ -17,9 +17,11 @@
    }
   
   $id = intval($_REQUEST['id']);
+  
   $userId = $_SESSION['userid'];
   $inSubmission = false;
   $formId = -1;
+  
   if ($id != 0)
   {
     $thisForm = "select expense_reports_id, submitter_id, approver_id, expensereport_status from expense_reports where expense_reports_id = '".$id."'";
@@ -59,13 +61,23 @@
 ?>
 
 <script>
+
+
 function DisplayExpense(element)
 {
     
-    var section = element.selectedOptions[0].id + "_expense";
+    var expenseType = $(element).parent().parent().find("#ExpenseType")[0];
+    
+    var section = expenseType.selectedOptions[0].id + "_expense";
     section = section.toLowerCase();
-    var section = document.getElementById(section);
+    
+    
+    var selector = '.popover-content #'+section;
+    var section = $(selector);
+    
+    
     $(section).css("display", "block");
+    //$("#formTypeContent").attr("display", "block");
 
 }
 function DoCheckUncheckDisplay(element, sectionId)
@@ -88,48 +100,36 @@ function DoCheckUncheckDisplay(element, sectionId)
 <html>
   <style>
     table, th, td {
-      border: 3px solid gray;
+      border: 1px solid black;
     }
   </style>
 <body>
-  <div class="container">
-            <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog" style="width:70%"> 
-                    <div class="modal-content"> 
-                        <div class="modal-header"> 
-                            <button align="left" type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                <button data-toggle="modal" id="btnPrint" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Preview</button>
-                                <button data-toggle="modal" onclick="getprint()" style="margin-left: 87%;" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-print"></i> Print</button>
-                            <h4 class="modal-title">
-                            	<i class="glyphicon glyphicon-list-alt"></i> Expense Form
-                            </h4> 
-                       </div> 
-                       <div class="modal-body" id="masterContent"> 
-                       	   <div id="modal-loader2" style="display: none; text-align: center;">
-                       	   <img src="images/ajax-loader.gif">
-                       	   </div>
-                           <div class="row">
-                                <div class="col-lg-1"></div>
-                                <div class="col-lg-10">
-                                    <div class="well panel panel-default" >
-                                        <div class="panel-body">                                       
-                                            <!-- content will be load here -->                          
-                                            <div id="dynamic-content2">
-                                              
-                                            </div>   
-                                        </div>
-                                        <div class="col-lg-1"></div>
-                                    </div>
-                                </div>
-                           </div> 
-                        </div> 
-                        <div class="modal-footer"> 
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
-                        </div> 
-                    </div> 
-              </div>
-           </div>
-        </div>         
+  
+  <div id="formTypeContent" style="display:none">
+    <div id="air_expense" style="display:none">
+     <?php include("air_expense_form.php")?>
+    </div>
+    
+    <div id="land_expense" style="display:none">
+      <?php include("land_expense_form.php")?>
+    </div>
+    
+    <div id="hotel_expense" style="display:none">
+      <?php include("hotel_expense_form.php")?>
+    </div>
+    
+    <div id="food_expense" style="display:none">
+      <?php include("food_expense_form.php")?>
+    </div>
+    
+    <div id="other_expense" style="display:none">
+      <?php include("other_expense_form.php")?>
+    </div>
+    <div>
+      <a class="btn btn-default" onclick="saveExpenseToTable(this)">Save</a>
+      <a class="btn btn-default" onclick="cancelExpense()" >Cancel</a>
+    </div>
+  </div>
   
   
   <form id="expenseForm" action="Forms/submitform.php?action=submit" method="POST" enctype="multipart/form-data" > 
@@ -138,73 +138,90 @@ function DoCheckUncheckDisplay(element, sectionId)
      <?php include("general_information_form.php");?>
     </div>
      <b>Expenditures:</b>
-    <table id="ExpenseTable">
+     <br><br>
+    <table id="ExpenseTable" name="ExpenseTable">
       <thead>
         <tr>
-        <td></td>
-        <td>Start Date</td>
-        <td>End Date</td>
-        <td>Expense Type</td>
-        <td>Expense Total</td>
+        <td width="1%"></td>
+        <td width="16%">Start Date</td>
+        <td width="16%">End Date</td>
+        <td width="16%">Expense Type</td>
+        <td width="16%">Expense Total</td>
+        <td width="16%">Approved Total</td>
+        <td style="display:none"></td>
       </tr>
       </thead>
       <tbody>
         <tr id="templateRow" style="display:none">
-        <td width="5%"  align="center">
-          <input type="checkbox" name="selectedRow" id="selectedRow">  
-        </td>
-        <td>
-          <input type="date" id="ExpenseStartDate" class="form-control">
-        </td>
-        <td>
-          <input type="date" id="ExpenseEndDate" class="form-control">
-        </td>
-        <td width="25%">
-          <select type="text" class="form-control" id="ExpenseType" name="ExpenseType" list = "list1" style="display:inline-block; width:100%" onchange="DisplayExpense(this)">
-            <option value = "- Expense Type -" selected >- Expense Type -</option>
-            <option name="Air"  id="Air" value="Air">Air</option>
-            <option name="Land"  id="Land" value="Land">Land</option>
-            <option name="Hotel"  id="Hotel" value="Hotel">Hotel</option>
-            <option name="Food"  id="Food" value="Food">Food</option>
-            <option name="Other"  id="Other" value="Other">Other</option>
-        </select>
-        </td>
-        <td>
-          <input id="ExpenseAmount" type="number">
-        </td>
-      </tr>
-      <tr id="dataRow">
-        <td width="5%" align="center">
-          <input type="checkbox" name="selectedRow" id="selectedRow">  
-        </td>
-        <td>
-          <input type="date" id="ExpenseStartDate" class="form-control">
-        </td>
-        <td>
-          <input type="date" id="ExpenseEndDate" class="form-control">
-        </td>
-        <td width="25%">
-          <select type="text" class="form-control" id="ExpenseType" name="ExpenseType" list = "list1" style="display:inline-block; width:100%" onchange="DisplayExpense(this)">
-            <option value = "- Expense Type -" selected >- Expense Type -</option>
-            <option name="Air"  id="Air" value="Air">Air</option>
-            <option name="Land"  id="Land" value="Land">Land</option>
-            <option name="Hotel"  id="Hotel" value="Hotel">Hotel</option>
-            <option name="Food"  id="Food" value="Food">Food</option>
-            <option name="Other"  id="Other" value="Other">Other</option>
-        </select>
-        </td>
-        <td>
-          <input id="ExpenseAmount" type="number" onclick="OpenDialog(this)">
-        </td>
-      </tr>
+          <td width="1%"  align="center">
+            <input type="checkbox" name="selectedRow" id="selectedRow">  
+          </td>
+          <td>
+            <input type="date" id="ExpenseStartDate" name="ExpenseStartDate[]" class="form-control">
+          </td>
+          <td>
+            <input type="date" id="ExpenseEndDate" name="ExpenseEndDate[]" class="form-control">
+          </td>
+          <td>
+            <select type="text" class="form-control" id="ExpenseType" name="ExpenseType[]" list="list1" style="display:inline-block; width:100%"  >
+              <option value = "- Expense Type -" selected >- Expense Type -</option>
+              <option name="Air"  id="Air" value="Air">Air</option>
+              <option name="Land"  id="Land" value="Land">Land</option>
+              <option name="Hotel"  id="Hotel" value="Hotel">Hotel</option>
+              <option name="Food"  id="Food" value="Food">Food</option>
+              <option name="Other"  id="Other" value="Other">Other</option>
+          </select>
+          </td>
+          <td>
+            <input  type = "text" class="expenseType form-control" id="ExpenseAmount"  name="ExpenseAmount[]"  title="ExpenseType" data-placement="bottom" data-toggle="popover" data-trigger="click"  style="float:right;">
+          </td>
+          <td>
+            <input class="form-control"  id="ExpenseApproved" name="ExpenseApproved[]" type="number" >
+          </td>
+          <td style="display:none">
+            <input id="fieldData" name="fieldData[]" type="text">
+          </td>
+        </tr>
+        <tr id="dataRow" class="datarow">
+          <td width="1%" align="center">
+            <input type="checkbox" name="selectedRow" id="selectedRow">  
+          </td>
+          <td width="16%">
+            <input type="date" id="ExpenseStartDate" name="ExpenseStartDate[]" class="form-control">
+          </td>
+          <td width="16%">
+            <input type="date" id="ExpenseEndDate" name="ExpenseEndDate[]"  class="form-control">
+          </td>
+          <td width="16%">
+            <select type="text" class="form-control" id="ExpenseType" name="ExpenseType[]" list = "list1" style="display:inline-block;" >
+              <option value = "- Expense Type -" selected >- Expense Type -</option>
+              <option name="Air"  id="Air" value="Air">Air</option>
+              <option name="Land"  id="Land" value="Land">Land</option>
+              <option name="Hotel"  id="Hotel" value="Hotel">Hotel</option>
+              <option name="Food"  id="Food" value="Food">Food</option>
+              <option name="Other"  id="Other" value="Other">Other</option>
+          </select>
+          </td>
+          <td width="16%" >
+           <input type = "text" class="expenseType form-control"  id="ExpenseAmount" name="ExpenseAmount[]" title="ExpenseType" data-placement="bottom" data-toggle="popover" data-trigger="click" style="float:right;" >
+          </td>
+          <td width="16%">
+            <input class="form-control" id="ExpenseApproved" name="ExpenseApproved[]" type="number">
+          </td>
+          <td style="display:none">
+            <input id="fieldData" name="fieldData[]" type="text">
+          </td>
+        </tr>
       </tbody>
-      
-      
     </table>
     <a onclick="addRowToTable()" style="padding-right:10px" >Add Row</a>
     <a onclick="deleteSelectedRow()" style="padding-right:10px" >Delete Selected Rows</a>
     <a onclick="copySelectedRow()" style="padding-right:10px" >Copy Selected Rows</a>
-    <br>
+    <input style="display:none" id="numRows" name="numRows" value=1 >
+    <br><br>
+    
+    <label for="totalExpense">Total Expense ($):</label><br>
+    <input type="number" step="0.01" name="totalExpense" id="totalExpense" style="width:30%">
     <hr>
       <!--
   
@@ -216,25 +233,7 @@ function DoCheckUncheckDisplay(element, sectionId)
     -->
     
     <div>
-    <div id="air_expense", style="display:none">
-     <?php include("air_expense_form.php")?>
-    </div>
     
-    <div id="land_expense", style="display:none">
-      <?php include("land_expense_form.php")?>
-    </div>
-    
-    <div id="hotel_expense", style="display:none">
-      <?php include("hotel_expense_form.php")?>
-    </div>
-    
-    <div id="food_expense", style="display:none">
-      <?php include("food_expense_form.php")?>
-    </div>
-    
-    <div id="other_expense", style="display:none">
-      <?php include("other_expense_form.php")?>
-    </div>
     <div>
       <?php 
       
@@ -275,51 +274,47 @@ function DoCheckUncheckDisplay(element, sectionId)
   </form>
 </body>
 <script>
-/*$("#expenseform input").prop("disabled", true);
-$("#expenseform input").css("background-color", "#f5f5f5");
-$("#expenseform input").css("border", "#f5f5f5");
-$("#expenseform textarea").prop("disabled", true);
-$("#expenseform textarea").css("background-color", "#f5f5f5");
-$("#expenseform textarea").css("border", "#f5f5f5");
-$('#homeTabs').on("click", "li", function (event) {         
-   var activeTab = $(this).find('a').attr('href');
-    if(activeTab == "#expenseform"){
-          $("input").prop("disabled", false);
-          $("input").css("background-color", "");
-          $("input").css("border", "");
-          $("textarea").prop("disabled", false);
-          $("textarea").css("background-color", "");
-    }
-});*/
+
     $(document).ready(function()
     {
+      function saveForm()
+      {
+        $("#expenseForm").attr("action","Forms/submitform.php?action=save");
+        $("#submit").click();
+      }
+      
+      function setTotalExpense()
+      {
+        var table = $("#ExpenseTable").find("tbody");
+        var rows = $(table).find(".datarow");
+        var total = parseFloat("0.00").toFixed(2);
+        for (var j = 0; j <= rows.length-1; j++)
+        {
+          var val = $(rows[j]).find("#ExpenseAmount").val();
+          var rowTotal = (val == "" ? 0 : val );
+          rowTotal = parseFloat(rowTotal).toFixed(2);
+          total = parseFloat(total).toFixed(2) - -parseFloat(rowTotal).toFixed(2);
+        }
+        $(totalExpense).val( parseFloat(total).toFixed(2) );
+      }
+      setTotalExpense();
+      
+      $('.expenseType.form-control').popover({
+            content: $('#formTypeContent').html(),
+            html: true,
+            delay: {show : 0, hide : 1}
+        }).click(function(e)
+        {
+          DisplayExpense(this);
+          setFieldData(this);
+          
+        });
+      
         var form_id = "<?php echo $id ?>";
     
     
         if (form_id != "0")
         {
-          $.ajax({
-    			url: 'WebService/forminfo.php',
-    			type: 'POST',
-    			data: { "val": "getExpenseTypes","formid":form_id },
-    
-      		})
-      		.done(function(data){
-      		    var expenseTypes = JSON.parse(data);
-                  for (var i = 0; i<= expenseTypes.length-1; i++)
-                  {
-                      var fieldId = expenseTypes[i].fieldId;
-                      var fieldValue = expenseTypes[i].fieldValue;
-                      var checked = fieldValue == "checked" ? true : false;
-                      var expenseTypeField = document.getElementById(fieldId);
-                      $(expenseTypeField).attr("checked",checked);
-                      $(expenseTypeField).trigger("change");
-                  }
-                 
-      		})
-      		.fail(function(){
-      			
-      		});
       		$.ajax({
     			url: 'WebService/forminfo.php',
     			type: 'POST',
@@ -328,9 +323,51 @@ $('#homeTabs').on("click", "li", function (event) {
       		})
       		.done(function(data){
       		    var expenseFields = JSON.parse(data);
-                  for (var i = 0; i<= expenseFields.length-1; i++)
-                  {
+                for (var i = 0; i<= expenseFields.length-1; i++)
+                {
+                  var type = jQuery.type(expenseFields[i]);
+                    if ( jQuery.type(expenseFields[i]) === "object" )
+                    {
                       var fieldId = expenseFields[i].fieldId;
+                      var fieldValue = expenseFields[i].fieldValue;
+                    
+                      if (fieldId.toLowerCase().indexOf("table") != -1 )
+                      {
+                        for (var j = 0; j <= fieldValue.length-1; j++)
+                        {
+                          if (j > 0)
+                            addRowToTable(fieldValue[j]);
+                          else
+                          {
+                            var table = $("#ExpenseTable").find("tbody");
+                            var data = fieldValue[j];
+                            var rowIndex = data.Row - 1;
+                            var row = $(table).find(".datarow")[rowIndex];
+                            for ( var i = 0; i <= data.Value.length -1; i++ )
+                            {
+                              var column = data.Value[i].Column;
+                              var value = data.Value[i].Value;
+                              var str = "#"+column;
+                              var col = $(row).find(str);
+                              if (i == data.Value.length-1)
+                              {
+                                debugger;
+                                var arr = [];
+                                for (var k = 0; k <= value.length-1; k++)
+                                {
+                                  arr.push(JSON.stringify(value[k]));
+                                }
+                                $(col).val("[" + arr.join(",") + "]");
+                              }
+                              else
+                                $(col).val(value);
+                            }
+                          }
+                        }
+                      }
+                    }
+                    else
+                    {
                       var fieldValue = expenseFields[i].fieldValue;
                       var expenseTypeField = document.getElementById(fieldId);
                       if (fieldId.indexOf("date")> -1)
@@ -338,7 +375,9 @@ $('#homeTabs').on("click", "li", function (event) {
       
                       }
                       $(expenseTypeField).val(fieldValue);
-                  }
+                    }
+                }
+                setTotalExpense();  
                  
       		})
       		.fail(function(){
@@ -354,26 +393,52 @@ $('#homeTabs').on("click", "li", function (event) {
       $("#expenseForm").attr("action","Forms/submitform.php?action=save");
       $("#submit").click();
     }
-    function addRowToTable()
+    function addRowToTable(data = null)
     {
       var table = $("#ExpenseTable").find("tbody");
-      
       var tr = $(table).find('tr:first').clone();
       var lastRowIndex = $(table).find('tr:last')[0].rowIndex;
-      tr.attr("id", "dataRow" + lastRowIndex );
-      
-      
+      tr.attr("id", "dataRow");
+      tr.attr("class", "datarow");
       tr.find("#selectedRow").attr("id", "selectedRow");
       tr.find("#ExpenseStartDate").attr("id", "ExpenseStartDate");
       tr.find("#ExpenseEndDate").attr("id", "ExpenseEndDate");
       tr.find("#ExpenseType").attr("id", "ExpenseType");
+      var expenseAmount = tr.find("#ExpenseAmount");
       tr.find("#ExpenseAmount").attr("id", "ExpenseAmount");
-      
+       $(expenseAmount).popover({
+            content: $('#formTypeContent').html(),
+            html: true,
+        }).click(function(e)
+        {
+          DisplayExpense(this);
+          setFieldData(this);
+          
+        });
+        $(expenseAmount).popover("toggle");
+      tr.find("#ExpenseApproved").attr("id", "ExpenseApproved");
       //tr.find("#ExpenseType").bind("change", "DisplayExpense(this)" );
       //tr.find("#ExpenseAmount").bind("change", "OpenDialog(this)");
       
       tr[0].style = "display: ";
-      $(table).append(tr)
+      $(table).append(tr);
+      $("#numRows").val( parseInt($("#numRows").val() ) + 1 );
+      if (data != null)
+      {
+        var rowIndex = data.Row - 1;
+        
+        var row = $(table).find(".datarow")[rowIndex];
+        
+        
+        for ( var i = 0; i <= data.Value.length -1; i++ )
+        {
+          var column = data.Value[i].Column;
+          var value = data.Value[i].Value;
+          var str = "#"+column;
+          var col = $(row).find(str);
+          $(col).val(value);
+        }
+      }
       
     }
     
@@ -387,6 +452,7 @@ $('#homeTabs').on("click", "li", function (event) {
       {
         var row = $(selectedRows[i]).parent().parent()[0].rowIndex;
         document.getElementById("ExpenseTable").deleteRow(row);
+        $("#numRows").val( parseInt($("#numRows").val() ) - 1 );
       }
       var numberOfRows = $(table).find("tr").length;
       if (numberOfRows == 1)
@@ -407,93 +473,89 @@ $('#homeTabs').on("click", "li", function (event) {
         var lastRowIndex = $(table).find('tr:last')[0].rowIndex;
         var tr = $(selectedRows[i]).parent().parent().clone();
         var rowIndex = $(selectedRows[i]).parent().parent()[0].rowIndex-1;
-        var ExpenseTypeIndex = $(selectedRows[i]).parent().parent().find("select[name=ExpenseType]")[0].selectedOptions[0].index;
+        var ExpenseTypeIndex = $(selectedRows[i]).parent().parent().find("select[name=ExpenseType]")[0];
+        if (ExpenseTypeIndex)
+          ExpenseTypeIndex = ExpenseTypeIndex.selectedOptions[0].index;
         
 
         tr.find("#selectedRow").attr("id", "selectedRow");
         tr.find("#selectedRow")[0].checked = false;
         tr.find("#ExpenseStartDate").attr("id", "ExpenseStartDate");
         tr.find("#ExpenseEndDate").attr("id", "ExpenseEndDate");
-        tr.find("#ExpenseType").attr("id", "ExpenseType");
+        tr.find("#ExpenseType").attr("id", "ExpenseType"+lastRowIndex);
         tr.find("#ExpenseAmount").attr("id", "ExpenseAmount");
         $(table).append(tr);
         var lastRowExpenseType = $(table).find('tr:last').find("#ExpenseType")[0];
-        var options = lastRowExpenseType.options[ExpenseTypeIndex].selected = 'selected';
-        //selectedRows[i].checked = false;
+        if( lastRowExpenseType )
+        {
+          var options = lastRowExpenseType.options[ExpenseTypeIndex].selected = 'selected';
+          
+        }
+        $("#numRows").val( parseInt($("#numRows").val() ) + 1 );
         
       }
 
     }
-    
-    
-    
-    function OpenDialog(element)
+    function saveExpenseToTable(element)
     {
       
-      var expenseType = $(element).parent().parent().find("#ExpenseType").val(); // it will get id of clicked row
-
-        		$('#dynamic-content').html(''); // leave it blank before ajax call
-        		$('#modal-loader').show();      // load ajax loader
-        		
-      var url = "";
-      if ( expenseType == "Air" )
-        url = "air_expense_form.php";
-      else if ( expenseType == "Land" )
-        url = "land_expense_form.php";
-      else if( expenseType == "Hotel" )
-        url = "hotel_expense_form.php";
-      else if ( expenseType == "Food" )
-        url = "food_expense_form.php";
-      else if ( expenseType == "Other" )
-        url = "other_expense_form.php";
-      
-      
-      
-      $.ajax({
-        
-        			url: url,
-        			type: 'POST'
-        			
-        		})
-        		.done(function(data){
-        			$('#dynamic-content2').html('');    
-        			$('#dynamic-content2').html(data); // load response 
-        			$('#modal-loader2').hide();		  // hide ajax loader	
-        		})
-        		.fail(function(){
-        			$('#dynamic-content2').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
-        			$('#modal-loader2').hide();
-        		});
+      var hField = $(element).parents("tr").find("#fieldData");
+      var popover = $(element).parents(".popover-content");
+      var fieldData = $(popover).find("input:visible");
+      var texts = $(popover).find("textarea:visible");
+      for (var i =0; i <= texts.length -1; i++)
+      {
+        fieldData.push( texts[i] );
+      }
+      data = [];
+      for (var i =0; i <= fieldData.length -1; i++)
+      {
+        var field = fieldData[i];
+        var fieldId = $(field).attr("id");
+        var fieldValue = $(field).val();
+        var json = '{"fieldId":"'+fieldId+'","fieldData":"'+fieldValue+'"}';
+        data.push(json);
+        if (fieldId.toLowerCase().indexOf("total") != -1)
+        {
+          $(element).parents("tr").find("#ExpenseAmount").val(fieldValue);
+          $(element).parents("tr").find("#ExpenseApproved").val(fieldValue);
+        }
+      }
+      data = '[' + data.join(",") + ']';
+      $(hField).val(data);
+      $('[data-toggle="popover"]').popover('hide');
     }
     
     
-    /*
-    $(document).ready(function(){
-        	$(document).on('change', '#getexpenseform', function(e){
-        		
-        		e.preventDefault();
-        		
-        		
-        		
-        		$.ajax({
-        			url: 'expenseform.php',
-        			type: 'POST',
-        			data: 'id='+user_id,
-        			dataType: 'html'
-        		})
-        		.done(function(data){
-        			$('#dynamic-content').html('');    
-        			$('#dynamic-content').html(data); // load response 
-        			$('#modal-loader').hide();		  // hide ajax loader	
-        		})
-        		.fail(function(){
-        			$('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
-        			$('#modal-loader').hide();
-        		});
-        		
-        	});
-        	
-        });       
-     */
+    function cancelExpense()
+    {
+      $('[data-toggle="popover"]').popover('hide');
+    }
+    
+    
+    function setFieldData(element)
+    {
+      var hField = $(element).parents("tr").find("#fieldData");
+      var popover = $(".popover-content");
+      var hFieldVal = $(hField).val();
+      if (hFieldVal)
+      {
+        
+        fieldData = JSON.parse(hFieldVal);
+        for(var i = 0; i <= fieldData.length-1; i++)
+        {
+          var selector = '#'+fieldData[i].fieldId;
+          var field = $(popover).find(selector);
+          $(field).val(fieldData[i].fieldData);
+        }
+      }
+       
+      
+    }
+    
+    
+    
+    
+
 </script>
 </html>

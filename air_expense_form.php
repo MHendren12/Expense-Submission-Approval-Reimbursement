@@ -21,7 +21,7 @@
 </p>
 <p>
   <label for="air_amount">Amount ($):</label><br>
-  <input type="number" step="0.01" name="air_amount" id="air_amount" style="width:30%">
+  <input type="number" step="0.01" name="totalAirExpense" id="totalAirExpense" style="width:30%">
 </p>
 <!--<p>
   <label for="air_receipt_upload">Upload a Receipt: </label><br>

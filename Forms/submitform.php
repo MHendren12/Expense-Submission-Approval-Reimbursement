@@ -6,6 +6,77 @@
     $sid = $_SESSION['userid'];
     $action = $_GET['action'];
     $form = $_POST['formId'];
+    $tableRows = $_POST['numRows'];
+    $currentTableRow = 1;
+    
+    
+    $tableRowsArray = array();
+    while ( $currentTableRow <= $tableRows ) 
+    {
+        $formJSON .= '{"row": "'.$currentTableRow.'", "Value": "';
+        $sDate = $_POST['ExpenseStartDate'][$currentTableRow];
+        $eDate = $_POST['ExpenseEndDate'][$currentTableRow];
+        $type = $_POST['ExpenseType'][$currentTableRow];
+        $total = $_POST['ExpenseAmount'][$currentTableRow];
+        $totalApp = $_POST['ExpenseApproved'][$currentTableRow];
+        $hField = $_POST['fieldData'][$currentTableRow];
+        $hField = json_decode($hField);
+        
+        $JSON = array(
+            "Row" => $currentTableRow,
+            "Value" => array(
+                array(
+                    "Column" => "ExpenseStartDate",
+                    "Value" => $sDate
+                ),
+                array(
+                    "Column" => "ExpenseEndDate",
+                    "Value" => $eDate
+                ),
+                array(
+                    "Column" => "ExpenseType",
+                    "Value" => $type
+                ),
+                array(
+                    "Column" => "ExpenseAmount",
+                    "Value" => $total
+                ),
+                array(
+                    "Column" => "ExpenseApproved",
+                    "Value" => $totalApp
+                ),
+                array(
+                    "Column" => "fieldData",
+                    "Value" => $hField
+                )
+            )
+        );
+
+        /*
+        $formJSON .= '{"row":"'.$currentTableRow.'", "ColValues":"[{ "Column" : "ExpenseStartDate", "Value": "'.$sDate.'" },"';
+        $formJSON .= '{ "Column" : "ExpenseEndDate", "Value": "'.$eDate.'" },"';
+        $formJSON .= '{ "Column" : "ExpenseType", "Value": "'.$type.'" },"';
+        $formJSON .= '{ "Column" : "ExpenseAmount", "Value": "'.$total.'" },"';
+        $formJSON .= '{ "Column" : "ExpenseApproved", "Value": "'.$totalApp.'" },"';
+        if ( $currentTableRow == $tableRows )
+            $formJSON .= '{ "Column" : "fieldData", "Value": "'.$hField.'" }]"}],';
+        else
+            $formJSON .= '{ "Column" : "fieldData", "Value": "'.$hField.'" }]"},';
+        
+        */
+        array_push( $tableRowsArray, $JSON );
+        $currentTableRow = $currentTableRow + 1;
+    }
+    //$formJSON = '[{"fieldId":"ExpenseTable", "fieldValue":"[';
+    $formArray = array(
+        array(
+            "fieldId" => "ExpenseTable",
+            "fieldValue" => $tableRowsArray
+        )
+        
+    );
+    
+    
     
     $getApprover = "select routing.routingUser_id, routingColumn_id from routing
     left join routingCondition on routingCondition.routingCondition_id = routing.routingRow_id
@@ -36,7 +107,7 @@
     $FoodChecked = isset( $_POST['Food'] ) ? "checked" : "unchecked";
     $OtherChecked = isset( $_POST['Other'] ) ? "checked" : "unchecked";
     
-   // $expenseTypes .= '[{"fieldId":"General", "fieldValue":"' . $GeneralChecked. '"},';
+   // $expenseTypes .= '{"fieldId":"General", "fieldValue":"' . $GeneralChecked. '"},';
     $expenseTypes .= '[{"fieldId":"Air", "fieldValue":"' . $AirChecked. '"},';
     $expenseTypes .= '{"fieldId":"Land", "fieldValue":"' . $LandChecked. '"},';
     $expenseTypes .= '{"fieldId":"Hotel","fieldValue":"' . $HotelChecked. '"},';
@@ -48,55 +119,37 @@
     $general_city = mysqli_real_escape_string($conn, $_POST['city']);
     $general_postal_code = mysqli_real_escape_string($conn, $_POST['postal']);
     $general_department = mysqli_real_escape_string($conn, $_POST['department']);
-
-    $air_explain_expense = mysqli_real_escape_string($conn, $_POST['air_explain_expense']);
-    $air_amount = mysqli_real_escape_string($conn, $_POST['air_amount']);
-    $air_depart_date = date('Y-m-d', strtotime($_POST['air_depart_date']));
-    $air_return_date = date('Y-m-d', strtotime($_POST['air_return_date']));
     
-    $land_explain_expense = mysqli_real_escape_string($conn, $_POST['land_explain_expense']);
-    //$distance_traveled = mysqli_real_escape_string($db, $mile_to_money);
-    $date = $_POST['land_date'];
-    $land_date = date('Y-m-d', strtotime($date));
-    $distance_traveled = mysqli_real_escape_string($conn, $_POST['distance_traveled']);
     
-    $hotel_explain_expense = mysqli_real_escape_string($conn, $_POST['hotel_explain_expense']);
-    $hotel_amount = mysqli_real_escape_string($conn, $_POST['hotel_amount']);
-    $date = $_POST['hotel_date'];
-    $hotel_date = date('Y-m-d', strtotime($date));
-
-    $food_explain_expense = mysqli_real_escape_string($conn, $_POST['food_explain_expense']);
-    $food_amount = mysqli_real_escape_string($conn, $_POST['food_amount']);
-    $date = $_POST['food_date'];
-    $food_date = date('Y-m-d', strtotime($date));
     
-    $other_explain_expense = mysqli_real_escape_string($conn, $_POST['other_explain_expense']);
-    $other_amount = mysqli_real_escape_string($conn, $_POST['other_amount']);
-    $date = $_POST['other_date'];
-    $other_date = date('Y-m-d', strtotime($date));
+    $formFieldsArray = array(
+        array(
+            "fieldId" => "general_name",
+            "fieldValue" => $general_name
+        ),
+        array(
+            "fieldId" => "general_address",
+            "fieldValue" => $general_address
+        ),
+        array(
+            "fieldId" => "general_city",
+            "fieldValue" => $general_city
+        ),
+        array(
+            "fieldId" => "general_postal_code",
+            "fieldValue" => $general_postal_code
+        ),
+        array(
+            "fieldId" => "general_department",
+            "fieldValue" => $general_department
+        )
+    );
+    array_push( $formArray, $formFieldsArray );
+    
+    $formJSON = json_encode($formArray);
+    echo $formJSON;
 
-    $fieldValues = "";
-    $fieldValues .= '[{"fieldId":"general_name", "fieldValue":"' . $general_name. '"},';
-    $fieldValues .= '{"fieldId":"general_address","fieldValue":"' . $general_address. '"},';
-    $fieldValues .= '{"fieldId":"general_city","fieldValue":"' . $general_city. '"},';
-    $fieldValues .= '{"fieldId":"general_postal_code","fieldValue":"' . $general_postal_code. '"},';
-    $fieldValues .= '{"fieldId":"general_department","fieldValue":"' . $general_department. '"},';
-    $fieldValues .= '{"fieldId":"air_explain_expense","fieldValue":"' . $air_explain_expense. '"},';
-    $fieldValues .= '{"fieldId":"air_amount","fieldValue":"' . $air_amount. '"},';
-    $fieldValues .= '{"fieldId":"air_depart_date","fieldValue":"' . $air_depart_date. '"},';
-    $fieldValues .= '{"fieldId":"air_return_date","fieldValue":"' . $air_return_date. '"},';
-    $fieldValues .= '{"fieldId":"land_explain_expense","fieldValue":"' . $land_explain_expense. '"},';
-    $fieldValues .= '{"fieldId":"land_date", "fieldValue":"' . $land_date. '"},';
-    $fieldValues .= '{"fieldId":"distance_traveled", "fieldValue":"' . $distance_traveled. '"},';
-    $fieldValues .= '{"fieldId":"hotel_explain_expense", "fieldValue":"' . $hotel_explain_expense. '"},';
-    $fieldValues .= '{"fieldId":"hotel_amount", "fieldValue":"' . $hotel_amount. '"},';
-    $fieldValues .= '{"fieldId":"hotel_date", "fieldValue":"' . $hotel_date. '"},';
-    $fieldValues .= '{"fieldId":"food_explain_expense", "fieldValue":"' . $food_explain_expense. '"},';
-    $fieldValues .= '{"fieldId":"food_amount", "fieldValue":"' . $food_amount. '"},';
-    $fieldValues .= '{"fieldId":"food_date", "fieldValue":"' . $food_date. '"},';
-    $fieldValues .= '{"fieldId":"other_explain_expense", "fieldValue":"' . $other_explain_expense. '"},';
-    $fieldValues .= '{"fieldId":"other_amount", "fieldValue":"' . $other_amount. '"},';
-    $fieldValues .= '{"fieldId":"other_date", "fieldValue":"' . $other_date. '"}]';
+
     
     $expenseReportId = $form;
     $status = "Pending";
@@ -113,20 +166,17 @@
         $sql = "update expense_reports set submitter_id = '".$sid."',
         approver_id = '".$firstApprover."',
         approver_level = '".$approverLevel."',
-        expense_types = '".$expenseTypes."',
-        expense_fields = '".$fieldValues."',
+        expense_fields = '".$formJSON."',
         submission_date = CURRENT_TIMESTAMP(),
         expensereport_status = '".$status."'
         where expense_reports_id = '".$form."'";
-        $update = mysqli_query($conn, $sql) 
-            or die(mysqli_error($update));
+        $update = mysqli_query($conn, $sql) or die(mysqli_error($update));
     }
     else
     {
-        $sql = "INSERT INTO expense_reports( submitter_id, approver_id,approver_level, expense_types, expense_fields, submission_date, expensereport_status) 
-            VALUES ('".$sid."', '" . $firstApprover. "','".$approverLevel."',  '" .$expenseTypes. "','".$fieldValues."', CURRENT_TIMESTAMP(), '".$status."' )";
-        $insert = mysqli_query($conn, $sql) 
-            or die(mysqli_error($insert));
+        $sql = "INSERT INTO expense_reports( submitter_id, approver_id, approver_level, expense_fields, submission_date, expensereport_status) 
+            VALUES ('".$sid."', '" . $firstApprover. "','".$approverLevel."', '".$formJSON."', CURRENT_TIMESTAMP(), '".$status."' )";
+        $insert = mysqli_query($conn, $sql) or die(mysqli_error($insert));
     
         $expenseReportId = mysqli_insert_id($conn);
     }
@@ -134,15 +184,14 @@
     {
         $sql = "INSERT INTO expensereport_history( expense_reports_id, revieweddate, reviewer_id, action) 
                 VALUES ('".$expenseReportId."', CURRENT_TIMESTAMP() ,'" .$sid. "', 'Submit' )";
-        $insert = mysqli_query($conn, $sql) 
-            or die(mysqli_error($insert));
+        $insert = mysqli_query($conn, $sql) or die(mysqli_error($insert));
             
         $sql = "INSERT INTO expensereport_history( expense_reports_id, reviewer_id) 
                 VALUES ('".$expenseReportId."','" .$firstApprover. "' )";
-            $insert = mysqli_query($conn, $sql) 
-                or die(mysqli_error($insert));
+        $insert = mysqli_query($conn, $sql) or die(mysqli_error($insert));
     }
     
+    if (empty($_FILES['attachments']['name']))
     foreach ($_FILES['attachments']['name'] as $f => $filename) 
     {  
         $tmpName  = $_FILES['attachments']['tmp_name'][$f];
@@ -169,6 +218,7 @@
     getApprovalRequest($expense_reports_id, $conn);
     
     header("Location: ../home.php");
+
 
     
 ?>
