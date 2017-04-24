@@ -14,14 +14,7 @@
                             <p>This project started out from simple idea. Expense Submission / Approval and Reimbursement that many businesses rely on excel based expense reporting and approval system. The responsibility would be creating a system for expense pre-approval, reporting, post approval and reimbursement system. A key role in the development of this site was devoted to team of 6 people their names are Michael Hendren, Jon Calvert, Matt Papais, Shane Kuskowski Andre Mitchell and Marek Stolarczyk. Their hard work brought this simple idea into full working website called R.A.S.E.</p>
                             <p>R.A.S.E service was created for small businesses by allowing for self-management of revenues and expenses. Reporting expense has never been a straightforward process. Not any more, with this system you will be able to organize time, pay of your employees, and manage many different items as travel, food, or equipment expense. This site has many functionalities that makes expense reports process a lot easier than working with paper and pen. Some of the features that R.A.S.E website provides: Allow for registration of users with different credential as trackers and submitters of their business expenses, the form can be customized up to the needs of company types of expense, Users with specific role will be able to view and approve expense, any message about pending or new forms will be sent to manager of the company, and other good features that will help speed the process of receiving your reimbursement.</p>
                             <p>Thank you for visiting our website and inquiry to use our tool to make your work a lot easier. R.A.S.E team.</P>
-                            <hr><br>
-                            <h3>Our Goal and Vision</h3><hr>
-                            <p>
-                                hfhofgs gfhbujgs hfgilg ghldfs gdf bgdf ghjdfb ghjd bgdsfhgsdg hbugfougfd bkgdfnb fdkggbokuifdvm fd
-                                hjfliksdgbfgsbgf hg hjglfbsdgvjh fdsgvfdj sgvfdhns gvfdv dfsvfbvmdf vjhfdv bnujg fdg fkdb gdf
-                                gbfdhjjksdjfvbbjf vfjmfdvbjfb vmdf vbjfdbvmfv djmvbjdfv fdmv jv bv fmv dfvbfv fdv
-                                bfdksbfgbigufkjgbfdukijgvb fdvb fdkvb v bdbvldfbv kjhdf skjuf sdkfbsf msdbfkisdb ndsf dsfbuksdbf fds
-                            </p><hr><br>
+                            <br>
                             <h3>Meet the Team</h3><hr>
                                 <h4>Michael Hendren</h4>
                                 <p>
