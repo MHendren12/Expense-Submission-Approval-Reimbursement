@@ -208,5 +208,8 @@ $(".num-<?php if(!$_GET['page']){echo 1;} else{echo $_GET['page'];} ?>").css('ba
 if (window.location.href.indexOf("?page") > -1) {
     window.scrollTo(0,document.body.scrollHeight);
 }
+if (window.location.href.indexOf("#home") > -1) {
+    window.scrollTo(0,document.body.scrollHeight);
+}
     </script>
 </html>

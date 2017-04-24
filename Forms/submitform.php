@@ -219,6 +219,4 @@
     
     header("Location: ../home.php");
 
-
-    
 ?>

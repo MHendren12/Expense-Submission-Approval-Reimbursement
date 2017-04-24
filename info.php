@@ -213,6 +213,7 @@
             placement: 'bottom',
             content: $('#specialS').html(),
             html: true,
+            width: 500,
             delay: {show : 0, hide : 1}
         });
         $('.approver').popover({

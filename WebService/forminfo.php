@@ -39,11 +39,11 @@
         }
     }
     
-    function getExpenseTypes($formid, $conn)
+    /*function getExpenseTypes($formid, $conn)
     {
         
 
-    }
+    }*/
     function getExpenseFields($formid, $conn)
     {
         $sql = "select expense_fields from expense_reports where expense_reports_id = '".$formid."'";
@@ -613,7 +613,6 @@
 <?php
             }
                 if($num_rows==0){
-                    echo $user_id;
                     echo "<td colspan='7' align='center'>No Results or History.</td>";
                 }
     }
