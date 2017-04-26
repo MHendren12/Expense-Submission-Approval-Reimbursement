@@ -434,11 +434,20 @@ function DoCheckUncheckDisplay(element, sectionId)
             html: true,
         }).click(function(e)
         {
-          DisplayExpense(this);
-          setFieldData(this);
-          if ( !$(".popover-content").parent()[0] || $(".popover-content").parent()[0].style.display != "block" )
+          var expenseType = $(this).parents("tr").find("#ExpenseType").val();
+          if (expenseType != "- Expense Type -")
           {
-            $(this).click();
+            DisplayExpense(this);
+            setFieldData(this);
+            if ( !$(".popover-content").parent()[0] || $(".popover-content").parent()[0].style.display != "block" )
+            {
+              $(this).click();
+            }
+          }
+          else
+          {
+            $('[data-toggle="popover"]').popover('hide');
+            alert("Please enter an expense type.");
           }
           
         });
@@ -521,11 +530,20 @@ function DoCheckUncheckDisplay(element, sectionId)
             html: true,
         }).click(function(e)
         {
-          DisplayExpense(this);
-          setFieldData(this);
-          if ( !$(".popover-content").parent()[0] || $(".popover-content").parent()[0].style.display != "block" )
+          var expenseType = $(this).parents("tr").find("#ExpenseType").val();
+          if (expenseType != "- Expense Type -")
           {
-            $(this).click();
+            DisplayExpense(this);
+            setFieldData(this);
+            if ( !$(".popover-content").parent()[0] || $(".popover-content").parent()[0].style.display != "block" )
+            {
+              $(this).click();
+            }
+          }
+          else
+          {
+            $('[data-toggle="popover"]').popover('hide');
+            alert("Please enter an expense type.");
           }
           
         });
