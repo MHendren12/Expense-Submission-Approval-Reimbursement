@@ -12,5 +12,5 @@
         $query = 'insert into routing (routingRow_id, routingColumn_id) values ("'.$routingConditionId.'","'.$i.'")';
         mysqli_query($conn, $query);
     }
-    header("Location: ../home.php");
+    header("Location: ../home.php#routing");
 ?>

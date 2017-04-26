@@ -23,6 +23,6 @@ session_start();
         mysqli_query($conn, $insertApprover);
     }
     
-    header("Location: ../home.php");
+    header("Location: ../home.php#routing");
     
 ?>

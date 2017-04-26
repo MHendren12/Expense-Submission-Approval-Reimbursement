@@ -115,3 +115,16 @@ insert into role_permissions (permission_id, userRole_id) values (2, (select use
 insert into role_permissions (permission_id, userRole_id) values (3, (select userRole_id from userRole where userRole_Name = "Administrator"));
 insert into role_permissions (permission_id, userRole_id) values (4, (select userRole_id from userRole where userRole_Name = "Administrator"));
 insert into role_permissions (permission_id, userRole_id) values (5, (select userRole_id from userRole where userRole_Name = "Administrator"));
+
+
+DROP TABLE routingLevels;
+create table routingLevels (
+  routinglevel_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  routinglevel_name varchar(75) NOT NULL
+);
+
+insert into routingLevels (routinglevel_name) values ("Approver Level 1"));
+insert into routingLevels (routinglevel_name) values ("Approver Level 2"));
+insert into routingLevels (routinglevel_name) values ("Approver Level 3"));
+insert into routingLevels (routinglevel_name) values ("Approver Level 4"));
+insert into routingLevels (routinglevel_name) values ("Approver Level 5"));

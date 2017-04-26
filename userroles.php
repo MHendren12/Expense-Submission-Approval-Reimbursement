@@ -61,7 +61,11 @@
                                             </td>
                                             <td>
                                                 <?php echo'<a href="'.$editRoleLink.'"><span class="glyphicon glyphicon-pencil" title="Edit Role" ></span></a>'; ?>
-                                                <?php echo '<a href="Roles/deleterole.php?roleid='.$userRole_id.'" title="Delete Role" ><span class="glyphicon glyphicon-remove"></span></a>'; ?>
+                                                <?php
+                                                    if ($userRole_Name != "Administrator" && $userRole_Name != "Approver" && $userRole_Name != "Submitter")
+                                                        echo '<a href="Roles/deleterole.php?roleid='.$userRole_id.'" title="Delete Role" <span class="glyphicon glyphicon-remove"></span></a>';
+
+                                                ?>
                                             </td>
                                         </tr>
                                     

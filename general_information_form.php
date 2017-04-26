@@ -1,6 +1,8 @@
 <?php
   session_start();
-  $uid = $_SESSION['userid'];
+  $uid = $inSubmission ? $_SESSION['userid'] : $submitterId;
+  
+  
 ?>
 <!DOCTYPE html>
 <html>

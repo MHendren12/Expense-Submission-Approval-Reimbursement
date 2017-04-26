@@ -18,6 +18,6 @@ session_start();
         mysqli_query($conn, $deleteR);
     }
     
-    header("Location: ../home.php");
+    header("Location: ../home.php#routing");
     
 ?>

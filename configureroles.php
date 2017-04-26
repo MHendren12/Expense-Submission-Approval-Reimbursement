@@ -94,7 +94,7 @@
                                         
                                         <br>
                                         <input id="submit" input type="submit" class="btn btn-success" value="Submit" name="submit" />
-                                        <a href="" class="btn btn-default">Cancel</a>
+                                        <a href="userroles.php" class="btn btn-default">Cancel</a>
                                     </div>
                                 </form>
                                 <hr>
@@ -191,7 +191,6 @@
     
     		})
     		.done(function(data){
-    		   debugger;
     		    var data = JSON.parse(data);
     		    //var chboxes = $("#permissions").find("input[type=checkbox]");
                 for (var i = 0; i<= data.length-1; i++)

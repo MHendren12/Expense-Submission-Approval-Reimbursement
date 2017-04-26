@@ -191,15 +191,20 @@
         $insert = mysqli_query($conn, $sql) or die(mysqli_error($insert));
     }
     
-    if (empty($_FILES['attachments']['name']))
-    foreach ($_FILES['attachments']['name'] as $f => $filename) 
-    {  
-        $tmpName  = $_FILES['attachments']['tmp_name'][$f];
-        $tmpPath = "/home/ubuntu/workspace/FormAttachments/".$tmpName;
-        $webPath = "../FormAttachments".$tmpName;
-        move_uploaded_file($tmpName, $tmpPath);
-        $insertAttachment = "insert into attachments (expenseform_id, uploadpath) values ('".$expenseReportId."', '".$webPath."' ) ";
-        $insert = mysqli_query($conn, $insertAttachment);
+    if (!empty($_FILES['attachments']['name']))
+    {
+        foreach ($_FILES['attachments']['name'] as $f => $filename) 
+        {  
+            if ($filename != "")
+            {
+                $tmpName  = $_FILES['attachments']['tmp_name'][$f];
+                $tmpPath = "/home/ubuntu/workspace/FormAttachments/".$tmpName;
+                $webPath = "../FormAttachments".$tmpName;
+                move_uploaded_file($tmpName, $tmpPath);
+                $insertAttachment = "insert into attachments (expenseform_id, uploadpath) values ('".$expenseReportId."', '".$webPath."' ) ";
+                $insert = mysqli_query($conn, $insertAttachment);
+            }
+        }
     }
     
     // trigger email on submission

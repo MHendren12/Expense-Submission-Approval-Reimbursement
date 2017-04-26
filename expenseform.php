@@ -65,8 +65,7 @@
 
 function DisplayExpense(element)
 {
-    
-    var expenseType = $(element).parent().parent().find("#ExpenseType")[0];
+    var expenseType = $(element).parents("tr").find("select.form-control")[0];
     
     var section = expenseType.selectedOptions[0].id + "_expense";
     section = section.toLowerCase();
@@ -105,8 +104,8 @@ function DoCheckUncheckDisplay(element, sectionId)
   </style>
 <body>
   
-  <div id="formTypeContent" style="display:none">
-    <div id="air_expense" style="display:none">
+  <div id="formTypeContent" style="display:none;height:auto">
+    <div id="air_expense" style="display:none;">
      <?php include("air_expense_form.php")?>
     </div>
     
@@ -125,6 +124,7 @@ function DoCheckUncheckDisplay(element, sectionId)
     <div id="other_expense" style="display:none">
       <?php include("other_expense_form.php")?>
     </div>
+    <hr>
     <div>
       <a class="btn btn-default" onclick="saveExpenseToTable(this)">Save</a>
       <a class="btn btn-default" onclick="cancelExpense()" >Cancel</a>
@@ -173,10 +173,10 @@ function DoCheckUncheckDisplay(element, sectionId)
           </select>
           </td>
           <td>
-            <input  type = "text" class="expenseType form-control" id="ExpenseAmount"  name="ExpenseAmount[]"  title="ExpenseType" data-placement="bottom" data-toggle="popover" data-trigger="click"  style="float:right;">
+            <input  type = "text" class="expenseType form-control" id="ExpenseAmount"  name="ExpenseAmount[]"  title="ExpenseType" data-placement="left" data-toggle="popover" data-trigger="click"  style="float:right;">
           </td>
           <td>
-            <input class="form-control"  id="ExpenseApproved" name="ExpenseApproved[]" type="number" >
+            <input class="form-control"  id="ExpenseApproved" name="ExpenseApproved[]" type="text" >
           </td>
           <td style="display:none">
             <input id="fieldData" name="fieldData[]" type="text">
@@ -203,10 +203,10 @@ function DoCheckUncheckDisplay(element, sectionId)
           </select>
           </td>
           <td width="16%" >
-           <input type = "text" class="expenseType form-control"  id="ExpenseAmount" name="ExpenseAmount[]" title="ExpenseType" data-placement="bottom" data-toggle="popover" data-trigger="click" style="float:right;" >
+           <input type = "text" class="expenseType form-control"  id="ExpenseAmount" name="ExpenseAmount[]" title="ExpenseType" data-placement="left" data-toggle="popover" data-trigger="click" style="float:right;" >
           </td>
           <td width="16%">
-            <input class="form-control" id="ExpenseApproved" name="ExpenseApproved[]" type="number">
+            <input class="form-control" id="ExpenseApproved" name="ExpenseApproved[]" type="text">
           </td>
           <td style="display:none">
             <input id="fieldData" name="fieldData[]" type="text">
@@ -242,10 +242,11 @@ function DoCheckUncheckDisplay(element, sectionId)
         while($row = mysqli_fetch_assoc($select))
         {
           $path = $row['uploadpath'];
-          echo '<a href="'.$path.'" >Link</a>';
+          echo '<a href="'.$path.'" target="_blank" style="padding: 0px 5px 0px 5px"><span class="glyphicon glyphicon-picture"></span></a>';
         }
         if ($inSubmission)
         {
+          echo '<br>' ;
           echo '<label for="air_receipt_upload">Upload a Receipt: </label><br>
                 <input type="file" name="attachments[]" id="attachments" multiple>';
         }
@@ -277,6 +278,16 @@ function DoCheckUncheckDisplay(element, sectionId)
 
     $(document).ready(function()
     {
+      /*
+      var totalFields = ["totalLandExpense", "totalOtherExpense", "totalFoodExpense", "totalHotelExpense", "totalAirExpense"];
+      for (var i =0; i <= totalFields.length-1;i++)
+      {
+        var thisField = $(totalFields[i]);
+        debugger;
+        $(totalFields[i]).bind("change",function(){ $(totalFields[i]).val(   parseFloat($(totalFields[i]).val()).toFixed(2)     );debugger; })
+      }
+      */
+      
       function saveForm()
       {
         $("#expenseForm").attr("action","Forms/submitform.php?action=save");
@@ -301,12 +312,25 @@ function DoCheckUncheckDisplay(element, sectionId)
       
       $('.expenseType.form-control').popover({
             content: $('#formTypeContent').html(),
-            html: true,
-            delay: {show : 0, hide : 1}
+            html: true
         }).click(function(e)
         {
-          DisplayExpense(this);
-          setFieldData(this);
+          var expenseType = $(this).parents("tr").find("#ExpenseType").val();
+          if (expenseType != "- Expense Type -")
+          {
+            DisplayExpense(this);
+            setFieldData(this);
+            if ( !$(".popover-content").parent()[0] || $(".popover-content").parent()[0].style.display != "block" )
+            {
+              $(this).click();
+            }
+            $(".popover-content")[0].style.height = "auto";
+          }
+          else
+          {
+            $('[data-toggle="popover"]').popover('hide');
+            alert("Please enter an expense type.");
+          }
           
         });
       
@@ -351,7 +375,6 @@ function DoCheckUncheckDisplay(element, sectionId)
                               var col = $(row).find(str);
                               if (i == data.Value.length-1)
                               {
-                                debugger;
                                 var arr = [];
                                 for (var k = 0; k <= value.length-1; k++)
                                 {
@@ -413,6 +436,10 @@ function DoCheckUncheckDisplay(element, sectionId)
         {
           DisplayExpense(this);
           setFieldData(this);
+          if ( !$(".popover-content").parent()[0] || $(".popover-content").parent()[0].style.display != "block" )
+          {
+            $(this).click();
+          }
           
         });
         $(expenseAmount).popover("toggle");
@@ -473,7 +500,7 @@ function DoCheckUncheckDisplay(element, sectionId)
         var lastRowIndex = $(table).find('tr:last')[0].rowIndex;
         var tr = $(selectedRows[i]).parent().parent().clone();
         var rowIndex = $(selectedRows[i]).parent().parent()[0].rowIndex-1;
-        var ExpenseTypeIndex = $(selectedRows[i]).parent().parent().find("select[name=ExpenseType]")[0];
+        var ExpenseTypeIndex = $(selectedRows[i]).parents("tr").find("#ExpenseType")[0];
         if (ExpenseTypeIndex)
           ExpenseTypeIndex = ExpenseTypeIndex.selectedOptions[0].index;
         
@@ -483,14 +510,34 @@ function DoCheckUncheckDisplay(element, sectionId)
         tr.find("#ExpenseStartDate").attr("id", "ExpenseStartDate");
         tr.find("#ExpenseEndDate").attr("id", "ExpenseEndDate");
         tr.find("#ExpenseType").attr("id", "ExpenseType"+lastRowIndex);
+        var expenseAmount = tr.find("#ExpenseAmount");
         tr.find("#ExpenseAmount").attr("id", "ExpenseAmount");
         $(table).append(tr);
-        var lastRowExpenseType = $(table).find('tr:last').find("#ExpenseType")[0];
+        var erter = $(table).find('tr:last');
+        var lastRowExpenseType = $(table).find('tr:last').find("#ExpenseType"+lastRowIndex)[0];
+        
+        $(expenseAmount).popover({
+            content: $('#formTypeContent').html(),
+            html: true,
+        }).click(function(e)
+        {
+          DisplayExpense(this);
+          setFieldData(this);
+          if ( !$(".popover-content").parent()[0] || $(".popover-content").parent()[0].style.display != "block" )
+          {
+            $(this).click();
+          }
+          
+        });
+        
         if( lastRowExpenseType )
         {
           var options = lastRowExpenseType.options[ExpenseTypeIndex].selected = 'selected';
           
         }
+        
+        
+        
         $("#numRows").val( parseInt($("#numRows").val() ) + 1 );
         
       }
@@ -519,8 +566,16 @@ function DoCheckUncheckDisplay(element, sectionId)
         {
           $(element).parents("tr").find("#ExpenseAmount").val(fieldValue);
           $(element).parents("tr").find("#ExpenseApproved").val(fieldValue);
+          
+          var currentTotal = parseFloat( $("#totalExpense").val() );
+          var newTotal = parseFloat( currentTotal - -fieldValue ).toFixed(2);
+          $("#totalExpense").val(newTotal);
+          
         }
       }
+      
+      
+      
       data = '[' + data.join(",") + ']';
       $(hField).val(data);
       $('[data-toggle="popover"]').popover('hide');
